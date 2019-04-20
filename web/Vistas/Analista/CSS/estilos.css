@@ -1,0 +1,502 @@
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    line-height: 18px;
+    background-color: rgb(245,245,245);
+}
+
+body::-webkit-scrollbar{
+    width: 7px;
+}
+
+body::-webkit-scrollbar-thumb{
+    background: #0069D9;
+    border-radius: 0 0 5px 5px;
+}
+
+.table-responsive::-webkit-scrollbar{
+    height: 10px;
+    width: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb{
+    background: #0069D9;
+}
+
+.ocultar{
+    display: none;
+}
+
+#navPri {
+    background-color: #0069D9;
+    color: white;
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    margin-top: -60px;
+    z-index: 1000;
+}
+
+#navAsi, #navMod{
+    background-color: #0069D9;
+    color: white;
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#empresa{
+    width: 240px;
+    height: 100%;
+    background-color: #0059C9;
+    float: left;
+    text-align: center;
+    padding-top: 5px;
+}
+
+#titulo{
+    width: 400px;
+    float: left;
+    height: 100%;
+    padding-top: 12px;
+}
+
+#cerrar{
+    float: right;
+    width: 100px;
+    height: 100%;
+
+}
+
+.icono{
+    color: #fff;
+    font-size: 24px;
+    position: absolute;
+    margin-left: 40px;
+    margin-top: 16px;
+}
+
+.icono:hover{
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    text-align: none;
+}
+
+.btn-menu{
+    display: block;
+    padding: 20px;
+    background: #0d2c44;
+    margin-top: 60px;
+    display: none;
+    color: #fff;
+}
+
+.icon{
+    float: right;
+}
+
+.btn-menu:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
+.contenedor-menu{
+    background-color: #EDF0F0;  
+    width: 240px;
+    height: 100%;
+    position: fixed;
+    display: inline-block;
+    z-index: 1000;
+}
+
+
+
+.contenedor-menu .menu{
+    width: 100%;
+}
+
+.contenedor-menu ul{
+    list-style: none;
+}
+
+.contenedor-menu .menu li a{
+    color: #494949;
+    display: block;
+    padding: 15px 25px;
+    text-decoration: none;
+    text-align: none;
+    transition: all .3s;
+}
+
+.contenedor-menu .menu li a:hover{
+    color: #fff;
+    background-color: #1a95d5;
+}
+
+.contenedor-menu .menu li span{
+    margin-left: 10px;
+}
+
+.contenedor-inicio{
+    width: 80%;
+    margin-left: 266px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: rgb(245,245,245);
+
+}
+
+.contenedor-inicio .serGenerados{
+    float: left;
+    width: 35%;
+    height: 150px;
+    background-color: #FFFFFF;
+    margin-left: 10%;
+}
+
+.contenedor-inicio .serGenerados .contImagen1{
+    width: 40%;
+    height: 100%;
+    background-color: #EEF464;
+    float: left;
+}
+
+.contenedor-inicio .serGenerados .contImagen1 i{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 80px;
+    color: #fff;
+}
+
+.contenedor-inicio .serGenerados .texto1{
+    width: 60%;
+    height: 100%;
+    text-align: center;
+    float: right;
+}
+
+.contenedor-inicio .serGenerados .texto1 h5{
+    top: 45%;
+    position: relative;
+}
+
+.contenedor-inicio .serGenerados .texto1 h1{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.contenedor-inicio .serAsignados{
+    float: right;
+    width: 35%;
+    height: 150px;
+    background-color: #FFFFFF;
+    margin-right: 10%;
+}
+
+.contenedor-inicio .serAsignados .contImagen2{
+    width: 40%;
+    height: 100%;
+    background-color: #6485F4;
+    float: left;
+}
+
+.contenedor-inicio .serAsignados .contImagen2 i{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 80px;
+    color: #fff;
+}
+
+.contenedor-inicio .serAsignados .texto2{
+    width: 60%;
+    height: 100%;
+    text-align: center;
+    float: right;
+}
+
+.contenedor-inicio .serAsignados .texto2 h5{
+    top: 45%;
+    position: relative;
+}
+
+.contenedor-inicio .serAsignados .texto2 h1{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.contenedor-inicio .ultNovedades{
+    
+    width: 100%;
+    height: 50%;
+    text-align: center;
+}
+
+.contenedor-inicio .ultNovedades .serGenerados1{
+    float: left;
+    width: 48%;
+    padding: 5px;
+    background-color: rgb(255,255,255);
+}
+
+.contenedor-inicio .ultNovedades .serGenerados1 table{
+    width: 700px;
+}
+
+.contenedor-inicio .ultNovedades .serAsignados1{
+    float: right;
+    width: 48%;
+    padding: 5px;
+    background-color: rgb(255,255,255);
+}
+
+.contenedor-inicio .ultNovedades .serAsignados1 table{
+    width: 700px;
+}
+
+
+.contenedor-agServicio{
+    width: 80%;
+    margin-left: 266px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+    background-color: rgb(245,245,245);
+}
+
+.contenedor-enFisica{
+    width: 80%;
+    margin-left: 266px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+    background-color: rgb(245,245,245);
+}
+
+.contenedor-enFisica form .botones{
+    float: right;
+    width:100%;
+}
+
+.contenedor-genServicio{
+    width: 80%;
+    margin-left: 266px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+    background-color: rgb(245,245,245);
+}
+
+.contenedor-genServicio form .botones{
+    float: right;
+    width:100%;
+}
+
+.contenedor-genServicio form .botones .alerta{
+    color: red;
+    float: left;
+    background-color: black;
+    padding: 10px;
+    display: none;
+    width: 60%;
+}
+
+.contenedor-genServicio form .botones button,
+.contenedor-genServicio form .botones input,
+.contenedor-genServicio form .botones a{
+    float: right;
+}
+
+.contenedor-serGenerados{
+    width: 80%;
+    margin-left: 266px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+    background-color: rgb(245,245,245);
+}
+
+#bodyCard{
+    transition: all .8s;
+}
+
+.card{
+    transition: all .8s;
+}
+
+.contenedor-serGenerados .cont{
+    height: 500px;
+}
+
+.contenedor-serGenerados .cont .tablaPri{
+    width: 2000px;
+}
+
+.contenedor-serAsignados{
+    width: 80%;
+    margin-left: 266px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+    background-color: rgb(245,245,245);
+}
+
+.contenedor-serAsignados div{
+    height: 500px;
+}
+
+.contenedor-serAsignados div table{
+    width: 2500px;
+}
+
+.contenedor-informes{
+    width: 80%;
+    margin-left: 266px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+    background-color: rgb(245,245,245);
+}
+
+.flex {
+    display: flex;
+}
+
+#tituloInfo, .pagination{
+    width: 50%;
+}
+
+.pagination{
+    align-items: flex-end;
+}
+
+
+
+.contenedor-estadisticos{
+    width: 80%;
+    margin-left: 266px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+    background-color: rgb(245,245,245);
+}
+
+.table-responsive{
+    width: 100%;
+}
+
+table{
+    text-align: center;
+
+}
+
+th{
+    background-color: rgb(240,240,240);
+}
+
+td{
+    background-color: rgb(255,255,255);
+}
+
+.contenedor-menu .menu .activado{
+    color: #fff;
+    background-color: #C0C3C3;
+}
+
+.conProveedores{
+    width: 100%;
+    /*float: left;*/
+}
+
+.conProveedores .cuposPro .texto1{
+    width: 200px;
+}
+
+input[type= text],input[type= number]{
+    text-align: center;
+}
+
+input[type= number] {
+    -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+
+input[type=number]::-webkit-inner-spin-button {
+
+    -webkit-appearance: none;
+
+    margin: 0;
+
+}
+
+@media screen and (max-width: 500px){
+    .contenedor-menu{
+        width: 100%;
+        height: auto;
+        margin-left: 0;
+        margin-top: 57px;
+        z-index: 1000;
+    }
+
+    .contenedor-menu .menu{
+        display: none;
+
+    }
+
+    .btn-menu{
+        display: block;
+    }
+
+    .contenedor-genServicio{
+        width: 100%;
+        margin-left: 0;
+        margin-top: -5px;
+    }
+
+    .contenedor-serGenerados{
+        width: 100%;
+        margin-left: 0;
+        margin-top: -5px;
+    }
+
+    .contenedor-serAsignados{
+        width: 100%;
+        margin-left: 0;
+        margin-top: -5px;
+    }
+
+    .contenedor-informes{
+        width: 100%;
+        margin-left: 0;
+        margin-top: -5px;
+    }
+}
