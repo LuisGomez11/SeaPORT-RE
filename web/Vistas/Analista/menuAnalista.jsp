@@ -47,7 +47,7 @@
         <%
             if (request.getParameter("val") != null) {
                 if (request.getParameter("val").equals("correcto")) {
-                    out.print("<script>swal('Correcto!', 'El servicio fue generado satisfactoriamente, lo puede consultar en la sección de servicios registrados', 'success').then((value) => {window.location = 'menuAnalista.jsp';});</script>");
+                    out.print("<script>swal('Correcto!', 'El servicio fue generado satisfactoriamente, lo puede consultar en la sección de servicios generados', 'success').then((value) => {window.location = 'menuAnalista.jsp';});</script>");
                 } else {
                     out.print("<script>swal('Error!', 'Ya hay un servicio generado con esa referencia', 'error').then((value) => {window.location = 'menuAnalista.jsp';});</script>");
                 }
@@ -136,7 +136,7 @@
                 <li><a href="#" class="" id="primera"><i class="fas fa-plus-circle"></i><span>Agregar servicio</span></a></li>
                 <li><a href="#" class="" id="segunda"><i class="fas fa-truck"></i><span>Entidades fisicas</span></a></li>
                 <li><a href="#" class="" id="tercera"><i class="fas fa-folder-plus"></i><span>Generar servicio</span></a></li>
-                <li><a href="#" class="" id="cuarta"><i class="fas fa-clipboard"></i><span>Servicios registrados</span></a></li>
+                <li><a href="#" class="" id="cuarta"><i class="fas fa-clipboard"></i><span>Servicios generados</span></a></li>
                 <li><a href="#" class="" id="quinta"><i class="fas fa-clipboard-check"></i><span>Servicios asignados</span></a></li>
                 <li><a href="#" class="" id="sexta"><i class="fas fa-folder-open"></i><span>Informes</span></a></li>
                 <li><a href="#" class="" id="septima"><i class="fas fa-chart-pie"></i><span>Datos estadisticos</span></a></li>
@@ -290,6 +290,7 @@
                     <div class="col-7">
                         <table class="table table-bordered">
                             <thead>
+                                <tr><th colspan="2">LISTADO DE SERVICIOS</th></tr>
                                 <tr>
                                     <th>NOMBRE</th>
                                     <th>ACCIONES</th>
@@ -348,6 +349,7 @@
             <hr><br>
             <table class="table table-bordered">
                 <thead>
+                    <tr><th colspan="3">LISTADO DE ENTIDADES FISICAS</th></tr>
                     <tr>
                         <th>NOMBRE</th>
                         <th>TIPO DE ENTIDAD</th>
@@ -618,7 +620,7 @@
                         <strong>Terminal: </strong><label class="ml-2"><%= rs1.getString("terminal")%></label><br>
                         <strong>Motonave: </strong><label class="ml-2"><%= rs1.getString("motonave")%></label><br>
                         <strong>Muelle: </strong><label class="ml-2"><%= rs1.getString("muelle")%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rs1.getString("grua")%></label><br>
+                        <strong>Grúa(s): </strong><label class="ml-2"><%= rs1.getString("grua")%></label><br>
                         <strong>Fecha de cita: </strong><label class="ml-2"><%= rs1.getString("fechaCita")%></label><br>
                         <strong>Hora de cita: </strong><label class="ml-2"><%= rs1.getString("horaCita")%></label><br>
                         <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rs1.getString("hrsOp")%></label><br>
