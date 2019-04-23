@@ -1,7 +1,7 @@
 <%-- 
     Document   : menuSeleccionador
     Created on : 4/04/2019, 03:15:55 PM
-    Author     : E201
+    Author     : Luis Gomez
 --%>
 
 <%@page import="java.sql.ResultSet"%>
@@ -128,42 +128,42 @@
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" required>
+                        <input type="text" class="form-control" name="nombre" id="nombre">
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="telefono">Telefono</label>
-                        <input type="number" class="form-control" name="telefono" required>
+                        <input type="number" class="form-control" name="telefono" id="telefono">
                     </div>
                     <div class="form-group col-6">
                         <label for="movil">Movil</label>
-                        <input type="number" class="form-control" name="movil" required>
+                        <input type="number" class="form-control" name="movil" id="movil">
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="correo">Correo electronico</label>
-                        <input type="email" class="form-control" name="correo" required>
+                        <input type="email" class="form-control" name="correo" id="correo">
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="nit">NIT del proveedor</label>
-                        <input type="text" class="form-control" name="nit" required>
+                        <input type="text" class="form-control" name="nit" id="nit">
                     </div>
                     <div class="form-group col-6">
                         <label for="cantTra">Cantidad de trabajadores</label>
-                        <input type="number" class="form-control" name="cantTra" required>
+                        <input type="number" class="form-control" name="cantTra" id="cantTra">
                     </div>
                 </div>
                 <br>
                 <div style="float: right; width:35%;">
                     <button type="button" style="float: right; margin-left: 10px;" class="btn btn-danger">CANCELAR</button>
-                    <input style="float: right;" type="submit" value="REGISTRAR" class="btn btn-primary">
+                    <input id="btnRegistrar" style="float: right;" type="submit" value="REGISTRAR" class="btn btn-primary">
                 </div>
             </form>
         </div>

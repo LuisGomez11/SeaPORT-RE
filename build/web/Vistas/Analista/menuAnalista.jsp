@@ -1,7 +1,7 @@
 <%-- 
     Document   : menuAnalista
     Created on : 04/04/2019, 10:35:57 AM
-    Author     : Sammy Guergachi <sguergachi at gmail.com>
+    Author     : Luis Gomez
 --%>
 
 <%@page import="Clases.ConexionBD"%>
@@ -42,6 +42,8 @@
             int contador1 = 0;
             int numServicios = 0;
             int numAsignaciones = 0;
+            
+            Connection connect = ConexionBD.connect();
         %>
 
         <%
@@ -83,7 +85,7 @@
                 out.print("<script>swal('Correcto!', 'El servicio fue asignado correctamente, lo puede consultar en la sección de servicios asignados', 'success').then((value) => {window.location = 'menuAnalista.jsp';});</script>");
             }
 
-            Connection connect = ConexionBD.connect();
+            
         %>
         <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
         <nav id="navPri">
@@ -279,7 +281,7 @@
                     <div class="col-5">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control">
+                            <input type="text" name="nombre" class="form-control" required>
                         </div>
                         <br>
                         <div class="botones">
@@ -329,7 +331,7 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="nombre">Nombre</label>
-                        <input type="text" name="nombre" class="form-control">
+                        <input type="text" name="nombre" class="form-control" required>
                     </div>
                     <div class="form-group col-6">
                         <label for="tipo">Tipo de entidad</label>

@@ -326,7 +326,7 @@ $(document).ready(function () {
 
     /////////////////////////////// LIMPIAR CAMPOS ///////////////////////////////
 
-    $("#limpiarCampos").on("click", function () {
+    $("#limpiarCampos").click(function () {
         if (confirm('Esta seguro que desea cancelar el registro del servicio?')) {
             $("#lloyd").val('');
             $("#uvi").val('');
