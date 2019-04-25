@@ -35,47 +35,45 @@
     </head>
     <body>
         <%
-        
-           String ref = request.getParameter("ref");
-        
+
+            String ref = request.getParameter("ref");
+
         %>
         <form action="Eliminar.jsp" method="POST">
-            <div class="container-fluid p-5">
-            <div class="form-group">
-                <h3>Servicio con referencia: <input type="text" readonly name="ref" value="<%= ref%>" class="form-control"></h3>
-                <h4>Digite su contraseña para seguridad de eliminacion</h4>
+            <div class="container p-5">
                 <div class="row">
-                    
-                    <div class="col-6">
+                    <div class="form-group col-4">
+                        <h3>Servicio con referencia: </h3>
+                        <input type="text" readonly name="ref" value="<%= ref%>" class="form-control">
+                    </div>
+                    <div class="form-group col-8">
+                        <h3>Digite su contraseña para seguridad de eliminacion</h3>
                         <input type="password" name="contra" class="form-control">
-                    </div>
-                    <div class="col-2">
-                        <input type="submit" name="btnEliminar" value="ELIMINAR" class="btn btn-info btn-block">
-                        
-                    </div>
-                    <div class="col-2">
-                        
-                        <a class="btn btn-danger btn-block" href="menuAnalista.jsp">CANCELAR</a>
+                        <br>
+                        <div class="d-flex">
+                            <input type="submit" name="btnEliminar" value="ELIMINAR" class="btn btn-info col-6 mr-1">
+                            <a class="btn btn-danger col-6 ml-1" href="menuAnalista.jsp">CANCELAR</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+
             </div>
         </form>
-        
+
         <%
-            if(request.getParameter("btnEliminar")!=null){
-                
+            if (request.getParameter("btnEliminar") != null) {
+
                 String contra = request.getParameter("contra");
-                
-                if(contra.equals("passanalista")){
+
+                if (contra.equals("passanalista")) {
                     OpcionesServicio.Eliminar(ref);
                     response.sendRedirect("menuAnalista.jsp?valEli=correcto");
-                }else{
+                } else {
                     out.print("<script>swal('Error!', 'Contraseña ingresada incorrecta, intente nuevamente', 'error');</script>");
                 }
-                
+
             }
-            
+
         %>
     </body>
 </html>

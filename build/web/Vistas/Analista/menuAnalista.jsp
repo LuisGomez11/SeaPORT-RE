@@ -4,6 +4,13 @@
     Author     : Luis Gomez
 --%>
 
+<%@page import="Config.OpcionesEntidades"%>
+<%@page import="Modelos.Entidades"%>
+<%@page import="java.util.List"%>
+<%@page import="Config.OpcionesServicios"%>
+<%@page import="Modelos.Servicios"%>
+<%@page import="Config.OpcionesAsignados"%>
+<%@page import="Config.OpcionesGenerados"%>
 <%@page import="Clases.ConexionBD"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -24,7 +31,7 @@
         <!-- ESTILOS -->
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS/estilos.css">
+        <link rel="stylesheet" type="text/css" href="CSS/estilos1.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
@@ -32,7 +39,7 @@
         <script src="../../JS/bootstrap.min.js"></script>
         <script src="../../JS/sweetalert.min.js"></script>
         <script src="../../JS/chart.js"></script>
-        <script src="JS/appMenu.js"></script>
+        <script src="JS/appMenu1.js"></script>
 
         <title>SeaPORT R&E</title>
     </head>
@@ -40,9 +47,9 @@
         <%
             int contador = 0;
             int contador1 = 0;
-            int numServicios = 0;
-            int numAsignaciones = 0;
-            
+            int numServicios = OpcionesGenerados.numGenerados();
+            int numAsignaciones = OpcionesAsignados.numAsignados();
+
             Connection connect = ConexionBD.connect();
         %>
 
@@ -85,7 +92,7 @@
                 out.print("<script>swal('Correcto!', 'El servicio fue asignado correctamente, lo puede consultar en la sección de servicios asignados', 'success').then((value) => {window.location = 'menuAnalista.jsp';});</script>");
             }
 
-            
+
         %>
         <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
         <nav id="navPri">
@@ -155,32 +162,14 @@
             <div class="serGenerados">
                 <div class="contImagen1"><i class="fas fa-clipboard"></i></div>
                 <div class="texto1">
-                    <%
-                        PreparedStatement ps3 = connect.prepareStatement("select count(*) from servicios_generados");
-                        ResultSet rs3 = ps3.executeQuery();
-
-                        while (rs3.next()) {
-
-                            numServicios = (Integer) rs3.getInt(1);
-                    %>
                     <h1><%= numServicios%></h1>
-                    <%}%>
                     <h5>Servicios Generados</h5>
                 </div>
             </div>
             <div class="serAsignados">
                 <div class="contImagen2"><i class="fas fa-clipboard-check"></i></div>
                 <div class="texto2">
-                    <%
-                        PreparedStatement ps6 = connect.prepareStatement("SELECT COUNT(DISTINCT referencia) FROM servicios_asignados;");
-                        ResultSet rs6 = ps6.executeQuery();
-
-                        while (rs6.next()) {
-
-                            numAsignaciones = (Integer) rs6.getInt(1);
-                    %>
                     <h1><%= numAsignaciones%></h1>
-                    <%}%>
                     <h5>Servicios Asignados</h5>
                 </div>
             </div>
@@ -216,11 +205,11 @@
                                     <td><%= rs2.getString("servicio")%></td>
                                 </tr>
                                 <%
-                                    contador++;
-                                    if (contador == 3) {
-                                        contador = 0;
-                                        break;
-                                    }
+                                        contador++;
+                                        if (contador == 3) {
+                                            contador = 0;
+                                            break;
+                                        }
                                     }
                                 %>
                             </tbody>
@@ -241,7 +230,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%                                   
+                                <%
                                     PreparedStatement ps13 = connect.prepareStatement("select * from servicios_asignados");
                                     ResultSet rs13 = ps13.executeQuery();
 
@@ -256,11 +245,11 @@
                                     <td><%= rs13.getString("hrsTotales")%></td>
                                 </tr>
                                 <%
-                                    contador1++;
-                                    if (contador1 == 3) {
-                                        contador1 = 0;
-                                        break;
-                                    }
+                                        contador1++;
+                                        if (contador1 == 3) {
+                                            contador1 = 0;
+                                            break;
+                                        }
                                     }
                                 %>
                             </tbody>
@@ -299,15 +288,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%                                
-                                    PreparedStatement ps7 = connect.prepareStatement("select * from servicios");
-                                    ResultSet rs7 = ps7.executeQuery();
+                                <%
+                                    List<Servicios> listaSer = OpcionesServicios.listar();
 
-                                    while (rs7.next()) {
+                                    for (Servicios dato : listaSer) {
 
                                 %>
                                 <tr>
-                                    <td><%= rs7.getString(1)%></td>
+                                    <td><%= dato.getNombre()%></td>
                                     <td>
                                         <a href="#" class="btn btn-outline-warning">MODIFICAR</a>
                                         <a href="#" class="btn btn-outline-danger">ELIMINAR</a>
@@ -360,15 +348,14 @@
                 </thead>
                 <tbody>
                     <%
-                        PreparedStatement ps4 = connect.prepareStatement("select * from entidad_fisica order by tipo");
-                        ResultSet rs4 = ps4.executeQuery();
+                        List<Entidades> listaEn = OpcionesEntidades.listar();
 
-                        while (rs4.next()) {
+                        for (Entidades dato : listaEn) {
 
                     %>
                     <tr>
-                        <td><%= rs4.getString("nombre")%></td>
-                        <td><%= rs4.getString("tipo")%></td>
+                        <td><%= dato.getNombre()%></td>
+                        <td><%= dato.getTipo()%></td>
                         <td>
                             <a href="#" class="btn btn-outline-warning">MODIFICAR</a>
                             <a href="#" class="btn btn-outline-danger">ELIMINAR</a>
@@ -398,12 +385,11 @@
                         <label for="moto">Motonave / Frente de servicio</label>
                         <select class="form-control" name="moto">
                             <%
-                                PreparedStatement ps5 = connect.prepareStatement("select * from entidad_fisica where tipo='Motonave'");
-                                ResultSet rs5 = ps5.executeQuery();
+                                List<Entidades> listaMoto = OpcionesEntidades.listarMoto();
 
-                                while (rs5.next()) {
+                                for (Entidades dato : listaMoto) {
                             %>
-                            <option><%= rs5.getString(1)%></option>
+                            <option><%= dato.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
@@ -449,12 +435,11 @@
                         <select class="form-control" name="grua1">
                             <option>N/A</option>
                             <%
-                                PreparedStatement ps9 = connect.prepareStatement("select * from entidad_fisica where tipo='Grua'");
-                                ResultSet rs9 = ps9.executeQuery();
+                                List<Entidades> listaGrua = OpcionesEntidades.listarGrua();
 
-                                while (rs9.next()) {
+                                for (Entidades dato : listaGrua) {
                             %>
-                            <option><%= rs9.getString(1)%></option>
+                            <option><%= dato.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
@@ -463,12 +448,9 @@
                         <select class="form-control" name="grua2">
                             <option>N/A</option>
                             <%
-                                PreparedStatement ps10 = connect.prepareStatement("select * from entidad_fisica where tipo='Grua'");
-                                ResultSet rs10 = ps10.executeQuery();
-
-                                while (rs10.next()) {
+                                for (Entidades dato : listaGrua) {
                             %>
-                            <option><%= rs10.getString(1)%></option>
+                            <option><%= dato.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
@@ -477,12 +459,9 @@
                         <select class="form-control" name="grua3">
                             <option>N/A</option>
                             <%
-                                PreparedStatement ps11 = connect.prepareStatement("select * from entidad_fisica where tipo='Grua'");
-                                ResultSet rs11 = ps11.executeQuery();
-
-                                while (rs11.next()) {
+                                for (Entidades dato : listaGrua) {
                             %>
-                            <option><%= rs11.getString(1)%></option>
+                            <option><%= dato.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
@@ -491,12 +470,9 @@
                         <select class="form-control" name="grua4">
                             <option>N/A</option>
                             <%
-                                PreparedStatement ps12 = connect.prepareStatement("select * from entidad_fisica where tipo='Grua'");
-                                ResultSet rs12 = ps12.executeQuery();
-
-                                while (rs12.next()) {
+                                for (Entidades dato : listaGrua) {
                             %>
-                            <option><%= rs12.getString(1)%></option>
+                            <option><%= dato.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
@@ -529,18 +505,14 @@
                         <label for="servicio">Servicio</label>
                         <select class="form-control" name="servicio">
                             <%
-                                PreparedStatement ps8 = connect.prepareStatement("select * from servicios");
-                                ResultSet rs8 = ps8.executeQuery();
-
-                                while (rs8.next()) {
+                                for (Servicios dato : listaSer) {
                             %>
-                            <option><%= rs8.getString(1)%></option>
+                            <option><%= dato.getNombre() %></option>
                             <% } %>
                         </select>
                     </div>
                 </div>
                 <div class="botones">
-                    <div class="alerta ml-2"></div>
                     <button type="button" class="btn btn-outline-danger ml-2" id="limpiarCampos">CANCELAR</button>
                     <input type="submit" value="GENERAR" class="btn btn-outline-primary" id="guardar">
                 </div>
@@ -602,6 +574,7 @@
         <!-- ////////////////////////////SERVICIOS ASIGNADOS//////////////////////////// -->
         <div class="contenedor-serAsignados">
             <h3>Servicios asignados</h3>
+            <button id="mostarAsi">Mostrar</button>
             <hr>
             <%
                 if (numAsignaciones == 0) {
@@ -609,516 +582,546 @@
             <h3>No hay servicios asignados.</h3>
             <%
             } else {
+
+                String ref = "";
+                int pri = 1;
                 PreparedStatement ps1 = connect.prepareStatement("select * from servicios_asignados");
                 ResultSet rs1 = ps1.executeQuery();
-
-                while (rs1.next()) {
-
             %>
-            <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rs1.getString("lloyd") + " // " + rs1.getString("uvi") + " - " + rs1.getString("referencia")%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rs1.getString("terminal")%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rs1.getString("motonave")%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rs1.getString("muelle")%></label><br>
-                        <strong>Grúa(s): </strong><label class="ml-2"><%= rs1.getString("grua")%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rs1.getString("fechaCita")%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rs1.getString("horaCita")%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rs1.getString("hrsOp")%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rs1.getString("fechaFinal")%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rs1.getString("horaFinal")%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rs1.getString("servicio")%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rs1.getString("proveedor")%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rs1.getInt("cantidad")%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rs1.getString("observaciones")%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rs1.getInt("hrsTotales")%></label>
+
+            <div class="row w-100 h-auto">
+
+                <%
+                    while (rs1.next()) {
+
+                        if (pri == 1) {
+                            ref = rs1.getString("referencia");
+                            pri++;
+                        }
+
+                        if (!ref.equalsIgnoreCase(rs1.getString("referencia"))) {
+                            ref = rs1.getString("referencia");
+                %>
+
+            </div>
+            <br><hr><br>
+            <div class="row w-100 h-auto" id="conAsi">    
+
+                <%
+                    }
+                %>
+                <div class="col-4 my-2"  id="carAsi">
+                    <div class="card border-primary">
+                        <div class="card-header text-center"><%= rs1.getString("lloyd") + " // " + rs1.getString("uvi") + " - " + rs1.getString("referencia")%></div>
+                        <div class="card-body">
+                            <strong>Terminal: </strong><label class="ml-2"><%= rs1.getString("terminal")%></label><br>
+                            <strong>Motonave: </strong><label class="ml-1"><%= rs1.getString("motonave")%></label><br>
+                            <strong>Muelle: </strong><label class="ml-2"><%= rs1.getString("muelle")%></label><br>
+                            <strong>Grúa(s): </strong><label class="ml-2"><%= rs1.getString("grua")%></label><br>
+                            <strong>Fecha de cita: </strong><label class="ml-2"><%= rs1.getString("fechaCita")%></label><br>
+                            <strong>Hora de cita: </strong><label class="ml-2"><%= rs1.getString("horaCita")%></label><br>
+                            <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rs1.getString("hrsOp")%></label><br>
+                            <strong>Fecha final: </strong><label class="ml-2"><%= rs1.getString("fechaFinal")%></label><br>
+                            <strong>Hora final: </strong><label class="ml-2"><%= rs1.getString("horaFinal")%></label><br>
+                            <strong>Servicio: </strong><label class="ml-2"><%= rs1.getString("servicio")%></label><br>
+                            <strong>Proveedor: </strong><label class="ml-2"><%= rs1.getString("proveedor")%></label><br>
+                            <strong>Cantidad: </strong><label class="ml-2"><%= rs1.getInt("cantidad")%></label><br>
+                            <strong>Observaciones: </strong><label class="ml-2"><%= rs1.getString("observaciones")%></label><br>
+                            <strong>Hrs. totales: </strong><label class="ml-2"><%= rs1.getInt("hrsTotales")%></label>
+                        </div>
+                        <div class="card-footer">
+                            <center>
+                                <span class="badge badge-pill badge-info">En espera</span>
+                                <hr>
+                                <a href="Extras/Eliminar.jsp?ref=<%= rs1.getString("referencia")%>" class="btn btn-outline-danger btn-block">ELIMINAR</a>
+                            </center>
+                        </div>
                     </div>
                 </div>
+                <%}
+                    }%>
             </div>
-            <%}
-                }%>
-
         </div>
         <!-- ////////////////////////////SERVICIOS ASIGNADOS//////////////////////////// -->
 
         <!-- ////////////////////////////INFORMES//////////////////////////// -->
         <div class="contenedor-informes">
             <div class="flex">
-            <h3 id="tituloInfo">Informes - Mes de enero</h3>
-            <ul class="pagination">
-                <li id="anterior-pag" class="page-item"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>
-            </ul>
+                <h3 id="tituloInfo">Informes - Mes de enero</h3>
+                <ul class="pagination">
+                    <li id="anterior-pag" class="page-item"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>
+                </ul>
             </div>
             <hr>
             <div class="loop">
                 <div class="carta">
-                <%                                
-                    PreparedStatement pst = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst = pst.executeQuery();
-                                
-                    while (rst.next()) {
+                    <%
+                        PreparedStatement pst = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst = pst.executeQuery();
 
-                    String fecha = rst.getString("fechaCita");
+                        while (rst.next()) {
 
-                    String[] splits = fecha.split("-");
+                            String fecha = rst.getString("fechaCita");
 
-                    if (splits[1].equalsIgnoreCase("01")) {
+                            String[] splits = fecha.split("-");
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst.getString(4) + " // " + rst.getString(5) + " - " + rst.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst.getInt(18)%></label>
+                            if (splits[1].equalsIgnoreCase("01")) {
+
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst.getString(4) + " // " + rst.getString(5) + " - " + rst.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst1 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst1 = pst1.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-            <%                                
-                    PreparedStatement pst1 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst1 = pst1.executeQuery();
-                                
-                                
-                    while (rst1.next()) {
+                        while (rst1.next()) {
 
-                    String fecha = rst1.getString("fechaCita");
+                            String fecha = rst1.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("02")) {
+                            if (splits[1].equalsIgnoreCase("02")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst1.getString(4) + " // " + rst1.getString(5) + " - " + rst1.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst1.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst1.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst1.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst1.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst1.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst1.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst1.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst1.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst1.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst1.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst1.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst1.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst1.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst1.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst1.getString(4) + " // " + rst1.getString(5) + " - " + rst1.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst1.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst1.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst1.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst1.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst1.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst1.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst1.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst1.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst1.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst1.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst1.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst1.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst1.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst1.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst2 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst2 = pst2.executeQuery();
 
-            </div>
-            <% } } %>
-        </div>
-        <div class="carta">
-                <%                                
-                    PreparedStatement pst2 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst2 = pst2.executeQuery();
-                                
-                                
-                    while (rst2.next()) {
+                        while (rst2.next()) {
 
-                    String fecha = rst2.getString("fechaCita");
+                            String fecha = rst2.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("03")) {
+                            if (splits[1].equalsIgnoreCase("03")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst2.getString(4) + " // " + rst2.getString(5) + " - " + rst2.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst2.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst2.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst2.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst2.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst2.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst2.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst2.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst2.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst2.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst2.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst2.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst2.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst2.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst2.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst2.getString(4) + " // " + rst2.getString(5) + " - " + rst2.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst2.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst2.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst2.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst2.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst2.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst2.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst2.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst2.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst2.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst2.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst2.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst2.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst2.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst2.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst3 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst3 = pst3.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst3 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst3 = pst3.executeQuery();
-                                
-                                
-                    while (rst3.next()) {
+                        while (rst3.next()) {
 
-                    String fecha = rst3.getString("fechaCita");
+                            String fecha = rst3.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("04")) {
+                            if (splits[1].equalsIgnoreCase("04")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst3.getString(4) + " // " + rst3.getString(5) + " - " + rst3.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst3.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst3.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst3.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst3.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst3.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst3.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst3.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst3.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst3.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst3.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst3.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst3.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst3.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst3.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst3.getString(4) + " // " + rst3.getString(5) + " - " + rst3.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst3.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst3.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst3.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst3.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst3.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst3.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst3.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst3.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst3.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst3.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst3.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst3.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst3.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst3.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst4 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst4 = pst4.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst4 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst4 = pst4.executeQuery();
-                                
-                                
-                    while (rst4.next()) {
+                        while (rst4.next()) {
 
-                    String fecha = rst4.getString("fechaCita");
+                            String fecha = rst4.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("05")) {
+                            if (splits[1].equalsIgnoreCase("05")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst4.getString(4) + " // " + rst4.getString(5) + " - " + rst4.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst4.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst4.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst4.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst4.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst4.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst4.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst4.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst4.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst4.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst4.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst4.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst4.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst4.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst4.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst4.getString(4) + " // " + rst4.getString(5) + " - " + rst4.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst4.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst4.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst4.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst4.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst4.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst4.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst4.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst4.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst4.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst4.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst4.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst4.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst4.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst4.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst5 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst5 = pst5.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst5 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst5 = pst5.executeQuery();
-                                
-                                
-                    while (rst5.next()) {
+                        while (rst5.next()) {
 
-                    String fecha = rst5.getString("fechaCita");
+                            String fecha = rst5.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("06")) {
+                            if (splits[1].equalsIgnoreCase("06")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst5.getString(4) + " // " + rst5.getString(5) + " - " + rst5.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst5.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst5.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst5.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst5.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst5.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst5.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst5.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst5.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst5.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst5.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst5.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst5.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst5.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst5.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst5.getString(4) + " // " + rst5.getString(5) + " - " + rst5.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst5.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst5.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst5.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst5.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst5.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst5.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst5.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst5.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst5.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst5.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst5.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst5.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst5.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst5.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst6 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst6 = pst6.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst6 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst6 = pst6.executeQuery();
-                                
-                                
-                    while (rst6.next()) {
+                        while (rst6.next()) {
 
-                    String fecha = rst6.getString("fechaCita");
+                            String fecha = rst6.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("07")) {
+                            if (splits[1].equalsIgnoreCase("07")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst6.getString(4) + " // " + rst6.getString(5) + " - " + rst6.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst6.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst6.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst6.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst6.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst6.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst6.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst6.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst6.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst6.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst6.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst6.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst6.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst6.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst6.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst6.getString(4) + " // " + rst6.getString(5) + " - " + rst6.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst6.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst6.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst6.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst6.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst6.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst6.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst6.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst6.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst6.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst6.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst6.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst6.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst6.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst6.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst7 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst7 = pst7.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst7 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst7 = pst7.executeQuery();
-                                
-                                
-                    while (rst7.next()) {
+                        while (rst7.next()) {
 
-                    String fecha = rst7.getString("fechaCita");
+                            String fecha = rst7.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("08")) {
+                            if (splits[1].equalsIgnoreCase("08")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst7.getString(4) + " // " + rst7.getString(5) + " - " + rst7.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst7.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst7.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst7.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst7.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst7.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst7.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst7.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst7.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst7.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst7.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst7.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst7.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst7.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst7.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst7.getString(4) + " // " + rst7.getString(5) + " - " + rst7.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst7.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst7.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst7.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst7.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst7.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst7.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst7.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst7.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst7.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst7.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst7.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst7.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst7.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst7.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst8 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst8 = pst8.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst8 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst8 = pst8.executeQuery();
-                                
-                                
-                    while (rst8.next()) {
+                        while (rst8.next()) {
 
-                    String fecha = rst8.getString("fechaCita");
+                            String fecha = rst8.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("09")) {
+                            if (splits[1].equalsIgnoreCase("09")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst8.getString(4) + " // " + rst8.getString(5) + " - " + rst8.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst8.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst8.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst8.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst8.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst8.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst8.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst8.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst8.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst8.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst8.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst8.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst8.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst8.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst8.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst8.getString(4) + " // " + rst8.getString(5) + " - " + rst8.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst8.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst8.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst8.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst8.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst8.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst8.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst8.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst8.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst8.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst8.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst8.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst8.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst8.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst8.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst9 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst9 = pst9.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst9 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst9 = pst9.executeQuery();
-                                
-                                
-                    while (rst9.next()) {
+                        while (rst9.next()) {
 
-                    String fecha = rst9.getString("fechaCita");
+                            String fecha = rst9.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("10")) {
+                            if (splits[1].equalsIgnoreCase("10")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst9.getString(4) + " // " + rst9.getString(5) + " - " + rst9.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst9.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst9.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst9.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst9.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst9.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst9.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst9.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst9.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst9.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst9.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst9.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst9.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst9.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst9.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst9.getString(4) + " // " + rst9.getString(5) + " - " + rst9.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst9.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst9.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst9.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst9.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst9.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst9.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst9.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst9.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst9.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst9.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst9.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst9.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst9.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst9.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst10 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst10 = pst10.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst10 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst10 = pst10.executeQuery();
-                                
-                                
-                    while (rst10.next()) {
+                        while (rst10.next()) {
 
-                    String fecha = rst10.getString("fechaCita");
+                            String fecha = rst10.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("11")) {
+                            if (splits[1].equalsIgnoreCase("11")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst10.getString(4) + " // " + rst10.getString(5) + " - " + rst10.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst10.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst10.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst10.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst10.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst10.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst10.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst10.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst10.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst10.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst10.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst10.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst10.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst10.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst10.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst10.getString(4) + " // " + rst10.getString(5) + " - " + rst10.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst10.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst10.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst10.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst10.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst10.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst10.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst10.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst10.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst10.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst10.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst10.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst10.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst10.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst10.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        } %>
                 </div>
+                <div class="carta">
+                    <%
+                        PreparedStatement pst11 = connect.prepareStatement("select * from servicios_asignados");
+                        ResultSet rst11 = pst11.executeQuery();
 
-            </div>
-            <% } } %>
-            </div>
-            <div class="carta">
-                <%                                
-                    PreparedStatement pst11= connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rst11 = pst11.executeQuery();
-                                
-                                
-                    while (rst11.next()) {
+                        while (rst11.next()) {
 
-                    String fecha = rst11.getString("fechaCita");
+                            String fecha = rst11.getString("fechaCita");
 
-                    String[] splits = fecha.split("-");
+                            String[] splits = fecha.split("-");
 
-                    if (splits[1].equalsIgnoreCase("12")) {
+                            if (splits[1].equalsIgnoreCase("12")) {
 
-                %>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                <div class="card-header text-center"><%= rst11.getString(4) + " // " + rst11.getString(5) + " - " + rst11.getString(6)%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rst11.getString(2)%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rst11.getString(3)%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rst11.getString(7)%></label><br>
-                        <strong>Grua: </strong><label class="ml-2"><%= rst11.getString(8)%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rst11.getString(9)%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rst11.getString(10)%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst11.getString(11)%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rst11.getString(12)%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rst11.getString(13)%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rst11.getString(14)%></label><br>
-                        <strong>Proveedor: </strong><label class="ml-2"><%= rst11.getString(15)%></label><br>
-                        <strong>Cantidad: </strong><label class="ml-2"><%= rst11.getInt(16)%></label><br>
-                        <strong>Observaciones: </strong><label class="ml-2"><%= rst11.getString(17)%></label><br>
-                        <strong>Hrs. totales: </strong><label class="ml-2"><%= rst11.getInt(18)%></label>
+                    %>
+                    <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
+                        <div class="card-header text-center"><%= rst11.getString(4) + " // " + rst11.getString(5) + " - " + rst11.getString(6)%></div>
+                        <div class="card-body" id="bodyCard">
+                            <div id="informacion" style="z-index: 2;">
+                                <strong>Terminal: </strong><label class="ml-2"><%= rst11.getString(2)%></label><br>
+                                <strong>Motonave: </strong><label class="ml-2"><%= rst11.getString(3)%></label><br>
+                                <strong>Muelle: </strong><label class="ml-2"><%= rst11.getString(7)%></label><br>
+                                <strong>Grua: </strong><label class="ml-2"><%= rst11.getString(8)%></label><br>
+                                <strong>Fecha de cita: </strong><label class="ml-2"><%= rst11.getString(9)%></label><br>
+                                <strong>Hora de cita: </strong><label class="ml-2"><%= rst11.getString(10)%></label><br>
+                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rst11.getString(11)%></label><br>
+                                <strong>Fecha final: </strong><label class="ml-2"><%= rst11.getString(12)%></label><br>
+                                <strong>Hora final: </strong><label class="ml-2"><%= rst11.getString(13)%></label><br>
+                                <strong>Servicio: </strong><label class="ml-2"><%= rst11.getString(14)%></label><br>
+                                <strong>Proveedor: </strong><label class="ml-2"><%= rst11.getString(15)%></label><br>
+                                <strong>Cantidad: </strong><label class="ml-2"><%= rst11.getInt(16)%></label><br>
+                                <strong>Observaciones: </strong><label class="ml-2"><%= rst11.getString(17)%></label><br>
+                                <strong>Hrs. totales: </strong><label class="ml-2"><%= rst11.getInt(18)%></label>
+                            </div>
+                        </div>
+
                     </div>
+                    <% }
+                        }%>
                 </div>
-
-            </div>
-            <% } } %>
-            </div>
             </div>      
         </div>
         <!-- ////////////////////////////INFORMES//////////////////////////// -->

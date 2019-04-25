@@ -14,8 +14,17 @@ $(document).ready(function () {
     });
     
     
+    
+    
+
+    
     $("#mostarAsi").click(function(){
-        alert($("#conAsi #carAsi").length);
+        var badges = $("#carAsi .card .badge");
+        var numAsi = badges.length;
+        for (var i = 0; i < numAsi; i++) {
+            $("#carAsi .card .badge:eq("+i+")").removeClass("badge-info");
+            $("#carAsi .card .badge:eq("+i+")").addClass("badge-warning");
+        }
     });
 
     //////////////////////// CONTENEDORES ///////////////////////
@@ -64,7 +73,7 @@ $(document).ready(function () {
         e.preventDefault();
         menuControl(inicio, agServicio, enFisica, genServicio, serGenerados, serAsignados,
          informes,estadisticos, btnInicio, tercera, segunda, cuarta, quinta, primera, sexta,
-         septima)
+         septima);
         if ($(document).width() < 500) {
             $('.contenedor-menu .menu').slideUp();
         }
@@ -74,7 +83,7 @@ $(document).ready(function () {
         e.preventDefault();
         menuControl(agServicio, inicio, enFisica, genServicio, serGenerados, serAsignados,
          informes,estadisticos, primera, tercera, segunda, cuarta, quinta, btnInicio, sexta,
-         septima)
+         septima);
         if ($(document).width() < 500) {
             $('.contenedor-menu .menu').slideUp();
         }
@@ -84,7 +93,7 @@ $(document).ready(function () {
         e.preventDefault();
         menuControl(enFisica, inicio, agServicio, genServicio, serGenerados, serAsignados,
          informes,estadisticos, segunda, tercera, primera, cuarta, quinta, btnInicio, sexta,
-         septima)
+         septima);
         if ($(document).width() < 500) {
             $('.contenedor-menu .menu').slideUp();
         }
@@ -94,7 +103,7 @@ $(document).ready(function () {
         e.preventDefault();
         menuControl(genServicio, inicio, agServicio, enFisica, serGenerados, serAsignados,
          informes,estadisticos, tercera, segunda, primera, cuarta, quinta, btnInicio, sexta,
-         septima)
+         septima);
         if ($(document).width() < 500) {
             $('.contenedor-menu .menu').slideUp();
         }
@@ -104,7 +113,7 @@ $(document).ready(function () {
         e.preventDefault();
         menuControl(serGenerados, inicio, agServicio, enFisica, genServicio, serAsignados,
          informes,estadisticos, cuarta, segunda, primera, tercera, quinta, btnInicio, sexta,
-         septima)
+         septima);
         if ($(document).width() < 500) {
             $('.contenedor-menu .menu').slideUp();
         }
@@ -114,7 +123,7 @@ $(document).ready(function () {
         e.preventDefault();
         menuControl(serAsignados, inicio, agServicio, enFisica, genServicio, serGenerados,
          informes,estadisticos, quinta, segunda, primera, tercera, cuarta, btnInicio, sexta,
-         septima)
+         septima);
         if ($(document).width() < 500) {
             $('.contenedor-menu .menu').slideUp();
         }
@@ -124,7 +133,7 @@ $(document).ready(function () {
         e.preventDefault();
         menuControl(informes, inicio, agServicio, enFisica, genServicio, serGenerados,
          serAsignados,estadisticos, sexta, segunda, primera, tercera, cuarta, btnInicio, quinta,
-         septima)
+         septima);
         if ($(document).width() < 500) {
             $('.contenedor-menu .menu').slideUp();
         }
@@ -134,7 +143,7 @@ $(document).ready(function () {
         e.preventDefault();
         menuControl(estadisticos, inicio, agServicio, enFisica, genServicio, serGenerados,
          informes,serAsignados, septima, segunda, primera, tercera, cuarta, btnInicio, sexta,
-         quinta)
+         quinta);
         if ($(document).width() < 500) {
             $('.contenedor-menu .menu').slideUp();
         }

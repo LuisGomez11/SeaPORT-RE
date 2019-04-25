@@ -1,13 +1,34 @@
-
 package Config;
 
 import Clases.ConexionBD;
 import Modelos.serGenerados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class OpcionesServicio {
+public class OpcionesGenerados {
+
+    public static int numGenerados()  {
+        int numero = 0;
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps3 = connect.prepareStatement("select count(*) from servicios_generados");
+            ResultSet rs3 = ps3.executeQuery();
+
+            while (rs3.next()) {
+
+                numero = (Integer) rs3.getInt(1);
+                
+            }
+
+             
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return numero;
+    }
 
     public static void Insertar(serGenerados ser) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
@@ -30,7 +51,7 @@ public class OpcionesServicio {
             pst.executeUpdate();
         }
     }
-    
+
     public static void Actualizar(serGenerados ser) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
             String sql = "update servicios_generados set terminal =?, motonave=?,"
@@ -53,7 +74,7 @@ public class OpcionesServicio {
             pst.executeUpdate();
         }
     }
-    
+
     public static void Eliminar(String ref) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
             String sql = "Delete from servicios_generados where referencia=?";
@@ -62,5 +83,5 @@ public class OpcionesServicio {
             pst.executeUpdate();
         }
     }
-    
+
 }

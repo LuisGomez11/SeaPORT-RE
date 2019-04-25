@@ -1,8 +1,8 @@
 
 package Servlet;
 
-import Config.OpcionesAsignaciones;
-import Config.OpcionesServicio;
+import Config.OpcionesAsignados;
+import Config.OpcionesGenerados;
 import Modelos.serAsignados;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -70,7 +70,7 @@ public class ControlAsignacion extends HttpServlet {
                         cantidad, observaciones, hrsTotales);
                 System.out.println(i);
                 try {
-                    OpcionesAsignaciones.Insertar(serAsi);
+                    OpcionesAsignados.Insertar(serAsi);
                     
                 } catch (ClassNotFoundException | SQLException e) {
                     System.out.println("Error: "+e);
@@ -78,7 +78,7 @@ public class ControlAsignacion extends HttpServlet {
                 
             }
 
-            OpcionesServicio.Eliminar(referencia);
+            OpcionesGenerados.Eliminar(referencia);
 
             response.sendRedirect("Vistas/Analista/menuAnalista.jsp?valAsi=correcto");
         }catch(IOException | ClassNotFoundException | SQLException e){

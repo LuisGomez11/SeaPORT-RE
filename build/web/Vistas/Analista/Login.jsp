@@ -50,9 +50,6 @@
 
                 <button type="button" class="btnIngresar" id="btn_iniciar">Ingresar</button>
 
-                <div id="contenedorAlerta">
-                    <div id="alerta">Error</div>
-                </div>
             </form>
         </div>
     </body>

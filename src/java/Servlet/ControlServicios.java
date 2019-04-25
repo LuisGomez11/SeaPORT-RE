@@ -1,7 +1,7 @@
 
 package Servlet;
 
-import Config.OpcionesServicio;
+import Config.OpcionesGenerados;
 import Modelos.serGenerados;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -54,12 +54,12 @@ public class ControlServicios extends HttpServlet {
             try {
 
                 if (opc.equalsIgnoreCase("agregar")) {
-                    OpcionesServicio.Insertar(ser);
+                    OpcionesGenerados.Insertar(ser);
                     response.sendRedirect("Vistas/Analista/menuAnalista.jsp?val=correcto");
                 }
 
                 if (opc.equalsIgnoreCase("mod")) {
-                    OpcionesServicio.Actualizar(ser);
+                    OpcionesGenerados.Actualizar(ser);
                     response.sendRedirect("Vistas/Analista/menuAnalista.jsp?valMod=correcto");
                 }
 

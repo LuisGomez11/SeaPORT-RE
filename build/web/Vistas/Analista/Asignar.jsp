@@ -165,7 +165,7 @@
         <hr>
         <div class="proveedores">
             <div class="row">
-                <h5 class="mt-1 col-2">Numero de proveedores: </h5>
+                <h5 class="mt-2 col-3">Numero de proveedores: </h5>
                 <input type="text" value="<%= numero%>" id="numPro" name="canPro" class="form-control col-1" readonly>
                 <a href="numProveedores.jsp?ref=<%= ref%>" class="btn btn-outline-secondary ml-4 col-3 w-25">CAMBIAR # DE PROVEEDORES</a>
             </div>

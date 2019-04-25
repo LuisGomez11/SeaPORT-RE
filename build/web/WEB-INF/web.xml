@@ -24,6 +24,10 @@
         <servlet-name>ControlServ</servlet-name>
         <servlet-class>Servlet.ControlServ</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControlLogin</servlet-name>
+        <servlet-class>Servlet.ControlLogin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>miServlet</servlet-name>
         <url-pattern>/miServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>ControlServ</servlet-name>
         <url-pattern>/ControlServ</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlLogin</servlet-name>
+        <url-pattern>/ControlLogin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,7 +4,7 @@
     Author     : Luis Alberto Gomez
 --%>
 
-<%@page import="Config.OpcionesServicio"%>
+<%@page import="Config.OpcionesAsignaciones"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,28 +16,28 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         <!-- ICONO VENTANA -->
-        <link rel="icon" href="../../IMG/version-para-favicon.png">
+        <link rel="icon" href="../../../IMG/version-para-favicon.png">
 
         <!-- ESTILOS -->
-        <link rel="stylesheet" href="../../CSS/animate.css">
-        <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS/estilos.css">
+        <link rel="stylesheet" href="../../../CSS/animate.css">
+        <link rel="stylesheet" type="text/css" href="../../../CSS/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../CSS/estilos.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
-        <script src="../../JS/jquery-3.1.1.min.js"></script>
-        <script src="../../JS/bootstrap.min.js"></script>
-        <script src="../../JS/sweetalert.min.js"></script>
-        <script src="../../JS/chart.js"></script>
-        <script src="JS/appMenu1.js"></script>
+        <script src="../../../JS/jquery-3.1.1.min.js"></script>
+        <script src="../../../JS/bootstrap.min.js"></script>
+        <script src="../../../JS/sweetalert.min.js"></script>
+        <script src="../../../JS/chart.js"></script>
+        <script src="../JS/appMenu1.js"></script>
 
         <title>SeaPORT R&E</title>
     </head>
     <body>
         <%
-
-            String ref = request.getParameter("ref");
-
+        
+           String ref = request.getParameter("ref");
+        
         %>
         <form action="Eliminar.jsp" method="POST">
             <div class="container p-5">
@@ -52,28 +52,28 @@
                         <br>
                         <div class="d-flex">
                             <input type="submit" name="btnEliminar" value="ELIMINAR" class="btn btn-info col-6 mr-1">
-                            <a class="btn btn-danger col-6 ml-1" href="menuAnalista.jsp">CANCELAR</a>
+                            <a class="btn btn-danger col-6 ml-1" href="../menuAnalista.jsp">CANCELAR</a>
                         </div>
                     </div>
                 </div>
 
             </div>
         </form>
-
+        
         <%
-            if (request.getParameter("btnEliminar") != null) {
-
+            if(request.getParameter("btnEliminar")!=null){
+                
                 String contra = request.getParameter("contra");
-
-                if (contra.equals("passanalista")) {
-                    OpcionesServicio.Eliminar(ref);
-                    response.sendRedirect("menuAnalista.jsp?valEli=correcto");
-                } else {
+                
+                if(contra.equals("passanalista")){
+                    OpcionesAsignaciones.Eliminar(ref);
+                    response.sendRedirect("../menuAnalista.jsp?valEli=correcto");
+                }else{
                     out.print("<script>swal('Error!', 'Contraseña ingresada incorrecta, intente nuevamente', 'error');</script>");
                 }
-
+                
             }
-
+            
         %>
     </body>
 </html>

@@ -14,6 +14,7 @@ body{
 
 body::-webkit-scrollbar{
     width: 7px;
+    height: 7px;
 }
 
 body::-webkit-scrollbar-thumb{
@@ -353,10 +354,6 @@ a {
     height: 500px;
 }
 
-.contenedor-serGenerados .cont .tablaPri{
-    width: 2000px;
-}
-
 .contenedor-serAsignados{
     width: 80%;
     margin-left: 266px;
@@ -365,14 +362,6 @@ a {
     padding: 10px;
     display: none;
     background-color: rgb(245,245,245);
-}
-
-.contenedor-serAsignados div{
-    height: 500px;
-}
-
-.contenedor-serAsignados div table{
-    width: 2500px;
 }
 
 .contenedor-informes{

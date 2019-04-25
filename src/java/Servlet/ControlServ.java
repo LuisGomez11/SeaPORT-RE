@@ -1,7 +1,7 @@
 
 package Servlet;
 
-import Config.OpcionesServ;
+import Config.OpcionesServicios;
 import Modelos.Servicios;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +26,7 @@ public class ControlServ extends HttpServlet {
             
             try {
                 if (opc.equalsIgnoreCase("agregar")) {
-                    OpcionesServ.Insertar(ser);
+                    OpcionesServicios.Insertar(ser);
                     response.sendRedirect("Vistas/Analista/menuAnalista.jsp?valSer=correcto");
                 }
             } catch (IOException | ClassNotFoundException | SQLException e) {

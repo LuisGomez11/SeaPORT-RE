@@ -12,6 +12,11 @@ $(document).ready(function () {
             $('.contenedor-menu .menu').css({'display': 'none'});
         }
     });
+    
+    
+    $("#mostarAsi").click(function(){
+        alert($("#conAsi #carAsi").length);
+    });
 
     //////////////////////// CONTENEDORES ///////////////////////
     var inicio = $('.contenedor-inicio');
