@@ -7,8 +7,6 @@ import Modelos.serAsignados;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +65,7 @@ public class ControlAsignacion extends HttpServlet {
                 serAsignados serAsi = new serAsignados(terminal, moto, lloyd, 
                         uvi, referencia, muelle, grua, fechaCita, horaCita, 
                         hrsOp, fechaFinal, horaFinal, servicio, proveedor, 
-                        cantidad, observaciones, hrsTotales);
+                        cantidad, observaciones, hrsTotales, "En espera");
                 System.out.println(i);
                 try {
                     OpcionesAsignados.Insertar(serAsi);

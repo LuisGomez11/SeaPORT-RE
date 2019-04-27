@@ -7,8 +7,43 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OpcionesAsignados {
+    
+    public static List listar(){
+        List<serAsignados> lista = new ArrayList<>();       
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps = connect.prepareStatement("SELECT * FROM servicios_asignados");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                serAsignados serAsi = new serAsignados(rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getInt(16),
+                        rs.getString(17),
+                        rs.getInt(18),
+                        rs.getString(19));
+                lista.add(serAsi);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return lista;
+    }
     
     public static int numAsignados()  {
         int numero = 0;
@@ -28,10 +63,32 @@ public class OpcionesAsignados {
         }
         return numero;
     }
+    
+    public static void pasarProceso(String ref){
+        try (Connection connect = ConexionBD.connect()) {
+                String sql = "UPDATE servicios_asignados SET estado = 'En progreso' WHERE referencia = "+ref;
+                PreparedStatement psEsta = connect.prepareStatement(sql);
+                psEsta.executeUpdate();
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+
+    }
+    
+    public static void pasarFinalizado(String ref){
+        try (Connection connect = ConexionBD.connect()) {
+                String sql = "UPDATE servicios_asignados SET estado = 'Finalizado' WHERE referencia = "+ref;
+                PreparedStatement psEsta = connect.prepareStatement(sql);
+                psEsta.executeUpdate();
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+
+    }
 
     public static void Insertar(serAsignados ser) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
-            String sql = "Insert into servicios_asignados values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into servicios_asignados values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = connect.prepareStatement(sql);
             pst.setString(1, ser.getTerminal());
             pst.setString(2, ser.getMotonave());
@@ -50,6 +107,7 @@ public class OpcionesAsignados {
             pst.setInt(15, ser.getCantidad());
             pst.setString(16, ser.getObservaciones());
             pst.setInt(17, ser.getHorasTotales());
+            pst.setString(18, ser.getEstado());
             pst.executeUpdate();
         }
     }

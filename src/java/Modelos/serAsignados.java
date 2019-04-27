@@ -20,11 +20,12 @@ public class serAsignados {
     private int cantidad;
     private String observaciones;
     private int horasTotales;
+    private String estado;
 
     public serAsignados() {
     }
 
-    public serAsignados(String terminal, String motonave, String lloyd, String uvi, String referencia, String muelle, String grua, String fechaCita, String horaCita, String hrsOpe, String fechaFinal, String horaFinal, String servicio, String proveedor, int cantidad, String observaciones, int horasTotales) {
+    public serAsignados(String terminal, String motonave, String lloyd, String uvi, String referencia, String muelle, String grua, String fechaCita, String horaCita, String hrsOpe, String fechaFinal, String horaFinal, String servicio, String proveedor, int cantidad, String observaciones, int horasTotales, String estado) {
         this.terminal = terminal;
         this.motonave = motonave;
         this.lloyd = lloyd;
@@ -42,11 +43,11 @@ public class serAsignados {
         this.cantidad = cantidad;
         this.observaciones = observaciones;
         this.horasTotales = horasTotales;
+        this.estado = estado;
     }
-    
-    
-    
 
+    
+    
     /**
      * @return the terminal
      */
@@ -285,5 +286,21 @@ public class serAsignados {
         this.horasTotales = horasTotales;
     }
 
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    
+    
     
 }

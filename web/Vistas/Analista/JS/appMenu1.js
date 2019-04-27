@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('.btn-menu').click(function () {
         $('.contenedor-menu .menu').slideToggle();
     });
@@ -13,20 +14,6 @@ $(document).ready(function () {
         }
     });
     
-    
-    
-    
-
-    
-    $("#mostarAsi").click(function(){
-        var badges = $("#carAsi .card .badge");
-        var numAsi = badges.length;
-        for (var i = 0; i < numAsi; i++) {
-            $("#carAsi .card .badge:eq("+i+")").removeClass("badge-info");
-            $("#carAsi .card .badge:eq("+i+")").addClass("badge-warning");
-        }
-    });
-
     //////////////////////// CONTENEDORES ///////////////////////
     var inicio = $('.contenedor-inicio');
     var agServicio = $('.contenedor-agServicio');

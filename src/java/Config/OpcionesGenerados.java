@@ -6,8 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OpcionesGenerados {
 
@@ -28,6 +28,34 @@ public class OpcionesGenerados {
             
         }
         return numero;
+    }
+    
+    public static List listar(){
+        List<serGenerados> lista = new ArrayList<>();       
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps = connect.prepareStatement("select * from servicios_generados");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                serGenerados ser = new serGenerados(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13));
+                lista.add(ser);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return lista;
     }
 
     public static void Insertar(serGenerados ser) throws ClassNotFoundException, SQLException {
