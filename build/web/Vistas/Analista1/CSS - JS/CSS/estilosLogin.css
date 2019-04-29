@@ -1,0 +1,160 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -10;
+}
+
+.fondo{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -5;
+    background-color: rgba(10,100,210,.3);
+}
+
+#volver{
+    font-size: 45px;
+    color: rgb(255, 255, 255);
+    position: absolute;
+}
+
+.contenedor{
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    width: 400px;
+    height: 420px;
+    background-color: rgba(255,255,255,.5);
+    border-radius: 22px;
+}
+
+.contenedor .logo{
+    width: 100px;
+    height: 100px;
+    background-color: rgba(52, 141, 165,.9);
+    border-radius: 150px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.contenedor .logo i{
+    color: #fff;
+    font-size: 60px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+
+.contenedor .loginTitulo{
+    color: rgb(80, 80, 80);
+    position: absolute;
+    left: 50%;
+    margin-top: 70px;
+    transform: translate(-50%);
+    letter-spacing: 3px;
+    width: 100%;
+    text-align: center;
+}
+
+form {
+    height: auto;
+}
+
+#contenedorAlerta{
+    position: absolute;
+    width: 100%;
+    margin-top: 150px;
+}
+
+#alerta{
+    position: absolute;
+    width: 100%;
+    background-color: black;
+    color: red;
+    padding: 5px;
+    text-align: center;
+    display: none;
+}
+
+.inputUser{
+    margin-top: 130px;
+    width: 100%;
+}
+
+.inputUser input{
+    width: 80%;
+    outline: none;
+    border: none;
+    padding: 15px 60px;
+    padding-right: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 10px;
+    margin-top: -80px;
+}
+
+.inputUser i{
+    position: absolute;
+    font-size: 30px;
+    margin-left: 55px;
+    margin-top: 10px;
+    color: rgb(134, 134, 134);
+    margin-top: -70px;
+}
+
+.inputPass{
+    margin-top: 210px;
+    width: 100%;
+}
+
+.inputPass input{
+    width: 80%;
+    outline: none;
+    border: none;
+    padding: 15px 60px;
+    padding-right: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 10px;
+}
+
+.inputPass i{
+    position: absolute;
+    font-size: 30px;
+    margin-left: 55px;
+    margin-top: 10px;
+    color: rgb(134, 134, 134);
+}
+
+.btnIngresar{
+    width: 80%;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    padding: 13px 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 10px;
+    margin-top: 80px;
+    background-color: rgb(52, 141, 165);
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: 3px;
+}
+
+.btnIngresar:hover{
+    background-color: rgb(70, 160, 185);
+}

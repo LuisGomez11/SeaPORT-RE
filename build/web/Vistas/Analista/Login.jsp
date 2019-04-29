@@ -18,7 +18,7 @@
         <link rel="icon" href="../../IMG/version-para-favicon.png">
 
         <!-- ESTILOS -->
-        <link rel="stylesheet" type="text/css" href="CSS/estilosLogin.css">
+        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/estilosLogin.css">
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -26,7 +26,7 @@
         <!-- SCRIPTS -->
         <script src="../../JS/jquery-3.1.1.min.js"></script>
         <script src="../../JS/bootstrap.min.js"></script>
-        <script src="JS/validacionLogin.js"></script>
+        <script src="CSS - JS/JS/validacionLogin.js"></script>
         <script src="../../JS/sweetalert.min.js"></script>
         
         <title>SeaPORT R&E</title>

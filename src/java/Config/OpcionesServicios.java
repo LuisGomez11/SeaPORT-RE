@@ -26,6 +26,22 @@ public class OpcionesServicios {
         }
         return lista;
     }
+    
+    public static List mostrarSer(String nom) {
+        List<Servicios> lista = new ArrayList<>();       
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps = connect.prepareStatement("select * from servicios where nombre=CAPATAZ");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Servicios ser = new Servicios(rs.getString(1));
+                lista.add(ser);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return lista;
+    }
 
     public static void Insertar(Servicios ser) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
@@ -45,12 +61,14 @@ public class OpcionesServicios {
         }
     }
 
-    public static void Eliminar(String nom) throws ClassNotFoundException, SQLException {
+    public static void Eliminar(String nom){
         try (Connection connect = ConexionBD.connect()) {
-            String sql = "Delete from servicios where nombre=?";
+            String sql = "delete from servicios where nombre=?";
             PreparedStatement pst = connect.prepareStatement(sql);
             pst.setString(1, nom);
             pst.executeUpdate();
+        } catch (ClassNotFoundException | SQLException ex) {
+            
         }
     }
 

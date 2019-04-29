@@ -45,6 +45,39 @@ public class OpcionesAsignados {
         return lista;
     }
     
+    public static List listarInforme(){
+        List<serAsignados> lista = new ArrayList<>();       
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps = connect.prepareStatement("SELECT * FROM servicios_asignados WHERE estado = 'Finalizado'");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                serAsignados serAsi = new serAsignados(rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getInt(16),
+                        rs.getString(17),
+                        rs.getInt(18),
+                        rs.getString(19));
+                lista.add(serAsi);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return lista;
+    }
+    
     public static int numAsignados()  {
         int numero = 0;
         try (Connection connect = ConexionBD.connect()) {

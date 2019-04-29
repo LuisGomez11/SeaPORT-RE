@@ -78,7 +78,7 @@ public class ControlAsignacion extends HttpServlet {
 
             OpcionesGenerados.Eliminar(referencia);
 
-            response.sendRedirect("Vistas/Analista/menuAnalista.jsp?valAsi=correcto");
+            response.sendRedirect("Vistas/Analista/Asignados.jsp?valAsi=correcto");
         }catch(IOException | ClassNotFoundException | SQLException e){
             System.out.println("Error: "+e);
         }

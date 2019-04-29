@@ -55,17 +55,17 @@ public class ControlServicios extends HttpServlet {
 
                 if (opc.equalsIgnoreCase("agregar")) {
                     OpcionesGenerados.Insertar(ser);
-                    response.sendRedirect("Vistas/Analista/menuAnalista.jsp?val=correcto");
+                    response.sendRedirect("Vistas/Analista/Generados.jsp?val=correcto");
                 }
 
                 if (opc.equalsIgnoreCase("mod")) {
                     OpcionesGenerados.Actualizar(ser);
-                    response.sendRedirect("Vistas/Analista/menuAnalista.jsp?valMod=correcto");
+                    response.sendRedirect("Vistas/Analista/Generados.jsp?valMod=correcto");
                 }
 
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println("ERROR: " + e);
-                response.sendRedirect("Analista/menuAnalista.jsp?val=error");
+                response.sendRedirect("Analista/Generar.jsp?val=error");
             }
 
         } catch (Exception e) {

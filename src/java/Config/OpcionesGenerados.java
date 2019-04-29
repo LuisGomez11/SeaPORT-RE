@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OpcionesGenerados {
 
@@ -56,6 +58,44 @@ public class OpcionesGenerados {
             
         }
         return lista;
+    }
+    
+    public static List mostrarSer(String ref){
+        List<serGenerados> lista = new ArrayList<>();       
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps = connect.prepareStatement("select * from servicios_generados where referencia="+ref);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                serGenerados ser = new serGenerados(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13));
+                lista.add(ser);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return lista;
+    }
+    
+    public static void eliminarSer(String ref){
+        try (Connection connect = ConexionBD.connect()) {
+            String sql = "Delete from servicios_generados where referencia = "+ref;
+            PreparedStatement pst = connect.prepareStatement(sql);
+            pst.executeUpdate();
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
     }
 
     public static void Insertar(serGenerados ser) throws ClassNotFoundException, SQLException {
