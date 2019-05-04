@@ -39,6 +39,22 @@
         <%
         
             List<Entidades> listaEn = OpcionesEntidades.listar();
+            
+            if (request.getParameter("val") != null) {
+                if (request.getParameter("val").equals("correcto")) {
+                    out.print("<script>swal('Correcto!', 'La entidad fisica fue registrada correctamente', 'success').then((value) => {window.location = 'Entidades.jsp';});</script>");
+                } else {
+                    out.print("<script>swal('Error!', 'Error al registrar la entidad', 'error').then((value) => {window.location = 'Entidades.jsp';});</script>");
+                }
+            }
+            
+            if (request.getParameter("valEli") != null) {
+                out.print("<script>swal('Correcto!', 'La entidad fue eliminada de la base de datos correctamente', 'success').then((value) => {window.location = 'Entidades.jsp';});</script>");
+            }
+            
+            if (request.getParameter("valMod") != null) {
+                out.print("<script>swal('Correcto!', 'La entidad fue modificada correctamente', 'success').then((value) => {window.location = 'Entidades.jsp';});</script>");
+            }
         
         %>
         
@@ -149,8 +165,8 @@
                         <td><%= dato.getNombre()%></td>
                         <td><%= dato.getTipo()%></td>
                         <td>
-                            <a href="#" class="btn btn-outline-warning">MODIFICAR</a>
-                            <a href="#" class="btn btn-outline-danger">ELIMINAR</a>
+                            <a href="Opciones/Entidades/Modificar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-warning">MODIFICAR</a>
+                            <a href="Opciones/Entidades/Eliminar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-danger">ELIMINAR</a>
                         </td>
                     </tr>
                     <% } %>

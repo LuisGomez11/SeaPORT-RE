@@ -18,7 +18,8 @@ public class OpcionesServicios {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Servicios ser = new Servicios(rs.getString(1));
+                Servicios ser = new Servicios(rs.getInt(1),
+                        rs.getString(2));
                 lista.add(ser);
             }
         } catch (ClassNotFoundException | SQLException ex) {
@@ -27,14 +28,14 @@ public class OpcionesServicios {
         return lista;
     }
     
-    public static List mostrarSer(String nom) {
+    public static List mostrarSer(int id) {
         List<Servicios> lista = new ArrayList<>();       
         try (Connection connect = ConexionBD.connect()) {
-            PreparedStatement ps = connect.prepareStatement("select * from servicios where nombre=CAPATAZ");
+            PreparedStatement ps = connect.prepareStatement("select * from servicios where id="+id);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Servicios ser = new Servicios(rs.getString(1));
+                Servicios ser = new Servicios(rs.getString(2));
                 lista.add(ser);
             }
         } catch (ClassNotFoundException | SQLException ex) {
@@ -45,27 +46,27 @@ public class OpcionesServicios {
 
     public static void Insertar(Servicios ser) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
-            String sql = "insert into servicios values(?)";
+            String sql = "insert into servicios values(null,?)";
             PreparedStatement ps = connect.prepareStatement(sql);
             ps.setString(1, ser.getNombre());
             ps.executeUpdate();
         }
     }
 
-    public static void Actualizar(Servicios ser, String nom) throws ClassNotFoundException, SQLException {
+    public static void Actualizar(Servicios ser, int id) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
-            String sql = "update servicios set nombre=? where nombre=" + nom;
+            String sql = "update servicios set nombre=? where id=" + id;
             PreparedStatement ps = connect.prepareStatement(sql);
             ps.setString(1, ser.getNombre());
             ps.executeUpdate();
         }
     }
 
-    public static void Eliminar(String nom){
+    public static void Eliminar(int id){
         try (Connection connect = ConexionBD.connect()) {
-            String sql = "delete from servicios where nombre=?";
+            String sql = "delete from servicios where id=?";
             PreparedStatement pst = connect.prepareStatement(sql);
-            pst.setString(1, nom);
+            pst.setInt(1, id);
             pst.executeUpdate();
         } catch (ClassNotFoundException | SQLException ex) {
             

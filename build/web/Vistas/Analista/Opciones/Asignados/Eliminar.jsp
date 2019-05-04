@@ -4,6 +4,7 @@
     Author     : Luis Alberto Gomez
 --%>
 
+<%@page import="Config.OpcionesAsignados"%>
 <%@page import="Config.OpcionesServicios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -36,15 +37,15 @@
         <img src="../../../../IMG/slider-background2.jpg">
         <%
 
-            int id = Integer.parseInt(request.getParameter("id"));
+            String ref = request.getParameter("ref");
 
         %>
         <form action="Eliminar.jsp" method="POST">
             <div class="formOpcio container p-5">
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <h3>Servicio con ID: </h3>
-                        <input type="text" readonly name="id" value="<%= id%>" class="form-control">
+                        <h3>Servicio asignado con referencia: </h3>
+                        <input type="text" readonly name="ref" value="<%= ref%>" class="form-control">
                     </div>
                     <div class="form-group col-md-8">
                         <h3>Digite su contraseña para seguridad de eliminacion</h3>
@@ -52,7 +53,7 @@
                         <br>
                         <div class="d-flex">
                             <input type="submit" name="btnEliminar" value="ELIMINAR" class="btn btn-info col-6 mr-1">
-                            <a class="btn btn-danger col-6 ml-1" href="../../Servicio.jsp">CANCELAR</a>
+                            <a class="btn btn-danger col-6 ml-1" href="../../Asignados.jsp">CANCELAR</a>
                         </div>
                     </div>
                 </div>
@@ -66,8 +67,8 @@
                 String contra = request.getParameter("contra");
 
                 if (contra.equals("passanalista")) {
-                    OpcionesServicios.Eliminar(id);
-                    response.sendRedirect("../../Servicio.jsp?valEli=correcto");
+                    OpcionesAsignados.Eliminar(ref);
+                    response.sendRedirect("../../Asignados.jsp?valEli=correcto");
                 } else {
                     out.print("<script>swal('Error!', 'Contraseña ingresada incorrecta, intente nuevamente', 'error');</script>");
                 }

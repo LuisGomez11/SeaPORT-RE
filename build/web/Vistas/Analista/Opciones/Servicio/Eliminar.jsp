@@ -36,15 +36,15 @@
         <img src="../../../../IMG/slider-background2.jpg">
         <%
 
-            String nombre = request.getParameter("nom");
+            int id = Integer.parseInt(request.getParameter("id"));
 
         %>
         <form action="Eliminar.jsp" method="POST">
             <div class="formOpcio container p-5">
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <h3>Servicio con nombre: </h3>
-                        <input type="text" readonly name="nom" value="<%= nombre%>" class="form-control">
+                        <h3>Servicio con ID: </h3>
+                        <input type="text" readonly name="id" value="<%= id%>" class="form-control">
                     </div>
                     <div class="form-group col-md-8">
                         <h3>Digite su contraseña para seguridad de eliminacion</h3>
@@ -66,7 +66,7 @@
                 String contra = request.getParameter("contra");
 
                 if (contra.equals("passanalista")) {
-                    OpcionesServicios.Eliminar(nombre);
+                    OpcionesServicios.Eliminar(id);
                     response.sendRedirect("../../Servicio.jsp?valEli=correcto");
                 } else {
                     out.print("<script>swal('Error!', 'Contraseña ingresada incorrecta, intente nuevamente', 'error');</script>");

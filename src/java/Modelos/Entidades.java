@@ -2,6 +2,7 @@ package Modelos;
 
 public class Entidades {
 
+    private int id;
     private String nombre;
     private String tipo;
 
@@ -12,6 +13,14 @@ public class Entidades {
         this.nombre = nombre;
         this.tipo = tipo;
     }
+
+    public Entidades(int id, String nombre, String tipo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tipo = tipo;
+    }
+    
+    
 
     /**
      * @return the nombre
@@ -39,6 +48,20 @@ public class Entidades {
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

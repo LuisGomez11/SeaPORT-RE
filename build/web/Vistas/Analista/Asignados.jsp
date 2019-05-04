@@ -52,6 +52,10 @@
                 out.print("<script>swal('Correcto!', 'El servicio fue asignado correctamente', 'success').then((value) => {window.location = 'Asignados.jsp';});</script>");
             }
             
+            if (request.getParameter("valEli") != null) {
+                out.print("<script>swal('Correcto!', 'El servicio asignado fue eliminado de la base de datos correctamente', 'success').then((value) => {window.location = 'Asignados.jsp';});</script>");
+            }
+            
             //COMPROBACIONES DE LOS HORARIOS DE LOS SERVICIOS
             DateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
             DateFormat formato1 = new SimpleDateFormat("HH:mm");
@@ -270,7 +274,7 @@
                                 %>
                                 <span class="badge badge-pill badge-<%= tipo%>"><%= estado%></span>
                                 <hr>
-                                <a href="Extras/Eliminar.jsp?ref=<%= dato.getReferencia()%>" class="btn btn-outline-danger btn-block  <%= desactivar%>">ELIMINAR</a>
+                                <a href="Opciones/Asignados/Eliminar.jsp?ref=<%= dato.getReferencia()%>" class="btn btn-outline-danger btn-block  <%= desactivar%>">ELIMINAR</a>
                             </center>
                         </div>
                     </div>

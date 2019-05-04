@@ -51,6 +51,10 @@
             if (request.getParameter("valEli") != null) {
                 out.print("<script>swal('Correcto!', 'El servicio fue eliminado de la base de datos correctamente', 'success').then((value) => {window.location = 'Servicio.jsp';});</script>");
             }
+            
+            if (request.getParameter("valMod") != null) {
+                out.print("<script>swal('Correcto!', 'El servicio fue modificado correctamente', 'success').then((value) => {window.location = 'Servicio.jsp';});</script>");
+            }
         
         %>
         
@@ -150,8 +154,8 @@
                                 <tr>
                                     <td><%= dato.getNombre()%></td>
                                     <td>
-                                        <a href="Opciones/Servicio/Modificar.jsp?nom=<%= dato.getNombre()%>" class="btn btn-outline-warning mb-1">MODIFICAR</a>
-                                        <a href="Opciones/Servicio/Eliminar.jsp?nom=<%= dato.getNombre()%>" class="btn btn-outline-danger">ELIMINAR</a>
+                                        <a href="Opciones/Servicio/Modificar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-warning mb-1">MODIFICAR</a>
+                                        <a href="Opciones/Servicio/Eliminar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-danger">ELIMINAR</a>
                                     </td>
                                 </tr>
                                 <% } %>

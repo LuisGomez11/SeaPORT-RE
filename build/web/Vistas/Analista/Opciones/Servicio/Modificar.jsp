@@ -37,16 +37,30 @@
         <img src="../../../../IMG/slider-background2.jpg">
         <%
         
-            String nom = request.getParameter("nom");
+            int id = Integer.parseInt(request.getParameter("id"));
             
-            List<Servicios> servicio = OpcionesServicios.mostrarSer(nom);
+            List<Servicios> servicio = OpcionesServicios.mostrarSer(id);
             
             for(Servicios dato : servicio){
 
         %>
         <div class="formOpcio container p-5">
             <form method="POST" autocomplete="off" action="../../../../ControlServ?opc=mod">
-                <h1 class="text-center"><%= dato.getNombre() %></h1><hr>
+                <h1 class="text-center">Modificar servicio</h1><hr>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="id">ID</label>
+                        <input type="text" class="form-control" value="<%= id%>" id="id" name="id" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" value="<%= dato.getNombre()%>" id="nombre" name="nombre" required>
+                    </div>
+                </div>
+                <div class="botones1">
+                    <a href="../../Servicio.jsp" class="btn btn-danger">CANCELAR</a>
+                    <input type="submit" value="MODIFICAR" class="btn btn-primary ml-2" id="modificar">
+                </div>
             </form>
         </div>
         <% } %>

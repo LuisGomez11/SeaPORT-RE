@@ -27,7 +27,12 @@ public class ControlEntidad extends HttpServlet {
             try {
                 if (opc.equalsIgnoreCase("agregar")) {
                     OpcionesEntidades.Insertar(en);
-                    response.sendRedirect("Vistas/Analista/menuAnalista.jsp?valEn=correcto");
+                    response.sendRedirect("Vistas/Analista/Entidades.jsp?val=correcto");
+                }
+                if(opc.equalsIgnoreCase("mod")){
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    OpcionesEntidades.Actualizar(en, id);
+                    response.sendRedirect("Vistas/Analista/Entidades.jsp?valMod=correcto");
                 }
             } catch (IOException | ClassNotFoundException | SQLException e) {
             }

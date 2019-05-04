@@ -27,11 +27,12 @@ public class ControlServ extends HttpServlet {
             try {
                 if (opc.equalsIgnoreCase("agregar")) {
                     OpcionesServicios.Insertar(ser);
-                    response.sendRedirect("Vistas/Analista1/Servicio.jsp?valSer=correcto");
+                    response.sendRedirect("Vistas/Analista/Servicio.jsp?valSer=correcto");
                 }
                 if(opc.equalsIgnoreCase("mod")){
-                    String nom = request.getParameter("nom");
-                    OpcionesServicios.Actualizar(ser, nom);
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    OpcionesServicios.Actualizar(ser, id);
+                    response.sendRedirect("Vistas/Analista/Servicio.jsp?valMod=correcto");
                 }
             } catch (IOException | ClassNotFoundException | SQLException e) {
             }

@@ -4,9 +4,9 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="Config.OpcionesEntidades"%>
+<%@page import="Modelos.Entidades"%>
 <%@page import="java.util.List"%>
-<%@page import="Config.OpcionesServicios"%>
-<%@page import="Modelos.Servicios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -39,26 +39,35 @@
         
             int id = Integer.parseInt(request.getParameter("id"));
             
-            List<Servicios> servicio = OpcionesServicios.mostrarSer(id);
+            List<Entidades> entidad = OpcionesEntidades.mostrarEntidad(id);
             
-            for(Servicios dato : servicio){
+            for(Entidades dato : entidad){
 
         %>
         <div class="formOpcio container p-5">
-            <form method="POST" autocomplete="off" action="../../../../ControlServ?opc=mod">
-                <h1 class="text-center">Modificar servicio</h1><hr>
+            <form method="POST" autocomplete="off" action="../../../../ControlEntidad?opc=mod">
+                <h1 class="text-center">Modificar entidad fisica</h1><hr>
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="id">ID</label>
                         <input type="text" class="form-control" value="<%= id%>" id="id" name="id" readonly>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-5">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" value="<%= dato.getNombre()%>" id="nombre" name="nombre" required>
                     </div>
+                    <div class="form-group col-md-4">
+                        <label for="tipo">Tipo de entidad</label>
+                        <select class="form-control" name="tipo">
+                            <option><%= dato.getTipo() %></option>
+                            <option>Motonave</option>
+                            <option>Grua</option>
+                            <option>Camion</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="botones1">
-                    <a href="../../Servicio.jsp" class="btn btn-danger">CANCELAR</a>
+                    <a href="../../Entidades.jsp" class="btn btn-danger">CANCELAR</a>
                     <input type="submit" value="MODIFICAR" class="btn btn-primary ml-2" id="modificar">
                 </div>
             </form>
