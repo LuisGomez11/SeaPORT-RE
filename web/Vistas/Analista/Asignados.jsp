@@ -4,6 +4,8 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="Modelos.serGenerados"%>
+<%@page import="Config.OpcionesGenerados"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
@@ -43,6 +45,7 @@
         
             //LISTAS            
             List<serAsignados> listaAsi = OpcionesAsignados.listar();
+            List<serGenerados> listaGen = OpcionesGenerados.listar();
             
             //NUMERO DE SERVICIOS ASIGNADOS
             int numAsignaciones = OpcionesAsignados.numAsignados();
@@ -56,6 +59,7 @@
                 out.print("<script>swal('Correcto!', 'El servicio asignado fue eliminado de la base de datos correctamente', 'success').then((value) => {window.location = 'Asignados.jsp';});</script>");
             }
             
+        
             //COMPROBACIONES DE LOS HORARIOS DE LOS SERVICIOS
             DateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
             DateFormat formato1 = new SimpleDateFormat("HH:mm");
@@ -69,7 +73,36 @@
 
             String[] hActual = horaActual.split(":");
             int hoActual = Integer.parseInt(hActual[0]);
-            int minutoActual = Integer.parseInt(hActual[1]);           
+            int minutoActual = Integer.parseInt(hActual[1]);
+            
+            for(serGenerados dato : listaGen){
+                String fechaIni = dato.getFechaCita();
+                String horaIni = dato.getHoraCita();
+                
+                String[] Inicio = fechaIni.split("-");
+                int diaInicio = Integer.parseInt(Inicio[2]);
+                int mesInicio = Integer.parseInt(Inicio[1]);
+                int anioInicio = Integer.parseInt(Inicio[0]);
+
+                String[] hInicio = horaIni.split(":");
+                int hoInicio = Integer.parseInt(hInicio[0]);
+                int minutoInicio = Integer.parseInt(hInicio[1]);
+                
+                if (anioActual > anioInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual > mesInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual > diaInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual == diaInicio && hoActual > hoInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
+                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                }
+            }
 
             for (serAsignados dato : listaAsi) {
                 String fechaIni = dato.getFechaCita();

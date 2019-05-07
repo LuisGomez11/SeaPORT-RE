@@ -4,6 +4,11 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="Config.OpcionesAsignados"%>
+<%@page import="Modelos.serAsignados"%>
 <%@page import="Config.OpcionesEntidades"%>
 <%@page import="Modelos.Entidades"%>
 <%@page import="Config.OpcionesServicios"%>
@@ -42,9 +47,112 @@
         
         <%
         
+            // LISTAS
             List<Servicios> listaSer = OpcionesServicios.listar();
             List<Entidades> listaMoto = OpcionesEntidades.listarMoto();
             List<Entidades> listaGrua = OpcionesEntidades.listarGrua();
+            List<serGenerados> listaGen = OpcionesGenerados.listar();
+            List<serAsignados> listaAsi = OpcionesAsignados.listar();
+            
+            //COMPROBACIONES DE LOS HORARIOS DE LOS SERVICIOS
+            DateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
+            DateFormat formato1 = new SimpleDateFormat("HH:mm");
+            String fechaActual = formato.format(new Date());
+            String horaActual = formato1.format(new Date());
+            
+            String[] actual = fechaActual.split("/");
+            int diaActual = Integer.parseInt(actual[2]);
+            int mesActual = Integer.parseInt(actual[1]);
+            int anioActual = Integer.parseInt(actual[0]);
+
+            String[] hActual = horaActual.split(":");
+            int hoActual = Integer.parseInt(hActual[0]);
+            int minutoActual = Integer.parseInt(hActual[1]);
+            
+            for(serGenerados dato : listaGen){
+                String fechaIni = dato.getFechaCita();
+                String horaIni = dato.getHoraCita();
+                
+                String[] Inicio = fechaIni.split("-");
+                int diaInicio = Integer.parseInt(Inicio[2]);
+                int mesInicio = Integer.parseInt(Inicio[1]);
+                int anioInicio = Integer.parseInt(Inicio[0]);
+
+                String[] hInicio = horaIni.split(":");
+                int hoInicio = Integer.parseInt(hInicio[0]);
+                int minutoInicio = Integer.parseInt(hInicio[1]);
+                
+                if (anioActual > anioInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual > mesInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual > diaInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual == diaInicio && hoActual > hoInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
+                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                }
+            }
+
+            for (serAsignados dato : listaAsi) {
+                String fechaIni = dato.getFechaCita();
+                String horaIni = dato.getHoraCita();
+                String fechaFin = dato.getFechaFinal();
+                String horaFin = dato.getHoraFinal();     
+
+                String[] Inicio = fechaIni.split("-");
+                int diaInicio = Integer.parseInt(Inicio[2]);
+                int mesInicio = Integer.parseInt(Inicio[1]);
+                int anioInicio = Integer.parseInt(Inicio[0]);
+
+                String[] hInicio = horaIni.split(":");
+                int hoInicio = Integer.parseInt(hInicio[0]);
+                int minutoInicio = Integer.parseInt(hInicio[1]);
+
+                String[] Fin = fechaFin.split("-");
+                int diaFin = Integer.parseInt(Fin[2]);
+                int mesFin = Integer.parseInt(Fin[1]);
+                int anioFin = Integer.parseInt(Fin[0]);
+
+                String[] hFin = horaFin.split(":");
+                int hoFin = Integer.parseInt(hFin[0]);
+                int minutoFin = Integer.parseInt(hFin[1]);
+
+                if (anioActual > anioInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual > mesInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual > diaInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual == diaInicio && hoActual > hoInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
+                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                }
+
+                if (anioActual > anioFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual > mesFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin
+                        && diaActual > diaFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin
+                        && diaActual == diaFin && hoActual > hoFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin && diaActual == diaFin
+                        && hoActual == hoFin && minutoActual >= minutoFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                }
+
+            }
         
         %>
         

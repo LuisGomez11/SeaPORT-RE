@@ -165,6 +165,9 @@ a {
 .contenedor-inicio .serGenerados{
     height: 150px;
     background-color: #FFFFFF;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 .contenedor-inicio .serGenerados .contImagen1{
@@ -205,6 +208,9 @@ a {
 .contenedor-inicio .serAsignados{
     height: 150px;
     background-color: #FFFFFF;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 .contenedor-inicio .serAsignados .contImagen2{

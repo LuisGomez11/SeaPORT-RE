@@ -4,6 +4,8 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="Config.OpcionesAsignados"%>
+<%@page import="Modelos.serAsignados"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
@@ -43,6 +45,7 @@
         
             //LISTAS            
             List<serGenerados> listaGen = OpcionesGenerados.listar();
+            List<serAsignados> listaAsi = OpcionesAsignados.listar();
             
             //NUMERO DE SERVICIOS GENERADOS
             int numServicios = OpcionesGenerados.numGenerados();
@@ -108,6 +111,62 @@
                         && hoActual == hoInicio && minutoActual >= minutoInicio) {
                     OpcionesGenerados.eliminarSer(dato.getReferencia());
                 }
+            }
+
+            for (serAsignados dato : listaAsi) {
+                String fechaIni = dato.getFechaCita();
+                String horaIni = dato.getHoraCita();
+                String fechaFin = dato.getFechaFinal();
+                String horaFin = dato.getHoraFinal();     
+
+                String[] Inicio = fechaIni.split("-");
+                int diaInicio = Integer.parseInt(Inicio[2]);
+                int mesInicio = Integer.parseInt(Inicio[1]);
+                int anioInicio = Integer.parseInt(Inicio[0]);
+
+                String[] hInicio = horaIni.split(":");
+                int hoInicio = Integer.parseInt(hInicio[0]);
+                int minutoInicio = Integer.parseInt(hInicio[1]);
+
+                String[] Fin = fechaFin.split("-");
+                int diaFin = Integer.parseInt(Fin[2]);
+                int mesFin = Integer.parseInt(Fin[1]);
+                int anioFin = Integer.parseInt(Fin[0]);
+
+                String[] hFin = horaFin.split(":");
+                int hoFin = Integer.parseInt(hFin[0]);
+                int minutoFin = Integer.parseInt(hFin[1]);
+
+                if (anioActual > anioInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual > mesInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual > diaInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual == diaInicio && hoActual > hoInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
+                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                }
+
+                if (anioActual > anioFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual > mesFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin
+                        && diaActual > diaFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin
+                        && diaActual == diaFin && hoActual > hoFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin && diaActual == diaFin
+                        && hoActual == hoFin && minutoActual >= minutoFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                }
+
             }
 
         %>

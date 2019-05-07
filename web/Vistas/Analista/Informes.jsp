@@ -4,6 +4,11 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="Config.OpcionesGenerados"%>
+<%@page import="Modelos.serGenerados"%>
 <%@page import="Config.OpcionesAsignados"%>
 <%@page import="Modelos.serAsignados"%>
 <%@page import="java.util.List"%>
@@ -35,15 +40,125 @@
         <title>SeaPORT R&E</title>
     </head>
     <body>
-        
+
         <%
-        
+
             //LISTAS            
             List<serAsignados> listaInfo = OpcionesAsignados.listarInforme();
+            List<serGenerados> listaGen = OpcionesGenerados.listar();
+            List<serAsignados> listaAsi = OpcionesAsignados.listar();
+
+            String ref1 = "",ref2 = "",ref3 = "",ref4 = "",ref5 = "",ref6 = "",
+                ref7 = "",ref8 = "",ref9 = "",ref10 = "",ref11 = "",ref12 = "";
             
-        
+            int pri1 = 1,pri2 = 1,pri3 = 1,pri4 = 1,pri5 = 1,pri6 = 1,pri7 = 1,
+                pri8 = 1,pri9 = 1,pri10 = 1,pri11 = 1,pri12 = 1;
+            
+           
+            
+            //COMPROBACIONES DE LOS HORARIOS DE LOS SERVICIOS
+            DateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
+            DateFormat formato1 = new SimpleDateFormat("HH:mm");
+            String fechaActual = formato.format(new Date());
+            String horaActual = formato1.format(new Date());
+            
+            String[] actual = fechaActual.split("/");
+            int diaActual = Integer.parseInt(actual[2]);
+            int mesActual = Integer.parseInt(actual[1]);
+            int anioActual = Integer.parseInt(actual[0]);
+
+            String[] hActual = horaActual.split(":");
+            int hoActual = Integer.parseInt(hActual[0]);
+            int minutoActual = Integer.parseInt(hActual[1]);
+            
+            for(serGenerados dato : listaGen){
+                String fechaIni = dato.getFechaCita();
+                String horaIni = dato.getHoraCita();
+                
+                String[] Inicio = fechaIni.split("-");
+                int diaInicio = Integer.parseInt(Inicio[2]);
+                int mesInicio = Integer.parseInt(Inicio[1]);
+                int anioInicio = Integer.parseInt(Inicio[0]);
+
+                String[] hInicio = horaIni.split(":");
+                int hoInicio = Integer.parseInt(hInicio[0]);
+                int minutoInicio = Integer.parseInt(hInicio[1]);
+                
+                if (anioActual > anioInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual > mesInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual > diaInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual == diaInicio && hoActual > hoInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
+                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
+                    OpcionesGenerados.eliminarSer(dato.getReferencia());
+                }
+            }
+
+            for (serAsignados dato : listaAsi) {
+                String fechaIni = dato.getFechaCita();
+                String horaIni = dato.getHoraCita();
+                String fechaFin = dato.getFechaFinal();
+                String horaFin = dato.getHoraFinal();     
+
+                String[] Inicio = fechaIni.split("-");
+                int diaInicio = Integer.parseInt(Inicio[2]);
+                int mesInicio = Integer.parseInt(Inicio[1]);
+                int anioInicio = Integer.parseInt(Inicio[0]);
+
+                String[] hInicio = horaIni.split(":");
+                int hoInicio = Integer.parseInt(hInicio[0]);
+                int minutoInicio = Integer.parseInt(hInicio[1]);
+
+                String[] Fin = fechaFin.split("-");
+                int diaFin = Integer.parseInt(Fin[2]);
+                int mesFin = Integer.parseInt(Fin[1]);
+                int anioFin = Integer.parseInt(Fin[0]);
+
+                String[] hFin = horaFin.split(":");
+                int hoFin = Integer.parseInt(hFin[0]);
+                int minutoFin = Integer.parseInt(hFin[1]);
+
+                if (anioActual > anioInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual > mesInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual > diaInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio
+                        && diaActual == diaInicio && hoActual > hoInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
+                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
+                    OpcionesAsignados.pasarProceso(dato.getReferencia());
+                }
+
+                if (anioActual > anioFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual > mesFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin
+                        && diaActual > diaFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin
+                        && diaActual == diaFin && hoActual > hoFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                } else if (anioActual == anioFin && mesActual == mesFin && diaActual == diaFin
+                        && hoActual == hoFin && minutoActual >= minutoFin) {
+                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
+                }
+
+            }
+
+
         %>
-        
+
         <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
         <nav id="navPri">
             <div id="empresa">
@@ -104,7 +219,7 @@
         <!-- ////////////////////////////MENU LATERAL//////////////////////////// -->
 
         <a href="" class="btn-menu">Menu <i class="icon fas fa-bars"></i></a>
-        
+
         <!-- ////////////////////////////INFORMES//////////////////////////// -->
         <div class="contenedor-informes">
             <div class="flex">
@@ -115,438 +230,628 @@
             </div>
             <hr>
             <div class="loop">
-                <div class="carta row w-100 h-auto">
-                    <%
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%                        for (serAsignados dato : listaInfo) {
 
-                        for (serAsignados dato : listaInfo) {
+                                String fecha = dato.getFechaCita();
 
-                            String fecha = dato.getFechaCita();
+                                String[] splits = fecha.split("-");
 
-                            String[] splits = fecha.split("-");
+                                if (splits[1].equalsIgnoreCase("01")) {
+                                    if (pri1 == 1) {
+                                        ref1 = dato.getReferencia();
+                                        pri1++;
+                                    }
 
-                            if (splits[1].equalsIgnoreCase("01")) {
+                                    if (!ref1.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref1 = dato.getReferencia();
+                        %>
 
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("02")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("02")) {
+                                    if (pri2 == 1) {
+                                        ref2 = dato.getReferencia();
+                                        pri2++;
+                                    }
+
+                                    if (!ref2.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref2 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("03")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("03")) {
+                                    if (pri3 == 1) {
+                                        ref3 = dato.getReferencia();
+                                        pri3++;
+                                    }
+
+                                    if (!ref3.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref3 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("04")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("04")) {
+                                    if (pri4 == 1) {
+                                        ref4 = dato.getReferencia();
+                                        pri4++;
+                                    }
+
+                                    if (!ref4.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref4 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("05")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("05")) {
+                                    if (pri5 == 1) {
+                                        ref5 = dato.getReferencia();
+                                        pri5++;
+                                    }
+
+                                    if (!ref5.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref5 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("06")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("06")) {
+                                    if (pri6 == 1) {
+                                        ref6 = dato.getReferencia();
+                                        pri6++;
+                                    }
+
+                                    if (!ref6.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref6 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("07")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("07")) {
+                                    if (pri7 == 1) {
+                                        ref7 = dato.getReferencia();
+                                        pri7++;
+                                    }
+
+                                    if (!ref7.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref7 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("08")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("08")) {
+                                    if (pri8 == 1) {
+                                        ref8 = dato.getReferencia();
+                                        pri8++;
+                                    }
+
+                                    if (!ref8.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref8 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("09")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("09")) {
+                                    if (pri9 == 1) {
+                                        ref9 = dato.getReferencia();
+                                        pri9++;
+                                    }
+
+                                    if (!ref9.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref9 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("10")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("10")) {
+                                    if (pri10 == 1) {
+                                        ref10 = dato.getReferencia();
+                                        pri10++;
+                                    }
+
+                                    if (!ref10.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref10 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("11")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("11")) {
+                                    if (pri11 == 1) {
+                                        ref11 = dato.getReferencia();
+                                        pri11++;
+                                    }
+
+                                    if (!ref11.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref11 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         } %>
-                </div>
-                <div class="carta row w-100 h-auto">
-                    <%
-                        for (serAsignados dato : listaInfo) {
-
-                            String fecha = dato.getFechaCita();
-
-                            String[] splits = fecha.split("-");
-
-                            if (splits[1].equalsIgnoreCase("12")) {
-
-                    %>
-                    <div class="col-lg-4 my-2" id="carAsi">
-                        <div class="card border-primary">
-                            <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
-                            <div class="card-body" id="bodyCard">
-                                <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
-                                <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
-                                <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
-                                <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
-                            </div>
-
-                        </div>
                     </div>
-                    <% }
+                </div>
+                <div class="carta w-100 h-auto">
+                    <div class="row w-100 h-auto">
+                        <%
+                            for (serAsignados dato : listaInfo) {
+
+                                String fecha = dato.getFechaCita();
+
+                                String[] splits = fecha.split("-");
+
+                                if (splits[1].equalsIgnoreCase("12")) {
+                                    if (pri12 == 1) {
+                                        ref12 = dato.getReferencia();
+                                        pri12++;
+                                    }
+
+                                    if (!ref12.equalsIgnoreCase(dato.getReferencia())) {
+                                        ref12 = dato.getReferencia();
+                        %>
+
+                    </div>
+                    <br><hr><br>
+                    <div class="row w-100 h-auto">    
+
+                        <%
+                            }
+                        %>
+                        <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <% }
                         }%>
+                    </div>
                 </div>
             </div>      
         </div>

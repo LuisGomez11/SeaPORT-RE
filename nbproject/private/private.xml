@@ -3,19 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Servicio.jsp</file>
-            <file>file:/G:/Universidad/SeaPORT/src/java/Config/OpcionesEntidades.java</file>
             <file>file:/G:/Universidad/SeaPORT/src/java/Config/OpcionesServicios.java</file>
-            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Asignados.jsp</file>
-            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Opciones/Servicio/Eliminar.jsp</file>
-            <file>file:/G:/Universidad/SeaPORT/src/java/Modelos/Entidades.java</file>
-            <file>file:/G:/Universidad/SeaPORT/src/java/Servlet/ControlServ.java</file>
-            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Opciones/Entidades/Modificar.jsp</file>
-            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Opciones/Servicio/Modificar.jsp</file>
-            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Entidades.jsp</file>
-            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Opciones/Asignados/Eliminar.jsp</file>
-            <file>file:/G:/Universidad/SeaPORT/src/java/Servlet/ControlEntidad.java</file>
-            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Opciones/Entidades/Eliminar.jsp</file>
+            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Inicio.jsp</file>
+            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/Generados.jsp</file>
+            <file>file:/G:/Universidad/SeaPORT/web/Vistas/Analista/CSS%20-%20JS/CSS/estilo.css</file>
+            <file>file:/G:/Universidad/SeaPORT/src/java/Clases/ConexionBD.java</file>
+            <file>file:/G:/Universidad/SeaPORT/src/java/Config/OpcionesGenerados.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,7 +1,7 @@
 <%-- 
     Document   : Inicio
     Created on : 28/04/2019, 08:17:31 PM
-    Author     : Sammy Guergachi <sguergachi at gmail.com>
+    Author     : Luis Alberto Gomez
 --%>
 
 <%@page import="java.util.Date"%>
@@ -28,7 +28,7 @@
         <!-- ESTILOS -->
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/estilos.css">
+        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/estilo.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
@@ -41,7 +41,7 @@
         <title>SeaPORT R&E</title>
     </head>
     <body>
-        
+
         <%
           
             //LISTAS            
@@ -156,7 +156,7 @@
             }
 
         %>
-        
+
         <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
         <nav id="navPri">
             <div id="empresa">
@@ -224,109 +224,109 @@
             <hr>
             <div class="container-fluid row">
                 <div class="col-lg-6 mb-3">
-            <div class="serGenerados"><!--serGenerados-->
-                <div class="contImagen1"><i class="fas fa-clipboard"></i></div>
-                <div class="texto1">
-                    <h1><%= numServicios%></h1>
-                    <h5>Servicios Generados</h5>
-                </div>
-            </div>
-                </div> 
-                    <div class="col-lg-6">
-            <div class="serAsignados"><!--serAsignados-->
-                <div class="contImagen2"><i class="fas fa-clipboard-check"></i></div>
-                <div class="texto2">
-                    <h1><%= numAsignaciones%></h1>
-                    <h5>Servicios Asignados</h5>
-                </div>
-            </div>
+                    <div class="serGenerados"><!--serGenerados-->
+                        <div class="contImagen1"><i class="fas fa-clipboard"></i></div>
+                        <div class="texto1">
+                            <h1><%= numServicios%></h1>
+                            <h5>Servicios Generados</h5>
+                        </div>
                     </div>
+                </div> 
+                <div class="col-lg-6">
+                    <div class="serAsignados"><!--serAsignados-->
+                        <div class="contImagen2"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="texto2">
+                            <h1><%= numAsignaciones%></h1>
+                            <h5>Servicios Asignados</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
             <hr>
             <div class="ultNovedades">
                 <h3>Ultimas novedades</h3>
                 <br>
                 <div class="container-fluid row">
-                <div class="col-lg-6 mb-4">
-                <div class="serGenerados1">
-                    <h4>Servicios generados</h4>
-                    <br>
-                    <div class="table-responsive">
-                        <center>
-                        <table class="table table-bordered tablaInicio">
-                            <thead>
-                                <tr>
-                                    <th>Terminal</th>
-                                    <th>Lloyd escala / UVI / Referencia</th>
-                                    <th>Hrs en operacion</th>
-                                    <th>Servicio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    for (serGenerados dato : listaGen) {
-                                %>
-                                <tr>
-                                    <td><%= dato.getTerminal()%></td>
-                                    <td><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></td>
-                                    <td><%= dato.getHrsOpe()%></td>
-                                    <td><%= dato.getServicio()%></td>
-                                </tr>
-                                <%
-                                        contador++;
-                                        if (contador == 3) {
-                                            contador = 0;
-                                            break;
-                                        }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                        </center>
+                    <div class="col-lg-6 mb-4">
+                        <div class="serGenerados1">
+                            <h4>Servicios generados</h4>
+                            <br>
+                            <div class="table-responsive">
+                                <center>
+                                    <table class="table table-bordered tablaInicio">
+                                        <thead>
+                                            <tr>
+                                                <th>Terminal</th>
+                                                <th>Lloyd escala / UVI / Referencia</th>
+                                                <th>Hrs en operacion</th>
+                                                <th>Servicio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                for (serGenerados dato : listaGen) {
+                                            %>
+                                            <tr>
+                                                <td><%= dato.getTerminal()%></td>
+                                                <td><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></td>
+                                                <td><%= dato.getHrsOpe()%></td>
+                                                <td><%= dato.getServicio()%></td>
+                                            </tr>
+                                            <%
+                                                    contador++;
+                                                    if (contador == 3) {
+                                                        contador = 0;
+                                                        break;
+                                                    }
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </center>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                </div>
-                <div class="col-lg-6">
-                <div class="serAsignados1">
-                    <h4>Servicios asignados</h4>
-                    <br>
-                    <div class="table-responsive"  >
-                        <center>
-                        <table class="table table-bordered tablaInicio">
-                            <thead>
-                                <tr>
-                                    <th>Lloyd escala / UVI / Referencia</th>
-                                    <th>Servicio</th>
-                                    <th>Proveedor</th>
-                                    <th>Hrs. Totales</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    for (serAsignados dato : listaAsi) {
+                    <div class="col-lg-6">
+                        <div class="serAsignados1">
+                            <h4>Servicios asignados</h4>
+                            <br>
+                            <div class="table-responsive"  >
+                                <center>
+                                    <table class="table table-bordered tablaInicio">
+                                        <thead>
+                                            <tr>
+                                                <th>Lloyd escala / UVI / Referencia</th>
+                                                <th>Servicio</th>
+                                                <th>Proveedor</th>
+                                                <th>Hrs. Totales</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                for (serAsignados dato : listaAsi) {
 
-                                %>
-                                <tr>
+                                            %>
+                                            <tr>
 
-                                    <td><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></td>
-                                    <td><%= dato.getServicio()%></td>
-                                    <td><%= dato.getProveedor()%></td>
-                                    <td><%= dato.getHorasTotales()%></td>
-                                </tr>
-                                <%
-                                        contador1++;
-                                        if (contador1 == 3) {
-                                            contador1 = 0;
-                                            break;
-                                        }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                            </center>
+                                                <td><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></td>
+                                                <td><%= dato.getServicio()%></td>
+                                                <td><%= dato.getProveedor()%></td>
+                                                <td><%= dato.getHorasTotales()%></td>
+                                            </tr>
+                                            <%
+                                                    contador1++;
+                                                    if (contador1 == 3) {
+                                                        contador1 = 0;
+                                                        break;
+                                                    }
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </center>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                </div>
                 </div>
             </div>
         </div>
