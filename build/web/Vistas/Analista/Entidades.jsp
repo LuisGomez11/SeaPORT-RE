@@ -38,18 +38,18 @@
         <script src="../../JS/sweetalert.min.js"></script>
         <script src="../../JS/chart.js"></script>
         <script src="CSS - JS/JS/appMenu.js"></script>
-
+        
         <title>SeaPORT R&E</title>
     </head>
     <body>
-        
+
         <%
-        
+
             //LISTAS            
             List<serGenerados> listaGen = OpcionesGenerados.listar();
             List<serAsignados> listaAsi = OpcionesAsignados.listar();
             List<Entidades> listaEn = OpcionesEntidades.listar();
-            
+
             if (request.getParameter("val") != null) {
                 if (request.getParameter("val").equals("correcto")) {
                     out.print("<script>swal('Correcto!', 'La entidad fisica fue registrada correctamente', 'success').then((value) => {window.location = 'Entidades.jsp';});</script>");
@@ -57,23 +57,21 @@
                     out.print("<script>swal('Error!', 'Error al registrar la entidad', 'error').then((value) => {window.location = 'Entidades.jsp';});</script>");
                 }
             }
-            
+
             if (request.getParameter("valEli") != null) {
                 out.print("<script>swal('Correcto!', 'La entidad fue eliminada de la base de datos correctamente', 'success').then((value) => {window.location = 'Entidades.jsp';});</script>");
             }
-            
+
             if (request.getParameter("valMod") != null) {
                 out.print("<script>swal('Correcto!', 'La entidad fue modificada correctamente', 'success').then((value) => {window.location = 'Entidades.jsp';});</script>");
             }
-            
-            
-        
+
             //COMPROBACIONES DE LOS HORARIOS DE LOS SERVICIOS
             DateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
             DateFormat formato1 = new SimpleDateFormat("HH:mm");
             String fechaActual = formato.format(new Date());
             String horaActual = formato1.format(new Date());
-            
+
             String[] actual = fechaActual.split("/");
             int diaActual = Integer.parseInt(actual[2]);
             int mesActual = Integer.parseInt(actual[1]);
@@ -82,11 +80,11 @@
             String[] hActual = horaActual.split(":");
             int hoActual = Integer.parseInt(hActual[0]);
             int minutoActual = Integer.parseInt(hActual[1]);
-            
-            for(serGenerados dato : listaGen){
+
+            for (serGenerados dato : listaGen) {
                 String fechaIni = dato.getFechaCita();
                 String horaIni = dato.getHoraCita();
-                
+
                 String[] Inicio = fechaIni.split("-");
                 int diaInicio = Integer.parseInt(Inicio[2]);
                 int mesInicio = Integer.parseInt(Inicio[1]);
@@ -95,7 +93,7 @@
                 String[] hInicio = horaIni.split(":");
                 int hoInicio = Integer.parseInt(hInicio[0]);
                 int minutoInicio = Integer.parseInt(hInicio[1]);
-                
+
                 if (anioActual > anioInicio) {
                     OpcionesGenerados.eliminarSer(dato.getReferencia());
                 } else if (anioActual == anioInicio && mesActual > mesInicio) {
@@ -116,7 +114,7 @@
                 String fechaIni = dato.getFechaCita();
                 String horaIni = dato.getHoraCita();
                 String fechaFin = dato.getFechaFinal();
-                String horaFin = dato.getHoraFinal();     
+                String horaFin = dato.getHoraFinal();
 
                 String[] Inicio = fechaIni.split("-");
                 int diaInicio = Integer.parseInt(Inicio[2]);
@@ -167,9 +165,9 @@
                 }
 
             }
-        
+
         %>
-        
+
         <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
         <nav id="navPri">
             <div id="empresa">
@@ -231,7 +229,7 @@
         <!-- ////////////////////////////MENU LATERAL//////////////////////////// -->
 
         <a href="" class="btn-menu">Menu <i class="icon fas fa-bars"></i></a>
-        
+
         <!-- ////////////////////////////ENTIDAD FISICA//////////////////////////// -->
         <div class="contenedor-enFisica">
             <h3>Entidades fisicas</h3>
@@ -256,9 +254,16 @@
                     <input type="submit" value="REGISTRAR" class="btn btn-outline-primary" id="registrar">
                     <button type="button" class="btn btn-outline-danger ml-2" id="limpiarCampos">CANCELAR</button>
                 </div>
+                
             </form>
             <br><br><br>
             <hr><br>
+            <div class="input-group mb-3 w-50 float-right">
+                    <input type="text" class="form-control" placeholder="Ingrese la informacion">
+                    <div class="input-group-append">
+                        <input class="btn btn-outline-primary" type="submit" value="BUSCAR">
+                    </div>
+                </div>
             <table class="table table-bordered">
                 <thead>
                     <tr><th colspan="3">LISTADO DE ENTIDADES FISICAS</th></tr>
@@ -269,20 +274,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%
-
-                        for (Entidades dato : listaEn) {
+                    <%                        for (Entidades dato : listaEn) {
 
                     %>
                     <tr>
                         <td><%= dato.getNombre()%></td>
                         <td><%= dato.getTipo()%></td>
                         <td>
-                            <a href="Opciones/Entidades/Modificar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-warning">MODIFICAR</a>
-                            <a href="Opciones/Entidades/Eliminar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-danger">ELIMINAR</a>
+                            <a href="Opciones/Entidades/Modificar.jsp?id=<%= dato.getId()%>" class="btn btn-outline-warning">MODIFICAR</a>
+                            <a href="Opciones/Entidades/Eliminar.jsp?id=<%= dato.getId()%>" class="btn btn-outline-danger">ELIMINAR</a>
                         </td>
                     </tr>
-                    <% } %>
+                    <% }%>
                 </tbody>
             </table>
         </div>
