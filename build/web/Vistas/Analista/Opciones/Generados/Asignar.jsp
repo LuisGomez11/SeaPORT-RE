@@ -4,6 +4,7 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="Modelos.Proveedores"%>
 <%@page import="java.util.List"%>
 <%@page import="Config.OpcionesProveedor"%>
 <%@page import="java.util.ArrayList"%>
@@ -179,11 +180,11 @@
                     	<select class="form-control col-3" name="prov<%=i%>" id="pro" class="pro">
                             <%
                                 
-		                List<String> lista = OpcionesProveedor.listarPro();
+		                List<Proveedores> lista = OpcionesProveedor.listar();
 
-                                for (String pro : lista){
+                                for (Proveedores pro : lista){
                             %>
-                            <option><%= pro %></option>
+                            <option><%= pro.getId()+" - "+ pro.getNombre() %></option>
                             <% } %>
                         </select>
                         <label class="ml-5 mt-2 col-2">Observaciones:</label>

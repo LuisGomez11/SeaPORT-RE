@@ -3,6 +3,7 @@ package Modelos;
 
 public class Proveedores {
 
+    private int id;
     private String nombre;
     private String telefono;
     private String movil;
@@ -12,6 +13,18 @@ public class Proveedores {
 
     public Proveedores() {
     }
+
+    public Proveedores(int id, String nombre, String telefono, String movil, String correo, String nit, int cantTra) {
+        this.id = id;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.movil = movil;
+        this.correo = correo;
+        this.nit = nit;
+        this.cantTra = cantTra;
+    }
+    
+    
 
     public Proveedores(String nombre, String telefono, String movil, String correo, String nit, int cantTra) {
         this.nombre = nombre;
@@ -105,6 +118,20 @@ public class Proveedores {
      */
     public void setCantTra(int cantTra) {
         this.cantTra = cantTra;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

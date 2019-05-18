@@ -28,6 +28,8 @@ public class OpcionesServicios {
         return lista;
     }
     
+    
+    
     public static List mostrarSer(int id) {
         List<Servicios> lista = new ArrayList<>();       
         try (Connection connect = ConexionBD.connect()) {

@@ -1,18 +1,20 @@
 <%-- 
-    Document   : Datos
-    Created on : 28/04/2019, 09:44:01 PM
-    Author     : Sammy Guergachi <sguergachi at gmail.com>
+    Document   : Proveedores
+    Created on : 16/05/2019, 02:34:26 PM
+    Author     : User
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Config.OpcionesProveedor"%>
+<%@page import="Modelos.Proveedores"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
+<%@page import="Config.OpcionesGenerados"%>
 <%@page import="Config.OpcionesAsignados"%>
 <%@page import="Modelos.serAsignados"%>
 <%@page import="Modelos.serGenerados"%>
 <%@page import="java.util.List"%>
-<%@page import="Config.OpcionesGenerados"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,6 +48,7 @@
             //LISTAS            
             List<serGenerados> listaGen = OpcionesGenerados.listar();
             List<serAsignados> listaAsi = OpcionesAsignados.listar();
+            List<Proveedores> listaProv = OpcionesProveedor.listar();
         
             //COMPROBACIONES DE LOS HORARIOS DE LOS SERVICIOS
             DateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
@@ -203,23 +206,37 @@
                 <li><a href="Generados.jsp" class="" id="cuarta"><i class="fas fa-clipboard"></i><span>Servicios generados</span></a></li>
                 <li><a href="Asignados.jsp" class="" id="quinta"><i class="fas fa-clipboard-check"></i><span>Servicios asignados</span></a></li>
                 <li><a href="Informes.jsp" class="" id="sexta"><i class="fas fa-calendar-alt"></i><span>Informes</span></a></li>
-                <li><a href="#" class="activado" id="septima"><i class="fas fa-chart-pie"></i><span>Datos estadisticos</span></a></li>
-                <li><a href="Proveedores.jsp" class="" id="octava"><i class="fas fa-address-book"></i><span>Consultar proveedores</span></a></li>
+                <li><a href="Datos.jsp" class="" id="septima"><i class="fas fa-chart-pie"></i><span>Datos estadisticos</span></a></li>
+                <li><a href="#" class="activado" id="octava"><i class="fas fa-address-book"></i><span>Consultar proveedores</span></a></li>
             </ul>
         </div>
         <!-- ////////////////////////////MENU LATERAL//////////////////////////// -->
 
         <a href="" class="btn-menu">Menu <i class="icon fas fa-bars"></i></a>
         
-        <!-- ////////////////////////////DATOS ESTADISTICOS//////////////////////////// -->
-        <div class="contenedor-estadisticos">
-            <h3>Datos estadisticos</h3>
+        <!-- ////////////////////////////PROVEEDORES//////////////////////////// -->
+        <div class="contenedor-proveedores">
+            <h3>Consultar proveedores</h3>
             <hr>
-            <canvas id="myChart" width="400" height="400"></canvas>
-        </div>
-        <!-- ////////////////////////////DATOS ESTADISTICOS//////////////////////////// -->
+            <div class="row w-100 h-auto">
 
-        <!-- SCRIPT GRAFICAS -->
-        <script src="CSS - JS/JS/graficas.js"></script>
+                <%                    
+                    for (Proveedores dato : listaProv) {
+                %>
+
+                <div class="col-lg-4 my-2" id="carPro">
+                    <div class="card border-primary">
+                        <div class="card-header text-center"><%= dato.getNombre() %></div>
+                        <div class="card-body" id="bodyCard">
+                            <strong>NIT: </strong><label class="ml-2"><%= dato.getNit() %></label><br>
+                            <strong>Cant. de trabajadores disponibles: </strong><label class="ml-1"><%= dato.getCantTra() %></label><br>
+                        </div>
+                    </div>
+                </div>
+                <%  }  %>
+            </div>
+        </div>
+        <!-- ////////////////////////////PROVEEDORES//////////////////////////// -->
+
     </body>
 </html>

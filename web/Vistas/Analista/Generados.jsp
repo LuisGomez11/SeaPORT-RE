@@ -27,7 +27,7 @@
         <!-- ESTILOS -->
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/estilos.css">
+        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/styles.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
@@ -226,6 +226,7 @@
                 <li><a href="Asignados.jsp" class="" id="quinta"><i class="fas fa-clipboard-check"></i><span>Servicios asignados</span></a></li>
                 <li><a href="Informes.jsp" class="" id="sexta"><i class="fas fa-calendar-alt"></i><span>Informes</span></a></li>
                 <li><a href="Datos.jsp" class="" id="septima"><i class="fas fa-chart-pie"></i><span>Datos estadisticos</span></a></li>
+                <li><a href="Proveedores.jsp" class="" id="octava"><i class="fas fa-address-book"></i><span>Consultar proveedores</span></a></li>
             </ul>
         </div>
         <!-- ////////////////////////////MENU LATERAL//////////////////////////// -->

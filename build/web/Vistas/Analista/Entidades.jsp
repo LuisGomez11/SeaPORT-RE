@@ -29,7 +29,7 @@
         <!-- ESTILOS -->
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/estilos.css">
+        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/styles.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
@@ -217,14 +217,15 @@
 
         <div class="contenedor-menu">
             <ul class="menu">
-                <li><a href="Inicio.jsp"><i class="fas fa-home"></i><span>Inicio</span></a></li>
-                <li><a href="Servicio.jsp"><i class="fas fa-plus-circle"></i><span>Agregar servicio</span></a></li>
-                <li><a href="#" class="activado"><i class="fas fa-truck"></i><span>Entidades fisicas</span></a></li>
-                <li><a href="Generar.jsp"><i class="fas fa-folder-plus"></i><span>Generar servicio</span></a></li>
-                <li><a href="Generados.jsp"><i class="fas fa-clipboard"></i><span>Servicios generados</span></a></li>
-                <li><a href="Asignados.jsp"><i class="fas fa-clipboard-check"></i><span>Servicios asignados</span></a></li>
-                <li><a href="Informes.jsp"><i class="fas fa-calendar-alt"></i><span>Informes</span></a></li>
-                <li><a href="Datos.jsp"><i class="fas fa-chart-pie"></i><span>Datos estadisticos</span></a></li>
+                <li><a href="Inicio.jsp" class="" id="inicio"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+                <li><a href="Servicio.jsp" class="" id="primera"><i class="fas fa-plus-circle"></i><span>Agregar servicio</span></a></li>
+                <li><a href="#" class="activado" id="segunda"><i class="fas fa-truck"></i><span>Entidades fisicas</span></a></li>
+                <li><a href="Generar.jsp" class="" id="tercera"><i class="fas fa-folder-plus"></i><span>Generar servicio</span></a></li>
+                <li><a href="Generados.jsp" class="" id="cuarta"><i class="fas fa-clipboard"></i><span>Servicios generados</span></a></li>
+                <li><a href="Asignados.jsp" class="" id="quinta"><i class="fas fa-clipboard-check"></i><span>Servicios asignados</span></a></li>
+                <li><a href="Informes.jsp" class="" id="sexta"><i class="fas fa-calendar-alt"></i><span>Informes</span></a></li>
+                <li><a href="Datos.jsp" class="" id="septima"><i class="fas fa-chart-pie"></i><span>Datos estadisticos</span></a></li>
+                <li><a href="Proveedores.jsp" class="" id="octava"><i class="fas fa-address-book"></i><span>Consultar proveedores</span></a></li>
             </ul>
         </div>
         <!-- ////////////////////////////MENU LATERAL//////////////////////////// -->

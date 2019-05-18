@@ -3,6 +3,7 @@ package Servlet;
 
 import Config.OpcionesAsignados;
 import Config.OpcionesGenerados;
+import Config.OpcionesProveedor;
 import Modelos.serAsignados;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,6 +50,8 @@ public class ControlAsignacion extends HttpServlet {
             }
             
             String proveedor;
+            String nombre;
+            int cod;
             int cantidad;
             String observaciones;
             int hrsTotales;
@@ -58,18 +61,21 @@ public class ControlAsignacion extends HttpServlet {
             
             for (int i = 1; i <= vanPro; i++) {
                 proveedor = request.getParameter("prov"+i);
+                String[]pro =proveedor.split(" - ");
+                cod = Integer.parseInt(pro[0]);
+                nombre = pro[1];
                 observaciones = request.getParameter("obser"+i);
                 cantidad = Integer.parseInt(request.getParameter("cantidad"+i));
                 hrsTotales = Integer.parseInt(request.getParameter("total"+i));
                 
                 serAsignados serAsi = new serAsignados(terminal, moto, lloyd, 
                         uvi, referencia, muelle, grua, fechaCita, horaCita, 
-                        hrsOp, fechaFinal, horaFinal, servicio, proveedor, 
+                        hrsOp, fechaFinal, horaFinal, servicio, nombre, 
                         cantidad, observaciones, hrsTotales, "En espera");
                 System.out.println(i);
                 try {
                     OpcionesAsignados.Insertar(serAsi);
-                    
+                    OpcionesProveedor.actualizarCant(cod, cantidad);
                 } catch (ClassNotFoundException | SQLException e) {
                     System.out.println("Error: "+e);
                 }
