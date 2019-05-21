@@ -1,11 +1,24 @@
 var ctx = document.getElementById('myChart').getContext('2d');
+var enero = parseInt($("#enero").val());
+var febrero = parseInt($("#febrero").val());
+var marzo = parseInt($("#marzo").val());
+var abril = parseInt($("#abril").val());
+var mayo = parseInt($("#mayo").val());
+var junio = parseInt($("#junio").val());
+var julio = parseInt($("#julio").val());
+var agosto = parseInt($("#agosto").val());
+var septiembre = parseInt($("#septiembre").val());
+var octubre = parseInt($("#octubre").val());
+var noviembre = parseInt($("#noviembre").val());
+var diciembre = parseInt($("#diciembre").val());
+
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         datasets: [{
-            label: 'No. de servicios generados',
-            data: [14, 13, 13, 15, 13, 12, 14, 13, 13, 15, 13, 13],
+            label: 'No. de servicios ejecutados',
+            data: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

@@ -27,7 +27,7 @@
         <!-- ESTILOS -->
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/styles.css">
+        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/estilos.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
@@ -35,7 +35,7 @@
         <script src="../../JS/bootstrap.min.js"></script>
         <script src="../../JS/sweetalert.min.js"></script>
         <script src="../../JS/chart.js"></script>
-        <script src="CSS - JS/JS/appMenu.js"></script>
+        <script src="CSS - JS/JS/app.js"></script>
 
         <title>SeaPORT R&E</title>
     </head>
@@ -54,107 +54,7 @@
             int pri1 = 1,pri2 = 1,pri3 = 1,pri4 = 1,pri5 = 1,pri6 = 1,pri7 = 1,
                 pri8 = 1,pri9 = 1,pri10 = 1,pri11 = 1,pri12 = 1;
             
-           
-            
-            //COMPROBACIONES DE LOS HORARIOS DE LOS SERVICIOS
-            DateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
-            DateFormat formato1 = new SimpleDateFormat("HH:mm");
-            String fechaActual = formato.format(new Date());
-            String horaActual = formato1.format(new Date());
-            
-            String[] actual = fechaActual.split("/");
-            int diaActual = Integer.parseInt(actual[2]);
-            int mesActual = Integer.parseInt(actual[1]);
-            int anioActual = Integer.parseInt(actual[0]);
-
-            String[] hActual = horaActual.split(":");
-            int hoActual = Integer.parseInt(hActual[0]);
-            int minutoActual = Integer.parseInt(hActual[1]);
-            
-            for(serGenerados dato : listaGen){
-                String fechaIni = dato.getFechaCita();
-                String horaIni = dato.getHoraCita();
-                
-                String[] Inicio = fechaIni.split("-");
-                int diaInicio = Integer.parseInt(Inicio[2]);
-                int mesInicio = Integer.parseInt(Inicio[1]);
-                int anioInicio = Integer.parseInt(Inicio[0]);
-
-                String[] hInicio = horaIni.split(":");
-                int hoInicio = Integer.parseInt(hInicio[0]);
-                int minutoInicio = Integer.parseInt(hInicio[1]);
-                
-                if (anioActual > anioInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual > mesInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio
-                        && diaActual > diaInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio
-                        && diaActual == diaInicio && hoActual > hoInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
-                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                }
-            }
-
-            for (serAsignados dato : listaAsi) {
-                String fechaIni = dato.getFechaCita();
-                String horaIni = dato.getHoraCita();
-                String fechaFin = dato.getFechaFinal();
-                String horaFin = dato.getHoraFinal();     
-
-                String[] Inicio = fechaIni.split("-");
-                int diaInicio = Integer.parseInt(Inicio[2]);
-                int mesInicio = Integer.parseInt(Inicio[1]);
-                int anioInicio = Integer.parseInt(Inicio[0]);
-
-                String[] hInicio = horaIni.split(":");
-                int hoInicio = Integer.parseInt(hInicio[0]);
-                int minutoInicio = Integer.parseInt(hInicio[1]);
-
-                String[] Fin = fechaFin.split("-");
-                int diaFin = Integer.parseInt(Fin[2]);
-                int mesFin = Integer.parseInt(Fin[1]);
-                int anioFin = Integer.parseInt(Fin[0]);
-
-                String[] hFin = horaFin.split(":");
-                int hoFin = Integer.parseInt(hFin[0]);
-                int minutoFin = Integer.parseInt(hFin[1]);
-
-                if (anioActual > anioInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual > mesInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio
-                        && diaActual > diaInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio
-                        && diaActual == diaInicio && hoActual > hoInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
-                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                }
-
-                if (anioActual > anioFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                } else if (anioActual == anioFin && mesActual > mesFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                } else if (anioActual == anioFin && mesActual == mesFin
-                        && diaActual > diaFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                } else if (anioActual == anioFin && mesActual == mesFin
-                        && diaActual == diaFin && hoActual > hoFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                } else if (anioActual == anioFin && mesActual == mesFin && diaActual == diaFin
-                        && hoActual == hoFin && minutoActual >= minutoFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                }
-
-            }
+            OpcionesAsignados.estado(listaGen, listaAsi);
 
 
         %>
@@ -223,13 +123,18 @@
 
         <!-- ////////////////////////////INFORMES//////////////////////////// -->
         <div class="contenedor-informes">
-            <div class="flex">
-                <h3 id="tituloInfo">Informes - Mes de enero</h3>
-                <ul class="pagination">
-                    <li id="anterior-pag" class="page-item"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>
-                </ul>
+            <div class="flex row">
+                <div class="col-lg-6">
+                    <h3 id="tituloInfo">Informes - Mes de enero</h3>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="pagination">
+                        <li id="anterior-pag" class="page-item"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>
+                    </ul>
+                </div>
             </div>
             <hr>
+            
             <div class="loop">
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
@@ -486,7 +391,7 @@
 
                             </div>
                         </div>
-                        <% }
+                        <%}
                         } %>
                     </div>
                 </div>
@@ -856,6 +761,7 @@
                 </div>
             </div>      
         </div>
+            
         <!-- ////////////////////////////INFORMES//////////////////////////// -->
     </body>
 </html>

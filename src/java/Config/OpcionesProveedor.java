@@ -33,6 +33,27 @@ public class OpcionesProveedor {
         return lista;
     }
     
+    public static List mostrarPro(int cod) {
+        List<Proveedores> lista = new ArrayList<>();       
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps = connect.prepareStatement("select * from proveedores where codProveedor=" + cod);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Proveedores p = new Proveedores(rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7));
+                lista.add(p);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return lista;
+    }
+    
     public static List listarPro() throws ClassNotFoundException, SQLException {
         ArrayList<String> lista = new ArrayList<>();
         try (Connection connect = ConexionBD.connect()) {

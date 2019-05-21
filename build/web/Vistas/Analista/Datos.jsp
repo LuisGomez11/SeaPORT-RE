@@ -35,7 +35,7 @@
         <script src="../../JS/bootstrap.min.js"></script>
         <script src="../../JS/sweetalert.min.js"></script>
         <script src="../../JS/chart.js"></script>
-        <script src="CSS - JS/JS/appMenu.js"></script>
+        <script src="CSS - JS/JS/app.js"></script>
 
         <title>SeaPORT R&E</title>
     </head>
@@ -47,105 +47,20 @@
             List<serGenerados> listaGen = OpcionesGenerados.listar();
             List<serAsignados> listaAsi = OpcionesAsignados.listar();
         
-            //COMPROBACIONES DE LOS HORARIOS DE LOS SERVICIOS
-            DateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
-            DateFormat formato1 = new SimpleDateFormat("HH:mm");
-            String fechaActual = formato.format(new Date());
-            String horaActual = formato1.format(new Date());
+            OpcionesAsignados.estado(listaGen, listaAsi);
             
-            String[] actual = fechaActual.split("/");
-            int diaActual = Integer.parseInt(actual[2]);
-            int mesActual = Integer.parseInt(actual[1]);
-            int anioActual = Integer.parseInt(actual[0]);
-
-            String[] hActual = horaActual.split(":");
-            int hoActual = Integer.parseInt(hActual[0]);
-            int minutoActual = Integer.parseInt(hActual[1]);
-            
-            for(serGenerados dato : listaGen){
-                String fechaIni = dato.getFechaCita();
-                String horaIni = dato.getHoraCita();
-                
-                String[] Inicio = fechaIni.split("-");
-                int diaInicio = Integer.parseInt(Inicio[2]);
-                int mesInicio = Integer.parseInt(Inicio[1]);
-                int anioInicio = Integer.parseInt(Inicio[0]);
-
-                String[] hInicio = horaIni.split(":");
-                int hoInicio = Integer.parseInt(hInicio[0]);
-                int minutoInicio = Integer.parseInt(hInicio[1]);
-                
-                if (anioActual > anioInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual > mesInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio
-                        && diaActual > diaInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio
-                        && diaActual == diaInicio && hoActual > hoInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
-                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
-                    OpcionesGenerados.eliminarSer(dato.getReferencia());
-                }
-            }
-
-            for (serAsignados dato : listaAsi) {
-                String fechaIni = dato.getFechaCita();
-                String horaIni = dato.getHoraCita();
-                String fechaFin = dato.getFechaFinal();
-                String horaFin = dato.getHoraFinal();     
-
-                String[] Inicio = fechaIni.split("-");
-                int diaInicio = Integer.parseInt(Inicio[2]);
-                int mesInicio = Integer.parseInt(Inicio[1]);
-                int anioInicio = Integer.parseInt(Inicio[0]);
-
-                String[] hInicio = horaIni.split(":");
-                int hoInicio = Integer.parseInt(hInicio[0]);
-                int minutoInicio = Integer.parseInt(hInicio[1]);
-
-                String[] Fin = fechaFin.split("-");
-                int diaFin = Integer.parseInt(Fin[2]);
-                int mesFin = Integer.parseInt(Fin[1]);
-                int anioFin = Integer.parseInt(Fin[0]);
-
-                String[] hFin = horaFin.split(":");
-                int hoFin = Integer.parseInt(hFin[0]);
-                int minutoFin = Integer.parseInt(hFin[1]);
-
-                if (anioActual > anioInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual > mesInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio
-                        && diaActual > diaInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio
-                        && diaActual == diaInicio && hoActual > hoInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                } else if (anioActual == anioInicio && mesActual == mesInicio && diaActual == diaInicio
-                        && hoActual == hoInicio && minutoActual >= minutoInicio) {
-                    OpcionesAsignados.pasarProceso(dato.getReferencia());
-                }
-
-                if (anioActual > anioFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                } else if (anioActual == anioFin && mesActual > mesFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                } else if (anioActual == anioFin && mesActual == mesFin
-                        && diaActual > diaFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                } else if (anioActual == anioFin && mesActual == mesFin
-                        && diaActual == diaFin && hoActual > hoFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                } else if (anioActual == anioFin && mesActual == mesFin && diaActual == diaFin
-                        && hoActual == hoFin && minutoActual >= minutoFin) {
-                    OpcionesAsignados.pasarFinalizado(dato.getReferencia());
-                }
-
-            }
+            int enero = OpcionesAsignados.numInformes("01");
+            int febre = OpcionesAsignados.numInformes("02");
+            int marzp = OpcionesAsignados.numInformes("03");
+            int abril = OpcionesAsignados.numInformes("04");
+            int mayo = OpcionesAsignados.numInformes("05");
+            int junio = OpcionesAsignados.numInformes("06");
+            int julio = OpcionesAsignados.numInformes("07");
+            int agosto = OpcionesAsignados.numInformes("08");
+            int sept = OpcionesAsignados.numInformes("09");
+            int oct = OpcionesAsignados.numInformes("10");
+            int nov = OpcionesAsignados.numInformes("11");
+            int dic = OpcionesAsignados.numInformes("12");
         
         %>
         
@@ -217,6 +132,15 @@
             <hr>
             <canvas id="myChart" width="400" height="400"></canvas>
         </div>
+        
+        <div>
+                <input type="hidden" id="enero" value="<%= enero %>"><input type="hidden" id="febrero" value="<%= febre %>">
+                <input type="hidden" id="marzo" value="<%= marzp %>"><input type="hidden" id="abril" value="<%= abril %>">
+                <input type="hidden" id="mayo" value="<%= mayo %>"><input type="hidden" id="junio" value="<%= junio %>">
+                <input type="hidden" id="julio" value="<%= julio %>"><input type="hidden" id="agosto" value="<%= agosto %>">
+                <input type="hidden" id="septiembre" value="<%= sept %>"><input type="hidden" id="octubre" value="<%= oct %>">
+                <input type="hidden" id="noviembre" value="<%= nov %>"><input type="hidden"  id="diciembre"value="<%= dic %>">
+            </div>
         <!-- ////////////////////////////DATOS ESTADISTICOS//////////////////////////// -->
 
         <!-- SCRIPT GRAFICAS -->

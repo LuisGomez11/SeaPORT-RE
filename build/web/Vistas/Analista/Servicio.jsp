@@ -4,6 +4,10 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="Config.OpcionesAsignados"%>
+<%@page import="Modelos.serGenerados"%>
+<%@page import="Modelos.serAsignados"%>
+<%@page import="Config.OpcionesGenerados"%>
 <%@page import="Config.OpcionesServicios"%>
 <%@page import="Modelos.Servicios"%>
 <%@page import="java.util.List"%>
@@ -30,14 +34,17 @@
         <script src="../../JS/bootstrap.min.js"></script>
         <script src="../../JS/sweetalert.min.js"></script>
         <script src="../../JS/chart.js"></script>
-        <script src="CSS - JS/JS/appMenu.js"></script>
+        <script src="CSS - JS/JS/app.js"></script>
 
         <title>SeaPORT R&E</title>
     </head>
     <body>
         
         <%
-        
+            
+            //LISTAS
+            List<serGenerados> listaGen = OpcionesGenerados.listar();
+            List<serAsignados> listaAsi = OpcionesAsignados.listar();
             List<Servicios> listaSer = OpcionesServicios.listar();
             
             if (request.getParameter("valSer") != null) {
@@ -55,6 +62,8 @@
             if (request.getParameter("valMod") != null) {
                 out.print("<script>swal('Correcto!', 'El servicio fue modificado correctamente', 'success').then((value) => {window.location = 'Servicio.jsp';});</script>");
             }
+            
+            OpcionesAsignados.estado(listaGen, listaAsi);
         
         %>
         
@@ -155,7 +164,7 @@
                                 <tr>
                                     <td><%= dato.getNombre()%></td>
                                     <td>
-                                        <a href="Opciones/Servicio/Modificar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-warning mb-1">MODIFICAR</a>
+                                        <a href="Opciones/Servicio/Modificar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-warning">MODIFICAR</a>
                                         <a href="Opciones/Servicio/Eliminar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-danger">ELIMINAR</a>
                                     </td>
                                 </tr>

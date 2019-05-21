@@ -1,0 +1,83 @@
+CREATE DATABASE pro_aula;
+
+USE pro_aula;
+
+CREATE TABLE servicios_generados (
+
+	terminal varchar(5) NOT NULL,
+	motonave varchar(30) NOT NULL,
+	lloyd varchar(10) NOT NULL,
+	uvi varchar(10) NOT NULL,
+	referencia varchar(10) NOT NULL PRIMARY KEY,
+	muelle varchar(10) NOT NULL,
+	grua varchar(20) NOT NULL,
+	fechaCita varchar(20) NOT NULL,
+	horaCita varchar(10) NOT NULL,
+	hrsOp varchar(3) NOT NULL,
+	fechaFinal varchar(20) NOT NULL,
+	horaFinal varchar(10) NOT NULL,
+	servicio varchar(20) NOT NULL
+	
+);
+
+CREATE TABLE servicios_asignados (
+
+	codigo int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	terminal varchar(5) NOT NULL,
+	motonave varchar(30) NOT NULL,
+	lloyd varchar(10) NOT NULL,
+	uvi varchar(10) NOT NULL,
+	referencia varchar(10) NOT NULL,
+	muelle varchar(10) NOT NULL,
+	grua varchar(20) NOT NULL,
+	fechaCita varchar(20) NOT NULL,
+	horaCita varchar(10) NOT NULL,
+	hrsOp varchar(3) NOT NULL,
+	fechaFinal varchar(20) NOT NULL,
+	horaFinal varchar(10) NOT NULL,
+	servicio varchar(20) NOT NULL,
+	proveedor varchar(30) NOT NULL,
+	cantidad int(3) NOT NULL,
+	observaciones varchar(30) NOT NULL,
+	hrsTotales int(3) NOT NULL,
+	estado varchar(15) NOT NULL
+	
+);
+
+CREATE TABLE proveedores (
+
+	codProveedor int PRIMARY KEY AUTO_INCREMENT,
+	nombre varchar(20) NOT NULL,
+	telefono varchar(20) NOT NULL,
+	movil varchar(20) NOT NULL,
+	correo varchar(50) NOT NULL,
+	nit varchar(30) NOT NULL,
+	cantTra int(5) NOT NULL
+
+);
+
+CREATE TABLE servicios (
+
+	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	nombre varchar(20)
+
+);
+
+
+CREATE TABLE entidad_fisica (
+
+	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	nombre varchar(20) ,
+	tipo varchar(15) NOT NULL
+
+);
+
+INSERT INTO proveedores VALUES ('1','EQUILOG','6003245','3009048952','equilog@hotmail.com','860034313-7','120');
+
+INSERT INTO proveedores VALUE ('2','IMPOTARJA','6003245','3009048952','impotarja@hotmail.com','878403313-3','100');
+
+INSERT INTO proveedores VALUES ('3','SESCARIBE','6003245','3009048952','sescaribe@hotmail.com','325532353-4','140');
+
+INSERT INTO proveedores VALUES ('4','CONTECAR','6003245','3009048952','contecar@hotmail.com','543643643-4','120');
+
+

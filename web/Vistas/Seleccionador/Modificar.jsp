@@ -4,6 +4,9 @@
     Author     : E201
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Config.OpcionesProveedor"%>
+<%@page import="Modelos.Proveedores"%>
 <%@page import="Clases.ConexionBD"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
@@ -24,7 +27,7 @@
         <!-- ESTILOS -->
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS/estilos1.css">
+        <link rel="stylesheet" type="text/css" href="CSS/estilos.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
@@ -36,28 +39,17 @@
         <title>SeaPORT R&E</title>
     </head>
     <body>
-        <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
-        <nav id="navMod">
-            <div id="empresa">
-                <h1>SPRC</h1>
-            </div>
-            <div id="titulo">
-                <h4 class="ml-4">Modificar servicio</h4>
-            </div>
-        </nav>
-        <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
-        <br><br><br><br><br>
+        <img src="../../IMG/slider-background2.jpg">
         <%
 
-            Connection connect = ConexionBD.connect();
             int cod = Integer.parseInt(request.getParameter("cod"));
-            PreparedStatement ps = connect.prepareStatement("select * from proveedores where codProveedor=" + cod);
-            ResultSet rs = ps.executeQuery();
+            
+            List<Proveedores> proveedor = OpcionesProveedor.mostrarPro(cod);
 
-            while (rs.next()) {
+            for(Proveedores dato : proveedor){
 
         %>
-        <div class="container">
+        <div class="formOpcio container p-5">
             <form autocomplete="off" method="POST" action="../../ControlProveedores?opc=mod">
                 <div class="row">
                     <div class="form-group col-12">
@@ -69,41 +61,41 @@
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" value="<%= rs.getString("nombre")%>" required>
+                        <input type="text" class="form-control" name="nombre" value="<%= dato.getNombre() %>" required>
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="telefono">Telefono</label>
-                        <input type="number" class="form-control" name="telefono" value="<%= rs.getString("telefono")%>" required>
+                        <input type="number" class="form-control" name="telefono" value="<%= dato.getTelefono() %>" required>
                     </div>
                     <div class="form-group col-6">
                         <label for="movil">Movil</label>
-                        <input type="number" class="form-control" name="movil" value="<%= rs.getString("movil")%>" required>
+                        <input type="number" class="form-control" name="movil" value="<%= dato.getMovil() %>" required>
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="correo">Correo electronico</label>
-                        <input type="email" class="form-control" name="correo" value="<%= rs.getString("correo")%>" required>
+                        <input type="email" class="form-control" name="correo" value="<%= dato.getCorreo() %>" required>
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="nit">NIT del proveedor</label>
-                        <input type="text" class="form-control" name="nit" value="<%= rs.getString("nit")%>" required>
+                        <input type="text" class="form-control" name="nit" value="<%= dato.getNit() %>" required>
                     </div>
                     <div class="form-group col-6">
                         <label for="cantTra">Cantidad de trabajadores</label>
-                        <input type="number" class="form-control" name="cantTra" value="<%= rs.getString("cantTra")%>" required>
+                        <input type="number" class="form-control" name="cantTra" value="<%= dato.getCantTra() %>" required>
                     </div>
                 </div>
                 <br>
                 <div style="float: right; width:35%;">
-                    <a href="menuSeleccionador.jsp" style="float: right; margin-left: 10px;" class="btn btn-danger">CANCELAR</a>
+                    <a href="Consultar.jsp" style="float: right; margin-left: 10px;" class="btn btn-danger">CANCELAR</a>
                     <input style="float: right;" type="submit" value="MODIFICAR" class="btn btn-primary">
                 </div>
             </form>

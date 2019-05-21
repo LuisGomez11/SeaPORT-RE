@@ -120,7 +120,7 @@ a {
     width: 240px;
     height: 100%;
     position: fixed;
-    display: inline-block;
+    display: block;
     z-index: 1000;
 }
 
@@ -363,10 +363,6 @@ box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.67);
 
 .flex {
     display: flex;
-}
-
-#tituloInfo, .pagination{
-    width: 50%;
 }
 
 .pagination{

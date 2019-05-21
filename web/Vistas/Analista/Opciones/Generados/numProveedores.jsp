@@ -30,7 +30,7 @@
     <script src="../../../../JS/jquery-3.1.1.min.js"></script>
     <script src="../../../../JS/bootstrap.min.js"></script>
     <script src="../../../../JS/sweetalert.min.js"></script>
-    <script src="../../CSS - JS/JS/appMenu1.js"></script>
+    <script src="../../CSS - JS/JS/app.js"></script>
 
         <title>SeaPORT R&E</title>
     </head>

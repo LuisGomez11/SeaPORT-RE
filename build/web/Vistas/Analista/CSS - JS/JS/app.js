@@ -1,13 +1,15 @@
 $(document).ready(function () {
 
     $('.btn-menu').click(function (e) {
-        $('.contenedor-menu .menu').slideToggle();
+        $('.contenedor-menu').slideToggle();
         e.preventDefault();
     });
 
     $(window).resize(function () {
         if ($(document).width() > 1015) {            
-            $('.contenedor-menu .menu').css({'display': 'block'});          
+            $('.contenedor-menu').css({'display': 'block'});          
+        }else{
+            $('.contenedor-menu').css({'display': 'none'});     
         }
     });
     

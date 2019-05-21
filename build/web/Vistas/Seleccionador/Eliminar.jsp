@@ -21,25 +21,26 @@
         <!-- ESTILOS -->
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS/estilos1.css">
+        <link rel="stylesheet" type="text/css" href="CSS/estilos.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
         <script src="../../JS/jquery-3.1.1.min.js"></script>
         <script src="../../JS/bootstrap.min.js"></script>
         <script src="../../JS/sweetalert.min.js"></script>
-        <script src="JS/appMenu.js"></script>
+        <script src="JS/app.js"></script>
         
         <title>SeaPORT R&E</title>
     </head>
     <body>
+        <img src="../../IMG/slider-background2.jpg">
         <%
         
            int cod = Integer.parseInt(request.getParameter("cod"));
         
         %>
         <form action="Eliminar.jsp" method="POST">
-            <div class="container-fluid p-5">
+            <div class="formOpcio container p-5">
             <div class="form-group">
                 <h3>Codigo del proveedor: <input type="text" readonly name="cod" value="<%= cod%>" class="form-control"></h3>
                 <h4>Digite su contraseña para seguridad de eliminacion</h4>
@@ -52,9 +53,8 @@
                         <input type="submit" name="btnEliminar" value="ELIMINAR" class="btn btn-info btn-block">
                         
                     </div>
-                    <div class="col-2">
-                        
-                        <a class="btn btn-danger btn-block" href="menuSeleccionador.jsp">CANCELAR</a>
+                    <div class="col-2">                       
+                        <a class="btn btn-danger btn-block" href="Consultar.jsp">CANCELAR</a>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 
                 if(contra.equals("passseleccionador")){
                     OpcionesProveedor.Eliminar(cod);
-                    response.sendRedirect("menuSeleccionador.jsp?valEli=correcto");
+                    response.sendRedirect("Consultar.jsp?valEli=correcto");
                 }else{
                     out.print("<script>swal('Error!', 'Contraseña ingresada incorrecta, intente nuevamente', 'error');</script>");
                 }

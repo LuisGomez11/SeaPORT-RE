@@ -11,7 +11,6 @@ $(document).ready(function () {
         }
     });
     
-
     ///////////////////////////PAGINACION/////////////////////////////
 
     var numTablas = $(".loop .carta").length;

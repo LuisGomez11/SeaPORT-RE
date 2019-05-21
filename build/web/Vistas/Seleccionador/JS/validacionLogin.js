@@ -18,7 +18,7 @@ $(document).ready(function () {
         }
 
         if (user === 'seleccionador' && pass === 'passseleccionador') {
-            window.location = "menuSeleccionador.jsp";
+            window.location = "Registrar.jsp";
         } else {
             swal("ERROR!", "Datos incorrectos, intente nuevamente", "error");
             return false;

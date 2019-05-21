@@ -13,54 +13,6 @@ $(document).ready(function(){
 		}
 	});
 
-	//////////////////////// CONTENEDORES ///////////////////////
-	var inicio = $('.contenedor-inicio');
-	var regProveedor = $('.contenedor-regProveedor');
-	var conProveedor = $('.contenedor-conProveedor');
-
-	////////////////////// BOTONES - MENU //////////////////////
-	var btnInicio = $('#inicio');
-	var primera = $('#primera');
-	var segunda = $('#segunda');
-
-	function menuControl(act, no1, no2, btnAct, btn1, btn2){
-		act.css({'display':'block'});
-		no1.css({'display':'none'});
-		no2.css({'display':'none'});
-		//////////////////////////////////////////////////////
-		btnAct.addClass('activado');
-		//////////////////////////////////////////////////////
-		btn1.removeClass('activado');
-		btn2.removeClass('activado');
-	}
-
-	$('#inicio').click(function(e){
-		e.preventDefault();
-		menuControl(inicio,regProveedor,conProveedor,
-			btnInicio,primera,segunda);
-		if ($(document).width() < 500) {
-			$('.contenedor-menu .menu').slideUp();
-		}
-	});
-
-	$('#primera').click(function(e){
-		e.preventDefault();
-		menuControl(regProveedor,inicio,conProveedor,
-			primera,btnInicio,segunda);
-		if ($(document).width() < 500) {
-			$('.contenedor-menu .menu').slideUp();
-		}
-	});
-
-	$('#segunda').click(function(e){
-		e.preventDefault();
-		menuControl(conProveedor,regProveedor,inicio,
-			segunda,primera,btnInicio);
-		if ($(document).width() < 500) {
-			$('.contenedor-menu .menu').slideUp();
-		}
-	});
-        
         //VALIDACIONES DEL FORMULARIO DE REGISTRO
         
         $("#btnRegistrar").click(function(e){

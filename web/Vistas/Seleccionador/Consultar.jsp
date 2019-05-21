@@ -1,16 +1,12 @@
 <%-- 
-    Document   : Proveedores
-    Created on : 16/05/2019, 02:34:26 PM
+    Document   : Consultar
+    Created on : 20/05/2019, 05:40:37 PM
     Author     : User
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="Config.OpcionesProveedor"%>
 <%@page import="Modelos.Proveedores"%>
-<%@page import="Config.OpcionesGenerados"%>
-<%@page import="Config.OpcionesAsignados"%>
-<%@page import="Modelos.serAsignados"%>
-<%@page import="Modelos.serGenerados"%>
-<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,29 +22,40 @@
         <!-- ESTILOS -->
         <link rel="stylesheet" href="../../CSS/animate.css">
         <link rel="stylesheet" type="text/css" href="../../CSS/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS - JS/CSS/styles.css">
+        <link rel="stylesheet" type="text/css" href="CSS/estilos.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
         <!-- SCRIPTS -->
         <script src="../../JS/jquery-3.1.1.min.js"></script>
         <script src="../../JS/bootstrap.min.js"></script>
         <script src="../../JS/sweetalert.min.js"></script>
-        <script src="../../JS/chart.js"></script>
-        <script src="CSS - JS/JS/app.js"></script>
-
+        <script src="JS/app1.js"></script>
+        
         <title>SeaPORT R&E</title>
     </head>
     <body>
         
         <%
+        
+            List<Proveedores> lista = OpcionesProveedor.listar();
             
-            //LISTAS            
-            List<serGenerados> listaGen = OpcionesGenerados.listar();
-            List<serAsignados> listaAsi = OpcionesAsignados.listar();
-            List<Proveedores> listaProv = OpcionesProveedor.listar();
-        
-            OpcionesAsignados.estado(listaGen, listaAsi);
-        
+            //MENSAJES DE ALERTA
+            if (request.getParameter("val") != null) {
+                if (request.getParameter("val").equals("correcto")) {
+                    out.print("<script>swal('Correcto!', 'El proveedor fue registrado correctamente', 'success').then((value) => {window.location = 'Consultar.jsp';});</script>");
+                }
+            }
+            if (request.getParameter("valMod") != null) {
+                if (request.getParameter("valMod").equals("correcto")) {
+                    out.print("<script>swal('Correcto!', 'El proveedor fue modificado correctamente', 'success').then((value) => {window.location = 'Consultar.jsp';});</script>");
+                }
+            }
+            if (request.getParameter("valEli") != null) {
+                if (request.getParameter("valEli").equals("correcto")) {
+                    out.print("<script>swal('Correcto!', 'El proveedor fue eliminado correctamente', 'success').then((value) => {window.location = 'Consultar.jsp';});</script>");
+                }
+            }
+
         %>
         
         <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
@@ -57,10 +64,10 @@
                 <h1>SPRC</h1>
             </div>
             <div id="titulo">
-                <h4 class="ml-4">Bienvenido al menu del analista</h4>
+                <h4 class="ml-4">Bienvenido al menu del seleccionador</h4>
             </div>
             <div id="cerrar">
-                <i data-toggle="modal" data-target="#myModal" class="icono fas fa-sign-out-alt"></i>
+                <i data-toggle="modal" data-target="#myModal" class="icono fas fa-power-off"></i>
             </div>
         </nav>
         <!-- ////////////////////////////BARRA SUPERIOR//////////////////////////// -->
@@ -98,44 +105,46 @@
 
         <div class="contenedor-menu">
             <ul class="menu">
-                <li><a href="Inicio.jsp" class="" id="inicio"><i class="fas fa-home"></i><span>Inicio</span></a></li>
-                <li><a href="Servicio.jsp" class="" id="primera"><i class="fas fa-plus-circle"></i><span>Agregar servicio</span></a></li>
-                <li><a href="Entidades.jsp" class="" id="segunda"><i class="fas fa-truck"></i><span>Entidades fisicas</span></a></li>
-                <li><a href="Generar.jsp" class="" id="tercera"><i class="fas fa-folder-plus"></i><span>Generar servicio</span></a></li>
-                <li><a href="Generados.jsp" class="" id="cuarta"><i class="fas fa-clipboard"></i><span>Servicios generados</span></a></li>
-                <li><a href="Asignados.jsp" class="" id="quinta"><i class="fas fa-clipboard-check"></i><span>Servicios asignados</span></a></li>
-                <li><a href="Informes.jsp" class="" id="sexta"><i class="fas fa-calendar-alt"></i><span>Informes</span></a></li>
-                <li><a href="Datos.jsp" class="" id="septima"><i class="fas fa-chart-pie"></i><span>Datos estadisticos</span></a></li>
-                <li><a href="#" class="activado" id="octava"><i class="fas fa-address-book"></i><span>Consultar proveedores</span></a></li>
+                <li><a href="Registrar.jsp" class="" id="primera"><i class="fas fa-plus-circle"></i><span>Agregar proveedores</span></a></li>
+                <li><a href="#" class="activado" id="segunda"><i class="fas fa-search"></i><span>Consultar proveedor</span></a></li>
             </ul>
         </div>
         <!-- ////////////////////////////MENU LATERAL//////////////////////////// -->
 
-        <a href="" class="btn-menu">Menu <i class="icon fas fa-bars"></i></a>
-        
-        <!-- ////////////////////////////PROVEEDORES//////////////////////////// -->
-        <div class="contenedor-proveedores">
-            <h3>Consultar proveedores</h3>
+        <a href="#" class="btn-menu">Menu <i class="icon fas fa-bars"></i></a>
+
+        <!-- ////////////////////////////CONSULTAR PROVEEDOR//////////////////////////// -->
+        <div class="contenedor-conProveedor">
+            <h3>Consultar datos de los proveedores</h3>
             <hr>
             <div class="row w-100 h-auto">
 
                 <%                    
-                    for (Proveedores dato : listaProv) {
+                    for (Proveedores dato : lista) {
                 %>
 
                 <div class="col-lg-4 my-2" id="carPro">
                     <div class="card border-primary">
                         <div class="card-header text-center"><%= dato.getNombre() %></div>
                         <div class="card-body" id="bodyCard">
+                            <strong>Codigo: </strong><label class="ml-2"><%= dato.getId() %></label><br>
+                            <strong>Telefono: </strong><label class="ml-2"><%= dato.getTelefono() %></label><br>
+                            <strong>Movil: </strong><label class="ml-2"><%= dato.getMovil() %></label><br>
+                            <strong>Correo: </strong><label class="ml-2"><%= dato.getCorreo() %></label><br>
                             <strong>NIT: </strong><label class="ml-2"><%= dato.getNit() %></label><br>
                             <strong>Cant. de trab. disponibles: </strong><label class="ml-1"><%= dato.getCantTra() %></label><br>
+                        </div>
+                        <div class="card-footer">
+                            <div class=" text-center">
+                                <a href="Modificar.jsp?cod=<%= dato.getId() %>" class="btn btn-outline-warning" style="width: 48%;">MODIFICAR</a>
+                                <a href="Eliminar.jsp?cod=<%= dato.getId()%>" class="btn btn-outline-danger" style="width: 48%;">ELIMINAR</a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <%  }  %>
             </div>
         </div>
-        <!-- ////////////////////////////PROVEEDORES//////////////////////////// -->
-
+        <!-- ////////////////////////////CONSULTAR PROVEEDOR//////////////////////////// -->
     </body>
 </html>

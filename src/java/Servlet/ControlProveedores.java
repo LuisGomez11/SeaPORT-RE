@@ -33,17 +33,17 @@ public class ControlProveedores extends HttpServlet {
 
                 if (opc.equalsIgnoreCase("agregar")) {
                     OpcionesProveedor.Insertar(pro);
-                    response.sendRedirect("Vistas/Seleccionador/menuSeleccionador.jsp?val=correcto");
+                    response.sendRedirect("Vistas/Seleccionador/Consultar.jsp?val=correcto");
                 }
                 
                 if(opc.equalsIgnoreCase("mod")){
                     int cod = Integer.parseInt(request.getParameter("cod"));
                     OpcionesProveedor.Actualizar(pro, cod);
-                    response.sendRedirect("Vistas/Seleccionador/menuSeleccionador.jsp?valMod=correcto");
+                    response.sendRedirect("Vistas/Seleccionador/Consultar.jsp?valMod=correcto");
                 }
 
             } catch (ClassNotFoundException | SQLException e) {
-                response.sendRedirect("Seleccionador/menuSeleccionador.jsp?val=error");
+                response.sendRedirect("Seleccionador/Consultar.jsp?val=error");
             }
             
         }
