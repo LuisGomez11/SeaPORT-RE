@@ -10,6 +10,13 @@ $(document).ready(function () {
         } else {
             $('.contenedor-menu').css({'display': 'none'});
         }
+        
+        if($(document).width() <= 767){
+            $('.formOpcio').removeClass("container");
+        }else{
+            $('.formOpcio').addClass("container");
+        }
+        
     });
 
     //VALIDACIONES DEL FORMULARIO DE REGISTRO

@@ -42,7 +42,11 @@ body::-webkit-scrollbar-thumb{
     position: fixed;
     width: 100%;
     margin-top: -60px;
-    z-index: 1000;
+    z-index: 2000;
+}
+
+.modal{
+    z-index: 10000;
 }
 
 #navAsi, #navMod{
@@ -228,7 +232,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 }
 
-.formOpcio{
+.formOpcio, .formOpcio1{
     background: rgba(255,255,255,.5);
     top: 50%;
     left: 50%;
@@ -238,7 +242,7 @@ input[type=number]::-webkit-inner-spin-button {
     -webkit-box-shadow: 0px 0px 19px 12px rgba(0,0,0,0.69);
     -moz-box-shadow: 0px 0px 19px 12px rgba(0,0,0,0.69);
     box-shadow: 0px 0px 19px 12px rgba(0,0,0,0.69);
-    margin: 10px;
+    
 }
 
 @media screen and (max-width: 1015px){
@@ -249,6 +253,7 @@ input[type=number]::-webkit-inner-spin-button {
         margin-top: 52px;
         z-index: 1000;
         display: none;
+        position: absolute;
     }
     
     #titulo{
@@ -268,11 +273,18 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 767px){
+    
+    body{
+     background: lightblue;   
+    }
+    
     img{
         display: none;
     }
     
     .formOpcio{
         width: 100%;
+        margin-top: 80px;
+        margin-bottom: 20px;
     }
 }

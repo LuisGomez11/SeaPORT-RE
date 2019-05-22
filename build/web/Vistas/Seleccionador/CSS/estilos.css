@@ -238,6 +238,7 @@ input[type=number]::-webkit-inner-spin-button {
     -webkit-box-shadow: 0px 0px 19px 12px rgba(0,0,0,0.69);
     -moz-box-shadow: 0px 0px 19px 12px rgba(0,0,0,0.69);
     box-shadow: 0px 0px 19px 12px rgba(0,0,0,0.69);
+    margin: 10px;
 }
 
 @media screen and (max-width: 1015px){
@@ -264,4 +265,14 @@ input[type=number]::-webkit-inner-spin-button {
         margin-top: -5px;
     }
    
+}
+
+@media screen and (max-width: 767px){
+    img{
+        display: none;
+    }
+    
+    .formOpcio{
+        width: 100%;
+    }
 }
