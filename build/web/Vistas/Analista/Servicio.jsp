@@ -150,8 +150,9 @@
                     <div class="col-lg-7">
                         <table class="table table-bordered">
                             <thead>
-                                <tr><th colspan="2">LISTADO DE SERVICIOS</th></tr>
+                                <tr><th colspan="3">LISTADO DE SERVICIOS</th></tr>
                                 <tr>
+                                    <th>ID</th>
                                     <th>NOMBRE</th>
                                     <th>ACCIONES</th>
                                 </tr>
@@ -162,10 +163,11 @@
 
                                 %>
                                 <tr>
+                                    <td><%= dato.getId_servicio()%></td>
                                     <td><%= dato.getNombre()%></td>
                                     <td>
-                                        <a href="Opciones/Servicio/Modificar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-warning">MODIFICAR</a>
-                                        <a href="Opciones/Servicio/Eliminar.jsp?id=<%= dato.getId() %>" class="btn btn-outline-danger">ELIMINAR</a>
+                                        <a href="Opciones/Servicio/Modificar.jsp?id=<%= dato.getId_servicio()%>" class="btn btn-outline-warning">MODIFICAR</a>
+                                        <a href="Opciones/Servicio/Eliminar.jsp?id=<%= dato.getId_servicio()%>" class="btn btn-outline-danger">ELIMINAR</a>
                                     </td>
                                 </tr>
                                 <% } %>

@@ -1,7 +1,7 @@
 <%-- 
     Document   : Entidades
     Created on : 28/04/2019, 08:47:25 PM
-    Author     : Sammy Guergachi <sguergachi at gmail.com>
+    Author     : Luis ALberto Gomez
 --%>
 
 <%@page import="Config.OpcionesAsignados"%>
@@ -168,8 +168,9 @@
                 </div>
             <table class="table table-bordered">
                 <thead>
-                    <tr><th colspan="3">LISTADO DE ENTIDADES FISICAS</th></tr>
+                    <tr><th colspan="4">LISTADO DE ENTIDADES FISICAS</th></tr>
                     <tr>
+                        <th>ID</th>
                         <th>NOMBRE</th>
                         <th>TIPO DE ENTIDAD</th>
                         <th>ACCIONES</th>
@@ -180,11 +181,12 @@
                         for (Entidades dato : listaEn) {
                     %>
                     <tr>
+                        <td><%= dato.getId_entidad()%></td>
                         <td><%= dato.getNombre()%></td>
                         <td><%= dato.getTipo()%></td>
                         <td>
-                            <a href="Opciones/Entidades/Modificar.jsp?id=<%= dato.getId()%>" class="btn btn-outline-warning">MODIFICAR</a>
-                            <a href="Opciones/Entidades/Eliminar.jsp?id=<%= dato.getId()%>" class="btn btn-outline-danger">ELIMINAR</a>
+                            <a href="Opciones/Entidades/Modificar.jsp?id=<%= dato.getId_entidad()%>" class="btn btn-outline-warning">MODIFICAR</a>
+                            <a href="Opciones/Entidades/Eliminar.jsp?id=<%= dato.getId_entidad()%>" class="btn btn-outline-danger">ELIMINAR</a>
                         </td>
                     </tr>
                     <% }%>

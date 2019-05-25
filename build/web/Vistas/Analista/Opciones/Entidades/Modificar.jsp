@@ -1,7 +1,7 @@
 <%-- 
     Document   : Modificar
     Created on : 29/04/2019, 12:42:59 PM
-    Author     : Sammy Guergachi <sguergachi at gmail.com>
+    Author     : Luis Alberto Gomez
 --%>
 
 <%@page import="Config.OpcionesEntidades"%>
@@ -39,9 +39,7 @@
         
             int id = Integer.parseInt(request.getParameter("id"));
             
-            List<Entidades> entidad = OpcionesEntidades.mostrarEntidad(id);
-            
-            for(Entidades dato : entidad){
+            Entidades en = OpcionesEntidades.mostrarEntidad(id);
 
         %>
         <div class="formOpcio container p-5">
@@ -54,12 +52,12 @@
                     </div>
                     <div class="form-group col-md-5">
                         <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" value="<%= dato.getNombre()%>" id="nombre" name="nombre" required>
+                        <input type="text" class="form-control" value="<%= en.getNombre()%>" id="nombre" name="nombre" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="tipo">Tipo de entidad</label>
                         <select class="form-control" name="tipo">
-                            <option><%= dato.getTipo() %></option>
+                            <option><%= en.getTipo() %></option>
                             <option>Motonave</option>
                             <option>Grua</option>
                             <option>Camion</option>
@@ -72,6 +70,5 @@
                 </div>
             </form>
         </div>
-        <% } %>
     </body>
 </html>

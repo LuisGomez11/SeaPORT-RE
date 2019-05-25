@@ -129,7 +129,7 @@
                 </div>
                 <br>
                 <div class="botones mb-4">                   
-                    <input type="submit" value="GENERAR" class="btn btn-outline-primary" id="guardar">
+                    <input type="submit" value="REGISTRAR" class="btn btn-outline-primary" id="guardar">
                     <button type="button" class="btn btn-outline-danger ml-2" id="limpiarCampos">CANCELAR</button>
                 </div>
             </form>

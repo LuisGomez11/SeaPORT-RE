@@ -4,38 +4,41 @@ package Modelos;
 public class serGenerados {
 
     private String terminal;
-    private String motonave;
+    private int id_entidadM;
     private String lloyd;
     private String uvi;
     private String referencia;
     private String muelle;
-    private String grua;
+    private int id_entidadG;
     private String fechaCita;
     private String horaCita;
     private String hrsOpe;
     private String fechaFinal;
     private String horaFinal;
-    private String servicio;
+    private int id_servicio;
+    private String estado;
 
     public serGenerados() {
     }
 
-    public serGenerados(String terminal, String motonave, String lloyd, String uvi, String referencia, String muelle, String grua, String fechaCita, String horaCita, String hrsOpe, String fechaFinal, String horaFinal, String servicio) {
+    public serGenerados(String terminal, int id_entidadM, String lloyd, String uvi, String referencia, String muelle, int id_entidadG, String fechaCita, String horaCita, String hrsOpe, String fechaFinal, String horaFinal, int id_servicio, String estado) {
         this.terminal = terminal;
-        this.motonave = motonave;
+        this.id_entidadM = id_entidadM;
         this.lloyd = lloyd;
         this.uvi = uvi;
         this.referencia = referencia;
         this.muelle = muelle;
-        this.grua = grua;
+        this.id_entidadG = id_entidadG;
         this.fechaCita = fechaCita;
         this.horaCita = horaCita;
         this.hrsOpe = hrsOpe;
         this.fechaFinal = fechaFinal;
         this.horaFinal = horaFinal;
-        this.servicio = servicio;
+        this.id_servicio = id_servicio;
+        this.estado = estado;
     }
 
+    
     
     /**
      * @return the terminal
@@ -49,20 +52,6 @@ public class serGenerados {
      */
     public void setTerminal(String terminal) {
         this.terminal = terminal;
-    }
-
-    /**
-     * @return the motonave
-     */
-    public String getMotonave() {
-        return motonave;
-    }
-
-    /**
-     * @param motonave the motonave to set
-     */
-    public void setMotonave(String motonave) {
-        this.motonave = motonave;
     }
 
     /**
@@ -192,33 +181,61 @@ public class serGenerados {
     }
 
     /**
-     * @return the servicio
+     * @return the id_entidadM
      */
-    public String getServicio() {
-        return servicio;
+    public int getId_entidadM() {
+        return id_entidadM;
     }
 
     /**
-     * @param servicio the servicio to set
+     * @param id_entidadM the id_entidadM to set
      */
-    public void setServicio(String servicio) {
-        this.servicio = servicio;
+    public void setId_entidadM(int id_entidadM) {
+        this.id_entidadM = id_entidadM;
     }
 
     /**
-     * @return the grua
+     * @return the id_entidadG
      */
-    public String getGrua() {
-        return grua;
+    public int getId_entidadG() {
+        return id_entidadG;
     }
 
     /**
-     * @param grua the grua to set
+     * @param id_entidadG the id_entidadG to set
      */
-    public void setGrua(String grua) {
-        this.grua = grua;
+    public void setId_entidadG(int id_entidadG) {
+        this.id_entidadG = id_entidadG;
     }
-    
+
+    /**
+     * @return the id_servicio
+     */
+    public int getId_servicio() {
+        return id_servicio;
+    }
+
+    /**
+     * @param id_servicio the id_servicio to set
+     */
+    public void setId_servicio(int id_servicio) {
+        this.id_servicio = id_servicio;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     
     
 }

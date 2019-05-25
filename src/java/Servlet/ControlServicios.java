@@ -17,39 +17,36 @@ public class ControlServicios extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
             String terminal = request.getParameter("term");
-            String moto = request.getParameter("moto");
+            
+            int id_moto, id_grua, id_servicio; 
+            String mot = request.getParameter("moto");
+            String gru = request.getParameter("grua");
+            String servi = request.getParameter("servicio");
+            
+            //SEPARAMOS LOS VALORES CON EL METODO SPLIT
+            String[]moto =mot.split(" - ");
+            String[]grua =gru.split(" - ");
+            String[]serv =servi.split(" - ");
+            //TOMAMOS EL CODIGO
+            id_moto = Integer.parseInt(moto[0]); 
+            id_grua = Integer.parseInt(grua[0]);
+            id_servicio = Integer.parseInt(serv[0]);
+            
             String lloyd = request.getParameter("lloyd");
             String uvi = request.getParameter("uvi");
             String referencia = request.getParameter("referencia");
             String muelle = request.getParameter("muelle");
-            String grua = "";
-            String grua1 = request.getParameter("grua1");
-            String grua2 = request.getParameter("grua2");
-            String grua3 = request.getParameter("grua3");
-            String grua4 = request.getParameter("grua4");
             String fechaCita = request.getParameter("fechaCita");
             String horaCita = request.getParameter("horaCita");
             String hrsOp = request.getParameter("horasOp");
             String fechaFinal = request.getParameter("fechaFinal");
-            String horaFinal = request.getParameter("horaFinal");
-            String servicio = request.getParameter("servicio");
-            
-            grua += grua1;
-            
-            if(!grua2.equalsIgnoreCase("N/A")){
-                grua += " "+grua2;
-                if(!grua3.equalsIgnoreCase("N/A")){
-                    grua += " "+grua3;
-                    if(!grua4.equalsIgnoreCase("N/A")){
-                        grua += " "+grua4;
-                    }
-                }
-            }
+            String horaFinal = request.getParameter("horaFinal");           
 
             String opc = request.getParameter("opc");
 
-            serGenerados ser = new serGenerados(terminal, moto, lloyd, uvi, referencia, muelle, grua, fechaCita, horaCita, hrsOp, fechaFinal, horaFinal, servicio);
+            serGenerados ser = new serGenerados(terminal, id_moto, lloyd, uvi, referencia, muelle, id_grua, fechaCita, horaCita, hrsOp, fechaFinal, horaFinal, id_servicio,"No asignado");
 
             try {
 
@@ -65,7 +62,7 @@ public class ControlServicios extends HttpServlet {
 
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println("ERROR: " + e);
-                response.sendRedirect("Analista/Generar.jsp?val=error");
+                response.sendRedirect("Vistas/Analista/Generar.jsp?val=error");
             }
 
         } catch (Exception e) {

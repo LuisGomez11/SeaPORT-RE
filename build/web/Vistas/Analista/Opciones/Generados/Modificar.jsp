@@ -47,39 +47,25 @@
         <%
 
             String ref = request.getParameter("ref");
+            int id_moto;
+            int id_grua;
+            int id_ser;
             
             List<serGenerados> listaGen = OpcionesGenerados.mostrarSer(ref);
             List<Servicios> listaSer = OpcionesServicios.listar();
             List<Entidades> listaMoto = OpcionesEntidades.listarMoto();
             List<Entidades> listaGrua = OpcionesEntidades.listarGrua();
             
+            String moto,grua,servi;
+            
             for(serGenerados dato : listaGen){
                 
-                String gruas = dato.getGrua();
-            
-                String grua1 = "N/A";
-                String grua2 = "N/A";
-                String grua3 = "N/A";
-                String grua4 = "N/A";
-
-                String[]grua =gruas.split(" ");
-
-                if(grua.length==1){
-                    grua1 = grua[0];
-                } else if(grua.length==2){
-                    grua1 = grua[0];
-                    grua2 = grua[1];
-                } else if(grua.length==3){
-                    grua1 = grua[0];
-                    grua2 = grua[1];
-                    grua3 = grua[2];
-                } else{
-                    grua1 = grua[0];
-                    grua2 = grua[1];
-                    grua3 = grua[2];
-                    grua4 = grua[3];
-                }
-
+                id_moto = dato.getId_entidadM();
+                id_grua = dato.getId_entidadG();
+                id_ser = dato.getId_servicio();
+                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                servi = OpcionesServicios.mostrarServi(id_ser);
         %>
         <div class="formOpcio container p-5">
             <form method="POST" autocomplete="off" action="../../../../ControlServicios?opc=mod">
@@ -96,11 +82,11 @@
                     <div class="form-group col-md-8">
                         <label for="moto">Motonave / Frente de servicio</label>
                         <select class="form-control" name="moto">
-                            <option><%= dato.getMotonave() %></option>
+                            <option><%= dato.getId_entidadM() +" - "+ moto %></option>
                             <%
                                 for (Entidades datom : listaMoto) {
                             %>
-                            <option><%= datom.getNombre()%></option>
+                            <option><%= datom.getId_entidad()+" - "+ datom.getNombre() %></option>
                             <% } %>
                         </select>
                     </div>
@@ -116,7 +102,7 @@
                         <label for="referencia">Referencia</label>
                         <input type="text" maxlength="4" class="form-control" readonly value="<%= dato.getReferencia() %>" id="referencia" name="referencia" required>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="muelle">Muelle</label>
                         <select class="form-control" name="muelle">
                             <option><%= dato.getMuelle() %></option>
@@ -142,51 +128,14 @@
                             <option>RORO</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="grua">Grúa 1</label>
-                        <select class="form-control" name="grua1">
-                            <option><%= grua1%></option>
-                            <option>N/A</option>
+                    <div class="form-group col-md-6">
+                        <label for="grua">Grúa</label>
+                        <select class="form-control" name="grua">
+                            <option><%= dato.getId_entidadG() +" - "+ grua %></option>
                             <%
                                 for (Entidades datog : listaGrua) {
                             %>
-                            <option><%= datog.getNombre()%></option>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="grua">Grúa 2</label>
-                        <select class="form-control" name="grua2">
-                            <option><%= grua2%></option>
-                            <option>N/A</option>
-                            <%
-                                for (Entidades datog : listaGrua) {
-                            %>
-                            <option><%= datog.getNombre()%></option>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="grua">Grúa 3</label>
-                        <select class="form-control" name="grua3">
-                            <option><%= grua3%></option>
-                            <option>N/A</option>
-                            <%
-                                for (Entidades datog : listaGrua) {
-                            %>
-                            <option><%= datog.getNombre()%></option>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="grua">Grúa 4</label>
-                        <select class="form-control" name="grua4">
-                            <option><%= grua4%></option>
-                            <option>N/A</option>
-                            <%
-                                for (Entidades datog : listaGrua) {
-                            %>
-                            <option><%= datog.getNombre()%></option>
+                            <option><%= datog.getId_entidad()+" - "+ datog.getNombre() %></option>
                             <% } %>
                         </select>
                     </div>
@@ -213,11 +162,11 @@
                     <div class="form-group col-md-4">
                         <label for="servicio">Servicio</label>
                         <select class="form-control" name="servicio">
-                            <option><%= dato.getServicio() %></option>
+                            <option><%= dato.getId_servicio() +" - "+ servi %></option>
                             <%
                                 for (Servicios datos : listaSer) {
                             %>
-                            <option><%= datos.getNombre()%></option>
+                            <option><%= datos.getId_servicio()+" - "+ datos.getNombre() %></option>
                             <% } %>
                         </select>
                     </div>

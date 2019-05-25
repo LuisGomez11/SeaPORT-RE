@@ -172,7 +172,7 @@
                                                 <td><%= dato.getTerminal()%></td>
                                                 <td><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></td>
                                                 <td><%= dato.getHrsOpe()%></td>
-                                                <td><%= dato.getServicio()%></td>
+                                                <td><%= dato.getId_servicio() %></td>
                                             </tr>
                                             <%
                                                     contador++;
@@ -197,9 +197,9 @@
                                     <table class="table table-bordered tablaInicio">
                                         <thead>
                                             <tr>
-                                                <th>Lloyd escala / UVI / Referencia</th>
-                                                <th>Servicio</th>
-                                                <th>Proveedor</th>
+                                                <th>Codigo</th>
+                                                <th>Referencia</th>
+                                                <th>Cod. Proveedor</th>
                                                 <th>Hrs. Totales</th>
                                             </tr>
                                         </thead>
@@ -210,9 +210,9 @@
                                             %>
                                             <tr>
 
-                                                <td><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></td>
-                                                <td><%= dato.getServicio()%></td>
-                                                <td><%= dato.getProveedor()%></td>
+                                                <td><%= dato.getCodigo()%></td>
+                                                <td><%= dato.getReferencia() %></td>
+                                                <td><%= dato.getCod_proveedor() %></td>
                                                 <td><%= dato.getHorasTotales()%></td>
                                             </tr>
                                             <%

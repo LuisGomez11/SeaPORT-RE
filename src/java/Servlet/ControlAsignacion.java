@@ -19,35 +19,7 @@ public class ControlAsignacion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String terminal = request.getParameter("terminal");
-            String moto = request.getParameter("motonave");
-            String lloyd = request.getParameter("lloyd");
-            String uvi = request.getParameter("uvi");
             String referencia = request.getParameter("referencia");
-            String muelle = request.getParameter("muelle");
-            String grua = "";
-            String grua1 = request.getParameter("grua1");
-            String grua2 = request.getParameter("grua2");
-            String grua3 = request.getParameter("grua3");
-            String grua4 = request.getParameter("grua4");
-            String fechaCita = request.getParameter("fechaCita");
-            String horaCita = request.getParameter("horaCita");
-            String hrsOp = request.getParameter("hrsOp");
-            String fechaFinal = request.getParameter("fechaFinal");
-            String horaFinal = request.getParameter("horaFinal");
-            String servicio = request.getParameter("servicio");
-            
-            grua += grua1;
-            
-            if(!grua2.equalsIgnoreCase("N/A")){
-                grua += " "+grua2;
-                if(!grua3.equalsIgnoreCase("N/A")){
-                    grua += " "+grua3;
-                    if(!grua4.equalsIgnoreCase("N/A")){
-                        grua += " "+grua4;
-                    }
-                }
-            }
             
             String proveedor;
             String nombre;
@@ -68,9 +40,7 @@ public class ControlAsignacion extends HttpServlet {
                 cantidad = Integer.parseInt(request.getParameter("cantidad"+i));
                 hrsTotales = Integer.parseInt(request.getParameter("total"+i));
                 
-                serAsignados serAsi = new serAsignados(terminal, moto, lloyd, 
-                        uvi, referencia, muelle, grua, fechaCita, horaCita, 
-                        hrsOp, fechaFinal, horaFinal, servicio, nombre, 
+                serAsignados serAsi = new serAsignados(referencia, cod, 
                         cantidad, observaciones, hrsTotales, "En espera");
                 System.out.println(i);
                 try {
@@ -82,10 +52,10 @@ public class ControlAsignacion extends HttpServlet {
                 
             }
 
-            OpcionesGenerados.Eliminar(referencia);
+            OpcionesGenerados.pasarAsignado(referencia,"Asignado");
 
             response.sendRedirect("Vistas/Analista/Asignados.jsp?valAsi=correcto");
-        }catch(IOException | ClassNotFoundException | SQLException e){
+        }catch(IOException e){
             System.out.println("Error: "+e);
         }
     }

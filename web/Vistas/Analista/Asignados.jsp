@@ -154,7 +154,9 @@
 
                 <%                    
                     for (serAsignados dato : listaAsi) {
-
+                        
+                        serGenerados gen = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                        
                         if (pri == 1) {
                             ref = dato.getReferencia();
                             pri++;
@@ -173,20 +175,11 @@
                 %>
                 <div class="col-lg-4 my-2"  id="carAsi">
                     <div class="card border-primary">
-                        <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                        <div class="card-header text-center"><%= gen.getLloyd() +" // "+ gen.getUvi() +" - "+ dato.getReferencia() %></div>
                         <div class="card-body" id="bodyCard">
 
-                            <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                            <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                            <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                            <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                            <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                            <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                            <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                            <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                            <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                            <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                            <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                            <strong>Codigo: </strong><label class="ml-2"><%= dato.getCodigo() %></label><br>
+                            <strong>Cod. proveedor: </strong><label class="ml-2"><%= dato.getCod_proveedor() %></label><br>
                             <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                             <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                             <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -210,7 +203,10 @@
                                 %>
                                 <span class="badge badge-pill badge-<%= tipo%>"><%= estado%></span>
                                 <hr>
-                                <a href="Opciones/Asignados/Eliminar.jsp?ref=<%= dato.getReferencia()%>" class="btn btn-outline-danger btn-block  <%= desactivar%>">ELIMINAR</a>
+                                <div class="text-center">
+                                    <a href="Opciones/Asignados/Consultar.jsp?cod=<%= dato.getCodigo() %>"  style="width: 48%;" class="btn btn-outline-primary">VER</a>
+                                    <a href="Opciones/Asignados/Eliminar.jsp?ref=<%= dato.getReferencia()%>" style="width: 48%;" class="btn btn-outline-danger <%= desactivar%>">ELIMINAR</a>
+                                </div>
                             </center>
                         </div>
                     </div>

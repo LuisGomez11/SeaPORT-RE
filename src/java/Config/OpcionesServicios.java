@@ -33,7 +33,7 @@ public class OpcionesServicios {
     public static List mostrarSer(int id) {
         List<Servicios> lista = new ArrayList<>();       
         try (Connection connect = ConexionBD.connect()) {
-            PreparedStatement ps = connect.prepareStatement("select * from servicios where id="+id);
+            PreparedStatement ps = connect.prepareStatement("select * from servicios where id_servicio="+id);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -44,6 +44,21 @@ public class OpcionesServicios {
             
         }
         return lista;
+    }
+    
+    public static String mostrarServi(int id) {
+        String servi = "";      
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps = connect.prepareStatement("select * from servicios where id_servicio="+id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                servi = rs.getString(2);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return servi;
     }
 
     public static void Insertar(Servicios ser) throws ClassNotFoundException, SQLException {
@@ -57,7 +72,7 @@ public class OpcionesServicios {
 
     public static void Actualizar(Servicios ser, int id) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
-            String sql = "update servicios set nombre=? where id=" + id;
+            String sql = "update servicios set nombre=? where id_servicio=" + id;
             PreparedStatement ps = connect.prepareStatement(sql);
             ps.setString(1, ser.getNombre());
             ps.executeUpdate();
@@ -66,7 +81,7 @@ public class OpcionesServicios {
 
     public static void Eliminar(int id){
         try (Connection connect = ConexionBD.connect()) {
-            String sql = "delete from servicios where id=?";
+            String sql = "delete from servicios where id_servicio=?";
             PreparedStatement pst = connect.prepareStatement(sql);
             pst.setInt(1, id);
             pst.executeUpdate();

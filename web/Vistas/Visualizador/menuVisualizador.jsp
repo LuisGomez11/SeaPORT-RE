@@ -4,6 +4,15 @@
     Author     : E201
 --%>
 
+<%@page import="Config.OpcionesServicios"%>
+<%@page import="Config.OpcionesEntidades"%>
+<%@page import="Modelos.Proveedores"%>
+<%@page import="Config.OpcionesProveedor"%>
+<%@page import="Config.OpcionesAsignados"%>
+<%@page import="Modelos.serAsignados"%>
+<%@page import="Modelos.serGenerados"%>
+<%@page import="Config.OpcionesGenerados"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="Clases.ConexionBD"%>
@@ -91,32 +100,31 @@
         <div class="container-fluid" id="serGenerados">
 
             <%
-                Connection connect = ConexionBD.connect();
-                PreparedStatement ps = connect.prepareStatement("select * from servicios_generados");
-                ResultSet rs = ps.executeQuery();
+                
+                List<serGenerados> listaGen = OpcionesGenerados.listar();
+                   
+                for (serGenerados dato : listaGen) {
 
-                while (rs.next()) {
+                %>
 
-            %>
-
-            <div class="card border-primary mr-4 my-2" style="float: left; width: 31%;">
-                <div class="card-header text-center"><%= rs.getString("lloyd") + " // " + rs.getString("uvi") + " - " + rs.getString("referencia")%></div>
-                <div class="card-body" id="bodyCard">
-                    <div id="informacion" style="z-index: 2;">
-                        <strong>Terminal: </strong><label class="ml-2"><%= rs.getString("terminal")%></label><br>
-                        <strong>Motonave: </strong><label class="ml-2"><%= rs.getString("motonave")%></label><br>
-                        <strong>Muelle: </strong><label class="ml-2"><%= rs.getString("muelle")%></label><br>
-                        <strong>Grúa(s): </strong><label class="ml-2"><%= rs.getString("grua")%></label><br>
-                        <strong>Fecha de cita: </strong><label class="ml-2"><%= rs.getString("fechaCita")%></label><br>
-                        <strong>Hora de cita: </strong><label class="ml-2"><%= rs.getString("horaCita")%></label><br>
-                        <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rs.getString("hrsOp")%></label><br>
-                        <strong>Fecha final: </strong><label class="ml-2"><%= rs.getString("fechaFinal")%></label><br>
-                        <strong>Hora final: </strong><label class="ml-2"><%= rs.getString("horaFinal")%></label><br>
-                        <strong>Servicio: </strong><label class="ml-2"><%= rs.getString("servicio")%></label>
+                <div class="col-lg-4 my-2" id="carAsi">
+                    <div class="card border-primary">
+                        <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                        <div class="card-body" id="bodyCard">
+                            <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
+                            <strong>Id motonave: </strong><label class="ml-1"><%= dato.getId_entidadM() %></label><br>
+                            <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
+                            <strong>Id grua: </strong><label class="ml-2"><%= dato.getId_entidadG() %></label><br>
+                            <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
+                            <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
+                            <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
+                            <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
+                            <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
+                            <strong>Id servicio: </strong><label class="ml-2"><%= dato.getId_servicio() %></label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <%}%>
+                <%  }   %>
         </div>
         <!--///////////////////////////// SERVICIOS GENERADOS ///////////////////////////// -->
 
@@ -124,37 +132,68 @@
         <div class="container-fluid" id="serAsignados">
             
                 <%
-                    PreparedStatement ps1 = connect.prepareStatement("select * from servicios_asignados");
-                    ResultSet rs1 = ps1.executeQuery();
+                    List<serAsignados> listaAsi = OpcionesAsignados.listar();
+                String ref = "";
+                int pri = 1;
+                int id_moto, id_grua, id_ser;
 
-                    while (rs1.next()) {
+            String moto, grua, servi;
 
+            %>
+
+            <div class="row w-100 h-auto">
+
+                <%                    
+                    for (serAsignados dato : listaAsi) {
+
+                        serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
+                        if (pri == 1) {
+                            ref = dato.getReferencia();
+                            pri++;
+                        }
+
+                        if (!ref.equalsIgnoreCase(dato.getReferencia())) {
+                            ref = dato.getReferencia();
                 %>
-                <div>
-                <div class="card border-primary mr-4 my-2" style="float: left; width: 31%; height: 450px">
-                    <div class="card-header text-center"><%= rs1.getString("lloyd") + " // " + rs1.getString("uvi") + " - " + rs1.getString("referencia")%></div>
-                    <div class="card-body" id="bodyCard">
-                        <div id="informacion" style="z-index: 2;">
-                            <strong>Terminal: </strong><label class="ml-2"><%= rs1.getString("terminal")%></label><br>
-                            <strong>Motonave: </strong><label class="ml-2"><%= rs1.getString("motonave")%></label><br>
-                            <strong>Muelle: </strong><label class="ml-2"><%= rs1.getString("muelle")%></label><br>
-                            <strong>Grua: </strong><label class="ml-2"><%= rs1.getString("grua")%></label><br>
-                            <strong>Fecha de cita: </strong><label class="ml-2"><%= rs1.getString("fechaCita")%></label><br>
-                            <strong>Hora de cita: </strong><label class="ml-2"><%= rs1.getString("horaCita")%></label><br>
-                            <strong>Hrs. en operacion: </strong><label class="ml-2"><%= rs1.getString("hrsOp")%></label><br>
-                            <strong>Fecha final: </strong><label class="ml-2"><%= rs1.getString("fechaFinal")%></label><br>
-                            <strong>Hora final: </strong><label class="ml-2"><%= rs1.getString("horaFinal")%></label><br>
-                            <strong>Servicio: </strong><label class="ml-2"><%= rs1.getString("servicio")%></label><br>
-                            <strong>Proveedor: </strong><label class="ml-2"><%= rs1.getString("proveedor")%></label><br>
-                            <strong>Cantidad: </strong><label class="ml-2"><%= rs1.getInt("cantidad")%></label><br>
-                            <strong>Observaciones: </strong><label class="ml-2"><%= rs1.getString("observaciones")%></label><br>
-                            <strong>Hrs. totales: </strong><label class="ml-2"><%= rs1.getInt("hrsTotales")%></label>
-                        </div>
-                    </div>
-                </div>
+
+            </div>
+            <br><hr><br>
+            <div class="row w-100 h-auto" id="conAsi">    
+
                 <%
-                }
+                    }
                 %>
+                <div class="col-lg-4 my-2"  id="carAsi">
+                            <div class="card border-primary">
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-body" id="bodyCard">
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
+                                    <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
+                                    <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
+                                    <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
+                                </div>
+
+                            </div>
+                        </div>
+                <%}%>
             </div>
             </div>
         <!--///////////////////////////// SERVICIOS ASIGNADOS ///////////////////////////// -->

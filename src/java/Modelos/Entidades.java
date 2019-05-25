@@ -2,7 +2,7 @@ package Modelos;
 
 public class Entidades {
 
-    private int id;
+    private int id_entidad;
     private String nombre;
     private String tipo;
 
@@ -14,13 +14,11 @@ public class Entidades {
         this.tipo = tipo;
     }
 
-    public Entidades(int id, String nombre, String tipo) {
-        this.id = id;
+    public Entidades(int id_entidad, String nombre, String tipo) {
+        this.id_entidad = id_entidad;
         this.nombre = nombre;
         this.tipo = tipo;
     }
-    
-    
 
     /**
      * @return the nombre
@@ -51,17 +49,19 @@ public class Entidades {
     }
 
     /**
-     * @return the id
+     * @return the id_entidad
      */
-    public int getId() {
-        return id;
+    public int getId_entidad() {
+        return id_entidad;
     }
 
     /**
-     * @param id the id to set
+     * @param id_entidad the id_entidad to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setId_entidad(int id_entidad) {
+        this.id_entidad = id_entidad;
     }
+
+    
 
 }

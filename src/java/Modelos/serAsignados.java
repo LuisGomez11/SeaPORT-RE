@@ -3,20 +3,9 @@ package Modelos;
 
 public class serAsignados {
 
-    private String terminal;
-    private String motonave;
-    private String lloyd;
-    private String uvi;
+    private int codigo;
     private String referencia;
-    private String muelle;
-    private String grua;
-    private String fechaCita;
-    private String horaCita;
-    private String hrsOpe;
-    private String fechaFinal;
-    private String horaFinal;
-    private String servicio;
-    private String proveedor;
+    private int cod_proveedor;
     private int cantidad;
     private String observaciones;
     private int horasTotales;
@@ -25,83 +14,37 @@ public class serAsignados {
     public serAsignados() {
     }
 
-    public serAsignados(String terminal, String motonave, String lloyd, String uvi, String referencia, String muelle, String grua, String fechaCita, String horaCita, String hrsOpe, String fechaFinal, String horaFinal, String servicio, String proveedor, int cantidad, String observaciones, int horasTotales, String estado) {
-        this.terminal = terminal;
-        this.motonave = motonave;
-        this.lloyd = lloyd;
-        this.uvi = uvi;
+    public serAsignados(String referencia, int cod_proveedor, int cantidad, String observaciones, int horasTotales, String estado) {
         this.referencia = referencia;
-        this.muelle = muelle;
-        this.grua = grua;
-        this.fechaCita = fechaCita;
-        this.horaCita = horaCita;
-        this.hrsOpe = hrsOpe;
-        this.fechaFinal = fechaFinal;
-        this.horaFinal = horaFinal;
-        this.servicio = servicio;
-        this.proveedor = proveedor;
+        this.cod_proveedor = cod_proveedor;
+        this.cantidad = cantidad;
+        this.observaciones = observaciones;
+        this.horasTotales = horasTotales;
+        this.estado = estado;
+    }
+    
+    public serAsignados(int codigo, String referencia, int cod_proveedor, int cantidad, String observaciones, int horasTotales, String estado) {
+        this.codigo = codigo;
+        this.referencia = referencia;
+        this.cod_proveedor = cod_proveedor;
         this.cantidad = cantidad;
         this.observaciones = observaciones;
         this.horasTotales = horasTotales;
         this.estado = estado;
     }
 
-    
-    
     /**
-     * @return the terminal
+     * @return the codigo
      */
-    public String getTerminal() {
-        return terminal;
+    public int getCodigo() {
+        return codigo;
     }
 
     /**
-     * @param terminal the terminal to set
+     * @param codigo the codigo to set
      */
-    public void setTerminal(String terminal) {
-        this.terminal = terminal;
-    }
-
-    /**
-     * @return the motonave
-     */
-    public String getMotonave() {
-        return motonave;
-    }
-
-    /**
-     * @param motonave the motonave to set
-     */
-    public void setMotonave(String motonave) {
-        this.motonave = motonave;
-    }
-
-    /**
-     * @return the lloyd
-     */
-    public String getLloyd() {
-        return lloyd;
-    }
-
-    /**
-     * @param lloyd the lloyd to set
-     */
-    public void setLloyd(String lloyd) {
-        this.lloyd = lloyd;
-    }
-
-    /**
-     * @return the uvi
-     */
-    public String getUvi() {
-        return uvi;
-    }
-
-    /**
-     * @param uvi the uvi to set
-     */
-    public void setUvi(String uvi) {
-        this.uvi = uvi;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     /**
@@ -119,129 +62,17 @@ public class serAsignados {
     }
 
     /**
-     * @return the muelle
+     * @return the cod_proveedor
      */
-    public String getMuelle() {
-        return muelle;
+    public int getCod_proveedor() {
+        return cod_proveedor;
     }
 
     /**
-     * @param muelle the muelle to set
+     * @param cod_proveedor the cod_proveedor to set
      */
-    public void setMuelle(String muelle) {
-        this.muelle = muelle;
-    }
-
-    /**
-     * @return the grua
-     */
-    public String getGrua() {
-        return grua;
-    }
-
-    /**
-     * @param grua the grua to set
-     */
-    public void setGrua(String grua) {
-        this.grua = grua;
-    }
-
-    /**
-     * @return the fechaCita
-     */
-    public String getFechaCita() {
-        return fechaCita;
-    }
-
-    /**
-     * @param fechaCita the fechaCita to set
-     */
-    public void setFechaCita(String fechaCita) {
-        this.fechaCita = fechaCita;
-    }
-
-    /**
-     * @return the horaCita
-     */
-    public String getHoraCita() {
-        return horaCita;
-    }
-
-    /**
-     * @param horaCita the horaCita to set
-     */
-    public void setHoraCita(String horaCita) {
-        this.horaCita = horaCita;
-    }
-
-    /**
-     * @return the hrsOpe
-     */
-    public String getHrsOpe() {
-        return hrsOpe;
-    }
-
-    /**
-     * @param hrsOpe the hrsOpe to set
-     */
-    public void setHrsOpe(String hrsOpe) {
-        this.hrsOpe = hrsOpe;
-    }
-
-    /**
-     * @return the fechaFinal
-     */
-    public String getFechaFinal() {
-        return fechaFinal;
-    }
-
-    /**
-     * @param fechaFinal the fechaFinal to set
-     */
-    public void setFechaFinal(String fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
-
-    /**
-     * @return the horaFinal
-     */
-    public String getHoraFinal() {
-        return horaFinal;
-    }
-
-    /**
-     * @param horaFinal the horaFinal to set
-     */
-    public void setHoraFinal(String horaFinal) {
-        this.horaFinal = horaFinal;
-    }
-
-    /**
-     * @return the servicio
-     */
-    public String getServicio() {
-        return servicio;
-    }
-
-    /**
-     * @param servicio the servicio to set
-     */
-    public void setServicio(String servicio) {
-        this.servicio = servicio;
-    }
-
-    /**
-     * @return the proveedor
-     */
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    /**
-     * @param proveedor the proveedor to set
-     */
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
+    public void setCod_proveedor(int cod_proveedor) {
+        this.cod_proveedor = cod_proveedor;
     }
 
     /**
@@ -300,7 +131,6 @@ public class serAsignados {
         this.estado = estado;
     }
 
-    
-    
+        
     
 }

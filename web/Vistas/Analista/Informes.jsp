@@ -4,6 +4,10 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="Config.OpcionesServicios"%>
+<%@page import="Config.OpcionesEntidades"%>
+<%@page import="Modelos.Proveedores"%>
+<%@page import="Config.OpcionesProveedor"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
@@ -48,12 +52,16 @@
             List<serGenerados> listaGen = OpcionesGenerados.listar();
             List<serAsignados> listaAsi = OpcionesAsignados.listar();
 
-            String ref1 = "",ref2 = "",ref3 = "",ref4 = "",ref5 = "",ref6 = "",
-                ref7 = "",ref8 = "",ref9 = "",ref10 = "",ref11 = "",ref12 = "";
-            
-            int pri1 = 1,pri2 = 1,pri3 = 1,pri4 = 1,pri5 = 1,pri6 = 1,pri7 = 1,
-                pri8 = 1,pri9 = 1,pri10 = 1,pri11 = 1,pri12 = 1;
-            
+            String ref1 = "", ref2 = "", ref3 = "", ref4 = "", ref5 = "", ref6 = "",
+                    ref7 = "", ref8 = "", ref9 = "", ref10 = "", ref11 = "", ref12 = "";
+
+            int pri1 = 1, pri2 = 1, pri3 = 1, pri4 = 1, pri5 = 1, pri6 = 1, pri7 = 1,
+                    pri8 = 1, pri9 = 1, pri10 = 1, pri11 = 1, pri12 = 1;
+
+            int id_moto, id_grua, id_ser;
+
+            String moto, grua, servi;
+
             OpcionesAsignados.estado(listaGen, listaAsi);
 
 
@@ -134,14 +142,22 @@
                 </div>
             </div>
             <hr>
-            
+
             <div class="loop">
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%                        for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                        <%                            
+                            
+                            for (serAsignados dato : listaInfo) {
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("01")) {
@@ -163,19 +179,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -184,20 +200,27 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("02")) {
-                                    if (pri2 == 1) {
+                                    if (pri2 == 2) {
                                         ref2 = dato.getReferencia();
                                         pri2++;
                                     }
@@ -215,19 +238,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -236,16 +259,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("03")) {
@@ -267,19 +297,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -288,16 +318,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("04")) {
@@ -319,19 +356,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -340,16 +377,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("05")) {
@@ -371,19 +415,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -391,17 +435,24 @@
 
                             </div>
                         </div>
-                        <%}
-                        } %>
+                        <% }
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("06")) {
@@ -423,19 +474,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -444,16 +495,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("07")) {
@@ -475,19 +533,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -496,16 +554,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("08")) {
@@ -527,19 +592,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -548,16 +613,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("09")) {
@@ -579,19 +651,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -600,16 +672,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("10")) {
@@ -631,19 +710,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -652,16 +731,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("11")) {
@@ -683,19 +769,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -704,16 +790,23 @@
                             </div>
                         </div>
                         <% }
-                        } %>
+                            } %>
                     </div>
                 </div>
                 <div class="carta w-100 h-auto">
                     <div class="row w-100 h-auto">
-                        <%
+                        <%                            
+                            
                             for (serAsignados dato : listaInfo) {
-
-                                String fecha = dato.getFechaCita();
-
+                                serGenerados gene = OpcionesGenerados.mostrarServi(dato.getReferencia());
+                                Proveedores p = OpcionesProveedor.mostrarProv(dato.getCod_proveedor());
+                                String fecha = gene.getFechaCita();
+                                id_moto = gene.getId_entidadM();
+                                id_grua = gene.getId_entidadG();
+                                id_ser = gene.getId_servicio();
+                                moto = OpcionesEntidades.mostrarEnti(id_moto);
+                                grua = OpcionesEntidades.mostrarEnti(id_grua);
+                                servi = OpcionesServicios.mostrarServi(id_ser);
                                 String[] splits = fecha.split("-");
 
                                 if (splits[1].equalsIgnoreCase("12")) {
@@ -735,19 +828,19 @@
                         %>
                         <div class="col-lg-4 my-2"  id="carAsi">
                             <div class="card border-primary">
-                                <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
+                                <div class="card-header text-center"><%= gene.getLloyd() + " // " + gene.getUvi() + " - " + dato.getReferencia()%></div>
                                 <div class="card-body" id="bodyCard">
-                                    <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                                    <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
-                                    <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                                    <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
-                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
-                                    <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
-                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
-                                    <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
-                                    <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                                    <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label><br>
-                                    <strong>Proveedor: </strong><label class="ml-2"><%= dato.getProveedor()%></label><br>
+                                    <strong>Terminal: </strong><label class="ml-2"><%= gene.getTerminal()%></label><br>
+                                    <strong>Motonave: </strong><label class="ml-1"><%= moto %></label><br>
+                                    <strong>Muelle: </strong><label class="ml-2"><%= gene.getMuelle()%></label><br>
+                                    <strong>Grúa(s): </strong><label class="ml-2"><%= grua %></label><br>
+                                    <strong>Fecha de cita: </strong><label class="ml-2"><%= gene.getFechaCita()%></label><br>
+                                    <strong>Hora de cita: </strong><label class="ml-2"><%= gene.getHoraCita()%></label><br>
+                                    <strong>Hrs. en operacion: </strong><label class="ml-2"><%= gene.getHrsOpe()%></label><br>
+                                    <strong>Fecha final: </strong><label class="ml-2"><%= gene.getFechaFinal()%></label><br>
+                                    <strong>Hora final: </strong><label class="ml-2"><%= gene.getHoraFinal()%></label><br>
+                                    <strong>Servicio: </strong><label class="ml-2"><%= servi %></label><br>
+                                    <strong>Proveedor: </strong><label class="ml-2"><%= p.getNombre() %></label><br>
                                     <strong>Cantidad de trabajadores: </strong><label class="ml-2"><%= dato.getCantidad()%></label><br>
                                     <strong>Observaciones: </strong><label class="ml-2"><%= dato.getObservaciones()%></label><br>
                                     <strong>Hrs. totales: </strong><label class="ml-2"><%= dato.getHorasTotales()%></label>
@@ -756,12 +849,12 @@
                             </div>
                         </div>
                         <% }
-                        }%>
+                            } %>
                     </div>
                 </div>
             </div>      
         </div>
-            
+
         <!-- ////////////////////////////INFORMES//////////////////////////// -->
     </body>
 </html>

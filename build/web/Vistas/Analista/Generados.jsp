@@ -152,6 +152,7 @@
 
                 <%                    
                     for (serGenerados dato : listaGen) {
+
                 %>
 
                 <div class="col-lg-4 my-2" id="carAsi">
@@ -159,20 +160,23 @@
                         <div class="card-header text-center"><%= dato.getLloyd() + " // " + dato.getUvi() + " - " + dato.getReferencia()%></div>
                         <div class="card-body" id="bodyCard">
                             <strong>Terminal: </strong><label class="ml-2"><%= dato.getTerminal()%></label><br>
-                            <strong>Motonave: </strong><label class="ml-1"><%= dato.getMotonave()%></label><br>
+                            <strong>Id motonave: </strong><label class="ml-1"><%= dato.getId_entidadM() %></label><br>
                             <strong>Muelle: </strong><label class="ml-2"><%= dato.getMuelle()%></label><br>
-                            <strong>Grúa(s): </strong><label class="ml-2"><%= dato.getGrua()%></label><br>
+                            <strong>Id grua: </strong><label class="ml-2"><%= dato.getId_entidadG() %></label><br>
                             <strong>Fecha de cita: </strong><label class="ml-2"><%= dato.getFechaCita()%></label><br>
                             <strong>Hora de cita: </strong><label class="ml-2"><%= dato.getHoraCita()%></label><br>
                             <strong>Hrs. en operacion: </strong><label class="ml-2"><%= dato.getHrsOpe()%></label><br>
                             <strong>Fecha final: </strong><label class="ml-2"><%= dato.getFechaFinal()%></label><br>
                             <strong>Hora final: </strong><label class="ml-2"><%= dato.getHoraFinal()%></label><br>
-                            <strong>Servicio: </strong><label class="ml-2"><%= dato.getServicio()%></label>
+                            <strong>Id servicio: </strong><label class="ml-2"><%= dato.getId_servicio() %></label>
                         </div>
                         <div class="card-footer">
-                            <a href="Opciones/Generados/numProveedores.jsp?ref=<%= dato.getReferencia()%>" class="btn btn-outline-primary btn-block">ASIGNAR</a>
+                            <div class="text-center">
+                            <a href="Opciones/Generados/numProveedores.jsp?ref=<%= dato.getReferencia()%>"  style="width: 48%;" class="btn btn-outline-primary">ASIGNAR</a>
+                            <a href="Opciones/Generados/Consultar.jsp?ref=<%= dato.getReferencia()%>"  style="width: 48%;" class="btn btn-outline-primary">VER</a>
+                            </div>
                             <hr>
-                            <div class=" text-center">
+                            <div class="text-center">
                                 <a href="Opciones/Generados/Modificar.jsp?ref=<%= dato.getReferencia()%>" class="btn btn-outline-warning" style="width: 48%;">MODIFICAR</a>
                                 <a href="Opciones/Generados/Eliminar.jsp?ref=<%= dato.getReferencia()%>" class="btn btn-outline-danger" style="width: 48%;">ELIMINAR</a>
                             </div>

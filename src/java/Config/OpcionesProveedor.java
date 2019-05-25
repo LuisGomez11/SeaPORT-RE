@@ -36,7 +36,7 @@ public class OpcionesProveedor {
     public static List mostrarPro(int cod) {
         List<Proveedores> lista = new ArrayList<>();       
         try (Connection connect = ConexionBD.connect()) {
-            PreparedStatement ps = connect.prepareStatement("select * from proveedores where codProveedor=" + cod);
+            PreparedStatement ps = connect.prepareStatement("select * from proveedores where cod_proveedor=" + cod);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -54,6 +54,26 @@ public class OpcionesProveedor {
         return lista;
     }
     
+    public static Proveedores mostrarProv(int cod) {
+        Proveedores p = null;      
+        try (Connection connect = ConexionBD.connect()) {
+            PreparedStatement ps = connect.prepareStatement("select * from proveedores where cod_proveedor=" + cod);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                p = new Proveedores(rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7));
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
+        return p;
+    }
+    
     public static List listarPro() throws ClassNotFoundException, SQLException {
         ArrayList<String> lista = new ArrayList<>();
         try (Connection connect = ConexionBD.connect()) {
@@ -69,7 +89,7 @@ public class OpcionesProveedor {
     public static int obtenerNuevaCant(int cod, int cant){
         int r = 0;
         try (Connection connect = ConexionBD.connect()) {
-            PreparedStatement ps = connect.prepareStatement("select cantTra from proveedores where codProveedor="+cod);
+            PreparedStatement ps = connect.prepareStatement("select cantTra from proveedores where cod_proveedor="+cod);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 r = rs.getInt(1);
@@ -85,7 +105,7 @@ public class OpcionesProveedor {
         int cantR = obtenerNuevaCant(cod, cant);
         try (Connection connect = ConexionBD.connect()) {
             PreparedStatement pst = connect.prepareStatement("update proveedores set cantTra=? "
-                    + "where codProveedor=?");
+                    + "where cod_proveedor=?");
             pst.setInt(1, cantR);
             pst.setInt(2, cod);
             pst.executeUpdate();
@@ -112,7 +132,7 @@ public class OpcionesProveedor {
         try (Connection connect = ConexionBD.connect()) {
             PreparedStatement pst = connect.prepareStatement("update proveedores set "
                     + "nombre =?, telefono=?, movil=?, correo =?, nit=?, cantTra=? "
-                    + "where codProveedor=?");
+                    + "where cod_proveedor=?");
             pst.setString(1, pro.getNombre());
             pst.setString(2, pro.getTelefono());
             pst.setString(3, pro.getMovil());
@@ -127,7 +147,7 @@ public class OpcionesProveedor {
     public static void Eliminar(int cod) throws ClassNotFoundException, SQLException {
         try (Connection connect = ConexionBD.connect()) {
             PreparedStatement pst = connect.prepareStatement("Delete from "
-                    + "proveedores where codProveedor=?");
+                    + "proveedores where cod_proveedor=?");
             pst.setInt(1, cod);
             pst.executeUpdate();
         }

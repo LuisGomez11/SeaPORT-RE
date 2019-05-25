@@ -140,7 +140,7 @@
                             <%
                                 for (Entidades dato : listaMoto) {
                             %>
-                            <option><%= dato.getNombre()%></option>
+                            <option><%= dato.getId_entidad() +" - "+ dato.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
@@ -156,7 +156,7 @@
                         <label for="referencia">Referencia</label>
                         <input type="text" maxlength="4" class="form-control" id="referencia" name="referencia" required>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="muelle">Muelle</label>
                         <select class="form-control" name="muelle">
                             <option>N/A</option>
@@ -181,47 +181,13 @@
                             <option>RORO</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="grua">Grúa 1</label>
-                        <select class="form-control" name="grua1">
-                            <option>N/A</option>
+                    <div class="form-group col-md-6">
+                        <label for="grua">Grúa</label>
+                        <select class="form-control" name="grua">
                             <%
                                 for (Entidades dato : listaGrua) {
                             %>
-                            <option><%= dato.getNombre()%></option>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="grua">Grúa 2</label>
-                        <select class="form-control" name="grua2">
-                            <option>N/A</option>
-                            <%
-                                for (Entidades dato : listaGrua) {
-                            %>
-                            <option><%= dato.getNombre()%></option>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="grua">Grúa 3</label>
-                        <select class="form-control" name="grua3">
-                            <option>N/A</option>
-                            <%
-                                for (Entidades dato : listaGrua) {
-                            %>
-                            <option><%= dato.getNombre()%></option>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="grua">Grúa 4</label>
-                        <select class="form-control" name="grua4">
-                            <option>N/A</option>
-                            <%
-                                for (Entidades dato : listaGrua) {
-                            %>
-                            <option><%= dato.getNombre()%></option>
+                            <option><%= dato.getId_entidad() +" - "+ dato.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
@@ -252,7 +218,7 @@
                             <%
                                 for (Servicios dato : listaSer) {
                             %>
-                            <option><%= dato.getNombre()%></option>
+                            <option><%= dato.getId_servicio() +" - "+ dato.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
